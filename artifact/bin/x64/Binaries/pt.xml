@@ -1,0 +1,177 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>pt</name>
+    </assembly>
+    <members>
+        <member name="T:P.Tester.OSResult">
+            <summary>
+             the result code of convergence detection
+            </summary>
+        </member>
+        <member name="T:P.Tester.DfsExploration">
+            <summary>
+            The main class of OS approach:
+            TODO: the name is not ideal. 
+            </summary>
+        </member>
+        <member name="F:P.Tester.DfsExploration.concretesInHash">
+            <summary>
+            the set of concrete states, storing in hash values, we have found in current round
+            </summary>
+        </member>
+        <member name="F:P.Tester.DfsExploration.abstractsInHash">
+            <summary>
+            the set of abstract states, storing in hash values, we have found in current round
+            </summary>
+        </member>
+        <member name="F:P.Tester.DfsExploration.abstractSuccsInHash">
+            <summary>
+            the set of successors of abstract states, storing in hash values, we have found in current round
+            </summary>
+        </member>
+        <member name="F:P.Tester.DfsExploration.countConcretesPrevious">
+            <summary>
+            --PL: the number of reached concrete states when queue is bounded by k-1
+            </summary>
+        </member>
+        <member name="F:P.Tester.DfsExploration.countAbstractsPrevious">
+            <summary>
+            --PL: the number of reached abstract states when queue is bounded by k-1
+            </summary>
+        </member>
+        <member name="F:P.Tester.DfsExploration.countAbstractsPreviousPrevious">
+            <summary>
+            --PL: the number of reached abstract states when queue is bounded by k-2
+            </summary>
+        </member>
+        <member name="F:P.Tester.DfsExploration.competitors">
+            <summary>
+            For convergence detection:
+            c -> c'
+            |    |
+            |    |
+            a -> a', b' = alpha(c') (MUST: b' in A)
+            </summary>
+        </member>
+        <member name="F:P.Tester.DfsExploration.start">
+            <summary>
+            the initial state
+            </summary>
+        </member>
+        <member name="M:P.Tester.DfsExploration.OSIterate">
+            <summary>
+            The main procedure of OS exploration. 
+            
+            Terminologies:
+            -- OS1: the observation sequences of global states
+            -- OS3: the observation sequences of states with queue abstraction
+            
+            </summary>
+        </member>
+        <member name="M:P.Tester.DfsExploration.Dfs(System.Boolean)">
+            <summary>
+            --PL: Queue-unbounded exploration, in DFS mode
+            </summary>
+            <param name="queueAbstraction">Abstracting queue or not, default is not (set param as false)</param>
+        </member>
+        <member name="M:P.Tester.DfsExploration.CheckPredHash(P.Runtime.StateImpl,P.Runtime.StateImpl)">
+            <summary>
+            For convergence detection:
+            c -> cp
+            |    |
+            |    |
+            a -> ap, bp = alpha(cp) (MUST: bp in A)
+            
+            Dump cp to file if cp's abstract state is a competitor
+            </summary>
+            <param name="c"> a concrete state</param>
+            <param name="cp">the successor of c, cp means c'</param>
+        </member>
+        <member name="M:P.Tester.DfsExploration.HasAbstractConverged">
+            <summary>
+            compute abstract successors, and return true ("converged") 
+            iff all of them are already contained in abstractsInHash
+            </summary>
+        </member>
+        <member name="M:P.Tester.DfsExploration.Execute(P.Tester.BacktrackingState)">
+            <summary>
+            - runs the state machine pointed to by CurrIndex, in place, and 
+              returns the successor wrapped into a curr
+            - assigns to argument a clone (!) of the old curr, and advances 
+              its choice vector and currIndex, as appropriate
+            So curr points to new memory after calling Execute. The returned 
+            successor is stored in old memory.
+            </summary>
+            <param name="curr"></param>
+            <returns></returns>
+        </member>
+        <member name="T:P.Tester.BacktrackingState">
+            the end of class DfsExploration
+            <summary>
+            --PL: A wrapper for P program State. Q: Why not use inheritance? 
+            </summary>
+        </member>
+        <member name="F:P.Tester.BacktrackingState.ChoiceVector">
+            <summary>
+            Enumerate all non-deterministic choices
+            </summary>
+        </member>
+        <member name="T:P.Tester.PTester">
+            <summary>
+            The main entry point for PTester
+            </summary>
+        </member>
+        <member name="F:P.Tester.TestResult.Success">
+            <summary>
+            No errors were found within the specified limits of the search (if any).
+            </summary>
+        </member>
+        <member name="F:P.Tester.TestResult.InvalidParameters">
+            <summary>
+            Invalid parameters passed
+            </summary>
+        </member>
+        <member name="F:P.Tester.TestResult.AssertionFailure">
+            <summary>
+            An assertion failure was encountered.
+            </summary>
+        </member>
+        <member name="F:P.Tester.TestResult.Deadlock">
+            <summary>
+            An execution was found in which all P machines are blocked and at least 
+            one liveness monitor is in a hot state.
+            </summary>
+        </member>
+        <member name="F:P.Tester.TestResult.AcceptingCyleFound">
+            <summary>
+            A lasso violating a liveness monitor was discovered.
+            </summary>
+        </member>
+        <member name="F:P.Tester.TestResult.InternalError">
+            <summary>
+            An internal error was encountered, typically indicating a bug in the compiler or runtime.
+            </summary>
+        </member>
+        <member name="F:P.Tester.TestResult.StackOverFlowError">
+            <summary>
+            Search stack size exceeded the maximum size.
+            </summary>
+        </member>
+        <member name="F:P.Tester.TestResult.Canceled">
+            <summary>
+            The search was canceled.
+            </summary>
+        </member>
+        <member name="F:P.Tester.TestResult.Timeout">
+            <summary>
+            Timeout
+            </summary>
+        </member>
+        <member name="F:P.Tester.CommandLineOptions.DfsExploration">
+            <summary>
+            OS realted commandline options
+            </summary>
+        </member>
+    </members>
+</doc>

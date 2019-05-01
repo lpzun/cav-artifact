@@ -1,0 +1,2195 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.PSharp.TestingServices.SchedulingStrategies</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable">
+            <summary>
+            Interface of an entity that can be scheduled.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable.Id">
+            <summary>
+            Unique id of the entity.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable.Name">
+            <summary>
+            Name of the entity.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable.IsEnabled">
+            <summary>
+            Is the entity enabled.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable.NextOperationType">
+            <summary>
+            Type of the next operation of the entity.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable.NextTargetType">
+            <summary>
+            The target type of the next operation of the entity.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable.NextTargetId">
+            <summary>
+            Target id of the next operation of the entity.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable.NextOperationMatchingSendIndex">
+            <summary>
+            If the next operation is <see cref="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.OperationType.Receive"/>
+            then this gives the step index of the corresponding Send. 
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable.OperationCount">
+            <summary>
+            Monotonically increasing operation count.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable.NextOperationGroupId">
+            <summary>
+            Unique id of the group of operations that is
+            associated with the next operation.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulingStrategy">
+            <summary>
+            Interface of a generic scheduling strategy.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulingStrategy.GetNext(Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable@,System.Collections.Generic.List{Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable},Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable)">
+            <summary>
+            Returns the next choice to schedule.
+            </summary>
+            <param name="next">Next</param>
+            <param name="choices">Choices</param>
+            <param name="current">Curent</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulingStrategy.GetNextBooleanChoice(System.Int32,System.Boolean@)">
+            <summary>
+            Returns the next boolean choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulingStrategy.GetNextIntegerChoice(System.Int32,System.Int32@)">
+            <summary>
+            Returns the next integer choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulingStrategy.ForceNext(Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable,System.Collections.Generic.List{Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable},Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable)">
+            <summary>
+            Forces the next choice to schedule.
+            </summary>
+            <param name="next">Next</param>
+            <param name="choices">Choices</param>
+            <param name="current">Curent</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulingStrategy.ForceNextBooleanChoice(System.Int32,System.Boolean)">
+            <summary>
+            Forces the next boolean choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulingStrategy.ForceNextIntegerChoice(System.Int32,System.Int32)">
+            <summary>
+            Forces the next integer choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulingStrategy.PrepareForNextIteration">
+            <summary>
+            Prepares for the next scheduling iteration. This is invoked
+            at the end of a scheduling iteration. It must return false
+            if the scheduling strategy should stop exploring.
+            </summary>
+            <returns>True to start the next iteration</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulingStrategy.Reset">
+            <summary>
+            Resets the scheduling strategy. This is typically invoked by
+            parent strategies to reset child strategies.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulingStrategy.GetScheduledSteps">
+            <summary>
+            Returns the scheduled steps.
+            </summary>
+            <returns>Scheduled steps</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulingStrategy.HasReachedMaxSchedulingSteps">
+            <summary>
+            True if the scheduling strategy has reached the max
+            scheduling steps for the given scheduling iteration.
+            </summary>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulingStrategy.IsFair">
+            <summary>
+            Checks if this is a fair scheduling strategy.
+            </summary>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulingStrategy.GetDescription">
+            <summary>
+            Returns a textual description of the scheduling strategy.
+            </summary>
+            <returns>String</returns>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.OperationTargetType">
+            <summary>
+            The target of an operation used during scheduling.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.OperationTargetType.Schedulable">
+            <summary>
+            The target of the operation is an <see cref="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable"/>.
+            For example, 'Create', 'Start' and 'Stop' are operations that
+            act upon an <see cref="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable"/>.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.OperationTargetType.Inbox">
+            <summary>
+            The target of the operation is the inbox of an <see cref="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable"/>.
+            For example, 'Send' and 'Receive' are operations that act upon the
+            inbox of an <see cref="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable"/>.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.OperationType">
+            <summary>
+            An operation used during scheduling.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.OperationType.Start">
+            <summary>
+            Operation used when an <see cref="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable"/>
+            starts executing.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.OperationType.Create">
+            <summary>
+            Operation used when an <see cref="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable"/>
+            creates another <see cref="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable"/>.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.OperationType.Send">
+            <summary>
+            Operation used when an <see cref="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable"/>
+            sends an event to a target <see cref="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable"/>.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.OperationType.Receive">
+            <summary>
+            Operation used when an <see cref="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable"/>
+            receives an event.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.OperationType.Stop">
+            <summary>
+            Operation used when an <see cref="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable"/>
+            stops executing.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.OperationType.Yield">
+            <summary>
+            Operation used when an <see cref="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable"/> yields. This denotes
+            that the current <see cref="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable"/> is not making progress. An
+            unfair scheduler could disable these <see cref="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable"/> until
+            quiescence, and then re-enable them.
+            
+            This operation is not currently supported in P#.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.OperationType.WaitForQuiescence">
+            <summary>
+            Operation used when an <see cref="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable"/> wants to wait for
+            quiescence. A scheduler could disable the <see cref="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable"/>
+            until quiescence, and then re-enable it.
+            
+            This operation is not currently supported in P#.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.OperationType.Join">
+            <summary>
+            Operation used when an <see cref="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable"/> wants to wait for
+            another <see cref="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable"/> to <see cref="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.OperationType.Stop"/>.
+            
+            This operation is not currently supported in P#.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.DefaultRandomNumberGenerator">
+            <summary>
+            Default random number generator that uses the
+            <see cref="T:System.Random"/> generator.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DefaultRandomNumberGenerator.Random">
+            <summary>
+            Device for generating random numbers.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DefaultRandomNumberGenerator.RandomSeed">
+            <summary>
+            The seed currently used by the generator.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.SchedulingStrategies.DefaultRandomNumberGenerator.Seed">
+            <summary>
+            The seed currently used by the generator.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DefaultRandomNumberGenerator.#ctor">
+            <summary>
+            Initializes with a time-dependent seed.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DefaultRandomNumberGenerator.#ctor(System.Int32)">
+            <summary>
+            Initializes with the given seed.
+            </summary>
+            <param name="seed">Seed value</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DefaultRandomNumberGenerator.Next">
+            <summary>
+            Returns a non-negative random number.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DefaultRandomNumberGenerator.Next(System.Int32)">
+            <summary>
+            Returns a non-negative random number less than maxValue.
+            </summary>
+            <param name="maxValue">Exclusive upper bound</param>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.IRandomNumberGenerator">
+            <summary>
+            Interface for random number generators.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.SchedulingStrategies.IRandomNumberGenerator.Seed">
+            <summary>
+            The seed currently used by the generator.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.IRandomNumberGenerator.Next">
+            <summary>
+            Returns a non-negative random number.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.IRandomNumberGenerator.Next(System.Int32)">
+            <summary>
+            Returns a non-negative random number less than maxValue.
+            </summary>
+            <param name="maxValue">Exclusive upper bound</param>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.DelayBoundingStrategy">
+            <summary>
+            An abstract delay-bounding scheduling strategy.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DelayBoundingStrategy.Logger">
+            <summary>
+            Logger used by the strategy.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DelayBoundingStrategy.RandomNumberGenerator">
+            <summary>
+            Random number generator.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DelayBoundingStrategy.MaxScheduledSteps">
+            <summary>
+            The maximum number of steps to schedule.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DelayBoundingStrategy.ScheduledSteps">
+            <summary>
+            The number of scheduled steps.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DelayBoundingStrategy.ScheduleLength">
+            <summary>
+            Length of the explored schedule across all iterations.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DelayBoundingStrategy.MaxDelays">
+            <summary>
+            The maximum number of delays.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DelayBoundingStrategy.RemainingDelays">
+            <summary>
+            The remaining delays.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DelayBoundingStrategy.#ctor(System.Int32,System.Int32,Microsoft.PSharp.TestingServices.SchedulingStrategies.ILogger)">
+            <summary>
+            Creates a delay-bounding strategy that uses the default random
+            number generator (seed is based on current time).
+            </summary>
+            <param name="maxSteps">Max scheduling steps</param>
+            <param name="maxDelays">Max number of delays</param>
+            <param name="logger">ILogger</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DelayBoundingStrategy.#ctor(System.Int32,System.Int32,Microsoft.PSharp.TestingServices.SchedulingStrategies.ILogger,Microsoft.PSharp.TestingServices.SchedulingStrategies.IRandomNumberGenerator)">
+            <summary>
+            Creates a delay-bounding strategy that uses the specified random number generator.
+            </summary>
+            <param name="maxSteps">Max scheduling steps</param>
+            <param name="maxDelays">Max number of delays</param>
+            <param name="logger">ILogger</param>
+            <param name="random">IRandomNumberGenerator</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DelayBoundingStrategy.GetNext(Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable@,System.Collections.Generic.List{Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable},Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable)">
+            <summary>
+            Returns the next choice to schedule.
+            </summary>
+            <param name="next">Next</param>
+            <param name="choices">Choices</param>
+            <param name="current">Curent</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DelayBoundingStrategy.GetNextBooleanChoice(System.Int32,System.Boolean@)">
+            <summary>
+            Returns the next boolean choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DelayBoundingStrategy.GetNextIntegerChoice(System.Int32,System.Int32@)">
+            <summary>
+            Returns the next integer choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DelayBoundingStrategy.ForceNext(Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable,System.Collections.Generic.List{Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable},Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable)">
+            <summary>
+            Forces the next choice to schedule.
+            </summary>
+            <param name="next">Next</param>
+            <param name="choices">Choices</param>
+            <param name="current">Curent</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DelayBoundingStrategy.ForceNextBooleanChoice(System.Int32,System.Boolean)">
+            <summary>
+            Forces the next boolean choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DelayBoundingStrategy.ForceNextIntegerChoice(System.Int32,System.Int32)">
+            <summary>
+            Forces the next integer choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DelayBoundingStrategy.PrepareForNextIteration">
+            <summary>
+            Prepares for the next scheduling iteration. This is invoked
+            at the end of a scheduling iteration. It must return false
+            if the scheduling strategy should stop exploring.
+            </summary>
+            <returns>True to start the next iteration</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DelayBoundingStrategy.Reset">
+            <summary>
+            Resets the scheduling strategy. This is typically invoked by
+            parent strategies to reset child strategies.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DelayBoundingStrategy.GetScheduledSteps">
+            <summary>
+            Returns the scheduled steps.
+            </summary>
+            <returns>Scheduled steps</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DelayBoundingStrategy.HasReachedMaxSchedulingSteps">
+            <summary>
+            True if the scheduling strategy has reached the max
+            scheduling steps for the given scheduling iteration.
+            </summary>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DelayBoundingStrategy.IsFair">
+            <summary>
+            Checks if this is a fair scheduling strategy.
+            </summary>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DelayBoundingStrategy.GetDescription">
+            <summary>
+            Returns a textual description of the scheduling strategy.
+            </summary>
+            <returns>String</returns>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.ExhaustiveDelayBoundingStrategy">
+            <summary>
+            An exhaustive delay-bounding scheduling strategy.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.ExhaustiveDelayBoundingStrategy.DelaysCache">
+            <summary>
+            Cache of delays across iterations.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ExhaustiveDelayBoundingStrategy.#ctor(System.Int32,System.Int32,Microsoft.PSharp.TestingServices.SchedulingStrategies.ILogger)">
+            <summary>
+            Creates an exhaustive delay-bounding strategy that uses the default
+            random number generator (seed is based on current time).
+            </summary>
+            <param name="maxSteps">Max scheduling steps</param>
+            <param name="maxDelays">Max number of delays</param>
+            <param name="logger">ILogger</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ExhaustiveDelayBoundingStrategy.#ctor(System.Int32,System.Int32,Microsoft.PSharp.TestingServices.SchedulingStrategies.ILogger,Microsoft.PSharp.TestingServices.SchedulingStrategies.IRandomNumberGenerator)">
+            <summary>
+            Creates an exhaustive delay-bounding strategy that uses
+            the specified random number generator.
+            </summary>
+            <param name="maxSteps">Max scheduling steps</param>
+            <param name="maxDelays">Max number of delays</param>
+            <param name="logger">ILogger</param>
+            <param name="random">IRandomNumberGenerator</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ExhaustiveDelayBoundingStrategy.PrepareForNextIteration">
+            <summary>
+            Prepares for the next scheduling iteration. This is invoked
+            at the end of a scheduling iteration. It must return false
+            if the scheduling strategy should stop exploring.
+            </summary>
+            <returns>True to start the next iteration</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ExhaustiveDelayBoundingStrategy.Reset">
+            <summary>
+            Resets the scheduling strategy. This is typically invoked by
+            parent strategies to reset child strategies.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ExhaustiveDelayBoundingStrategy.GetDescription">
+            <summary>
+            Returns a textual description of the scheduling strategy.
+            </summary>
+            <returns>String</returns>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.RandomDelayBoundingStrategy">
+            <summary>
+            A randomized delay-bounding scheduling strategy.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.RandomDelayBoundingStrategy.CurrentIterationDelays">
+            <summary>
+            Delays during this iteration.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.RandomDelayBoundingStrategy.#ctor(System.Int32,System.Int32,Microsoft.PSharp.TestingServices.SchedulingStrategies.ILogger)">
+            <summary>
+            Creates a randomized delay-bounding strategy that uses the default
+            random number generator (seed is based on current time).
+            </summary>
+            <param name="maxSteps">Max scheduling steps</param>
+            <param name="maxDelays">Max number of delays</param>
+            <param name="logger">ILogger</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.RandomDelayBoundingStrategy.#ctor(System.Int32,System.Int32,Microsoft.PSharp.TestingServices.SchedulingStrategies.ILogger,Microsoft.PSharp.TestingServices.SchedulingStrategies.IRandomNumberGenerator)">
+            <summary>
+            Creates a randomized delay-bounding strategy that uses
+            the specified random number generator.
+            </summary>
+            <param name="maxSteps">Max scheduling steps</param>
+            <param name="maxDelays">Max number of delays</param>
+            <param name="logger">ILogger</param>
+            <param name="random">IRandomNumberGenerator</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.RandomDelayBoundingStrategy.PrepareForNextIteration">
+            <summary>
+            Prepares for the next scheduling iteration. This is invoked
+            at the end of a scheduling iteration. It must return false
+            if the scheduling strategy should stop exploring.
+            </summary>
+            <returns>True to start the next iteration</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.RandomDelayBoundingStrategy.GetDescription">
+            <summary>
+            Returns a textual description of the scheduling strategy.
+            </summary>
+            <returns>String</returns>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.DFSStrategy">
+            <summary>
+            A depth-first search scheduling strategy.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DFSStrategy.Logger">
+            <summary>
+            Logger used by the strategy.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DFSStrategy.MaxScheduledSteps">
+            <summary>
+            The maximum number of steps to schedule.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DFSStrategy.ScheduledSteps">
+            <summary>
+            The number of scheduled steps.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DFSStrategy.ScheduleStack">
+            <summary>
+            Stack of scheduling choices.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DFSStrategy.BoolNondetStack">
+            <summary>
+            Stack of nondeterministic choices.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DFSStrategy.IntNondetStack">
+            <summary>
+            Stack of nondeterministic choices.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DFSStrategy.SchIndex">
+            <summary>
+            Current schedule index.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DFSStrategy.NondetIndex">
+            <summary>
+            Current nondeterministic index.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DFSStrategy.#ctor(System.Int32,Microsoft.PSharp.TestingServices.SchedulingStrategies.ILogger)">
+            <summary>
+            Creates a DFS strategy.
+            </summary>
+            <param name="maxSteps">Max scheduling steps</param>
+            <param name="logger">ILogger</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DFSStrategy.GetNext(Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable@,System.Collections.Generic.List{Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable},Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable)">
+            <summary>
+            Returns the next choice to schedule.
+            </summary>
+            <param name="next">Next</param>
+            <param name="choices">Choices</param>
+            <param name="current">Curent</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DFSStrategy.GetNextBooleanChoice(System.Int32,System.Boolean@)">
+            <summary>
+            Returns the next boolean choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DFSStrategy.GetNextIntegerChoice(System.Int32,System.Int32@)">
+            <summary>
+            Returns the next integer choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DFSStrategy.ForceNext(Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable,System.Collections.Generic.List{Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable},Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable)">
+            <summary>
+            Forces the next choice to schedule.
+            </summary>
+            <param name="next">Next</param>
+            <param name="choices">Choices</param>
+            <param name="current">Curent</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DFSStrategy.ForceNextBooleanChoice(System.Int32,System.Boolean)">
+            <summary>
+            Forces the next boolean choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DFSStrategy.ForceNextIntegerChoice(System.Int32,System.Int32)">
+            <summary>
+            Forces the next integer choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DFSStrategy.PrepareForNextIteration">
+            <summary>
+            Prepares for the next scheduling iteration. This is invoked
+            at the end of a scheduling iteration. It must return false
+            if the scheduling strategy should stop exploring.
+            </summary>
+            <returns>True to start the next iteration</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DFSStrategy.Reset">
+            <summary>
+            Resets the scheduling strategy. This is typically invoked by
+            parent strategies to reset child strategies.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DFSStrategy.GetScheduledSteps">
+            <summary>
+            Returns the scheduled steps.
+            </summary>
+            <returns>Scheduled steps</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DFSStrategy.HasReachedMaxSchedulingSteps">
+            <summary>
+            True if the scheduling strategy has reached the max
+            scheduling steps for the given scheduling iteration.
+            </summary>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DFSStrategy.IsFair">
+            <summary>
+            Checks if this is a fair scheduling strategy.
+            </summary>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DFSStrategy.GetDescription">
+            <summary>
+            Returns a textual description of the scheduling strategy.
+            </summary>
+            <returns>String</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DFSStrategy.PrintSchedule">
+            <summary>
+            Prints the schedule.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.DFSStrategy.SChoice">
+            <summary>
+            A scheduling choice. Contains an id and a boolean that is
+            true if the choice has been previously explored.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DFSStrategy.SChoice.#ctor(System.UInt64)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="id">Id</param>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.DFSStrategy.NondetBooleanChoice">
+            <summary>
+            A nondeterministic choice. Contains a boolean value that
+            corresponds to the choice and a boolean that is true if
+            the choice has been previously explored.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DFSStrategy.NondetBooleanChoice.#ctor(System.Boolean)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="value">Value</param>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.DFSStrategy.NondetIntegerChoice">
+            <summary>
+            A nondeterministic choice. Contains an integer value that
+            corresponds to the choice and a boolean that is true if
+            the choice has been previously explored.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DFSStrategy.NondetIntegerChoice.#ctor(System.Int32)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="value">Value</param>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.IterativeDeepeningDFSStrategy">
+            <summary>
+            A depth-first search scheduling strategy that uses iterative deepening.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.IterativeDeepeningDFSStrategy.MaxDepth">
+            <summary>
+            The max depth.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.IterativeDeepeningDFSStrategy.CurrentDepth">
+            <summary>
+            The current depth.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.IterativeDeepeningDFSStrategy.#ctor(System.Int32,Microsoft.PSharp.TestingServices.SchedulingStrategies.ILogger)">
+            <summary>
+            Creates a DFS strategy that uses iterative deepening.
+            </summary>
+            <param name="maxSteps">Max scheduling steps</param>
+            <param name="logger">ILogger</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.IterativeDeepeningDFSStrategy.PrepareForNextIteration">
+            <summary>
+            Prepares for the next scheduling iteration. This is invoked
+            at the end of a scheduling iteration. It must return false
+            if the scheduling strategy should stop exploring.
+            </summary>
+            <returns>True to start the next iteration</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.IterativeDeepeningDFSStrategy.HasReachedMaxSchedulingSteps">
+            <summary>
+            True if the scheduling strategy has reached the max
+            scheduling steps for the given scheduling iteration.
+            </summary>
+            <returns>Depth bound</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.IterativeDeepeningDFSStrategy.GetDescription">
+            <summary>
+            Returns a textual description of the scheduling strategy.
+            </summary>
+            <returns>String</returns>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.DPORAlgorithm">
+            <summary>
+            The actual DPOR algorithm used by <see cref="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPORStrategy"/>.
+            
+            This is actually the "Source DPOR" algorithm.
+            
+            Implementation notes:
+            
+            
+            Note that when we store indexes, they start at 1.
+            This allows 0 to mean: null / not yet seen.
+            Thus, when accessing e.g. Vcs, we must subtract 1.
+            But most accesses should be done via a method to hide this.
+            
+            The happens-before relation (HBR) is assigned as follows:
+            - create, start, stop with the same target id are totally-ordered
+            - operations from the same thread are totally ordered.
+            - corresponding send-receive operation pairs are ordered.
+            - sends to the same target id are totally-ordered.
+            
+            That last one is expected, but a bit annoying when doing random DPOR
+            because it limits the races (see below) between send operations to the same target id.
+            
+            The HBR is tracked using vector clocks (VCs).
+            
+            A pair of operations A and B is a race iff:
+            - A happens-before B 
+            - and A and B are from different threads
+            - and there does not exist an operation C such that A happens-before C happens-before B.
+            
+            In other words, A and B must be directly related in the HBR with no intervening operation
+            connecting them. They do not need to be adjacent though 
+            (i.e. in a schedule, ACB, A and B might still be a race, unless A hb C hb B).
+            We check this in the code by checking if A hb B *before* we update the 
+            VC of B to include the A-B edge; if A already happens-before B then this is not a race.
+            
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.DPORAlgorithm.NumThreads">
+            <summary>
+            An upper bound of the number of threads (schedulables).
+            Will be increased as needed.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.DPORAlgorithm.NumSteps">
+            <summary>
+            The total number of steps (visible operations).
+            Will be increased as needed.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.DPORAlgorithm.ThreadIdToLastOpIndex">
+            <summary>
+            A map from thread id to the index of the last op
+            performed by the thread.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.DPORAlgorithm.TargetIdToLastCreateStartEnd">
+            <summary>
+            A map from target id to the last create, start or stop operation.
+            Used to update the HBR/VCs.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.DPORAlgorithm.TargetIdToLastSend">
+            <summary>
+            A map from target id to the last send (*to* this target).
+            Used to update the HBR/VCs.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.DPORAlgorithm.TargetIdToFirstSend">
+            <summary>
+            A map from target id to the first send (*to* this target).
+            TODO: Used in random DPOR to slightly limit the search
+            of prior sends that could race with the current send.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.DPORAlgorithm.Vcs">
+            <summary>
+            The list of vector clocks (VCs).
+            We store a VC for each visible operation.
+            Thus, this is a map from a step index to the operation's VC.
+            Given a step index i and thread id c:
+              Vcs[(i-1)*NumThreads + c] == the vector clock of thread c.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.DPORAlgorithm.Contract">
+            <summary>
+            A way for the ISchedulable to assert conditions.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.DPORAlgorithm.Races">
+            <summary>
+            A list of all races.
+            Only used when performing random DPOR.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.DPORAlgorithm.MissingThreadIds">
+            <summary>
+            The missing thread ids when replaying a reversed race.
+            When performing random DPOR,
+            we pick a race, reverse it, and "replay" it.
+            In the replay, some threads may not get created
+            (because the replay is different)
+            and we must be careful when writing the RaceReplaySuffix,
+            subtracting 1 for every missing thread that is less than
+            the thread id we want to record.
+            This field tracks those threads.
+            It is a list of thread ids (not a map).
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.DPORAlgorithm.RaceReplaySuffix">
+            <summary>
+            When performing random DPOR,
+            this field gives the schedule (as a list of thread ids)
+            that should be followed in order to reverse a randomly chosen race.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.DPORAlgorithm.ReplayRaceIndex">
+            <summary>
+            An index for the <see cref="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.DPORAlgorithm.RaceReplaySuffix"/> (for convenience) to be used 
+            when replaying a reversed race.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.DPORAlgorithm.#ctor(Microsoft.PSharp.TestingServices.SchedulingStrategies.IContract)">
+            <summary>
+            Construct the DPOR algorithm.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.DPORAlgorithm.Reversible(Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.Stack,System.Int32,System.Int32)">
+            <summary>
+            Checks if two operations are reversible.
+            Assumes both operations passed in are dependent.
+            </summary>
+            <param name="stack">Stack</param>
+            <param name="index1"></param>
+            <param name="index2"></param>
+            <returns>Are the operations reversible?</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.DPORAlgorithm.DoDPOR(Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.Stack,Microsoft.PSharp.TestingServices.SchedulingStrategies.IRandomNumberGenerator)">
+            <summary>
+            The main entry point to the DPOR algorithm.
+            </summary>
+            <param name="stack">Should contain a terminal schedule.</param>
+            <param name="rand">If non-null, then a randomized DPOR algorithm will be used.</param>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.NonDetChoice">
+            <summary>
+            Stores the outcome of a nondetereminstic (nondet) choice.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.NonDetChoice.IsBoolChoice">
+            <summary>
+            Is this nondet choice a boolean choice?
+            If so, <see cref="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.NonDetChoice.Choice"/> is 0 or 1.
+            Otherwise, it can be any int value.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.NonDetChoice.Choice">
+            <summary>
+            The nondet choice; 0 or 1 if this is a bool choice;
+            otherwise, any int.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.Race">
+            <summary>
+            Represents a race (two visible operation that are concurrent but dependent)
+            that can be reversed to reach a different terminal state.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.Race.A">
+            <summary>
+            The index of the first racing visible operation.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.Race.B">
+            <summary>
+            The index of the second racing visible operation.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.Race.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Construct a race.
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.SleepSets">
+            <summary>
+            Sleep sets is a reduction technique that can be in addition to DPOR
+            or on its own.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.SleepSets.UpdateSleepSets(Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.Stack,Microsoft.PSharp.TestingServices.SchedulingStrategies.IContract)">
+            <summary>
+            Update the sleep sets for the top operation on the stack.
+            This will look at the second from top element in the stack
+            and copy forward the sleep set, excluding threads that are dependent
+            with the executed operation.
+            </summary>
+            <param name="stack">Stack</param>
+            <param name="contract">IContract</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.SleepSets.IsDependent(Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntry,Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntry)">
+            <summary>
+            Used to test if two operations are dependent.
+            However, it is not perfect and it assumes we are only checking
+            co-enabled operations from the same scheduling point.
+            Thus, the following will always appear to be independent,
+            even though this is not always the case:
+            Create and Start, Send and Receive.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.Stack">
+            <summary>
+            The stack datastructure used by <see cref="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPORStrategy"/> to perform the
+            depth-first search.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.Stack.StackInternal">
+            <summary>
+            The actual stack.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.Stack.SLEEP_SET_BLOCKED">
+            <summary>
+            If no thread id can be chosen,
+            a negative thread id is returned.
+            This indicates that some threads
+            were enabled, but they were all slept (due to <see cref="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.SleepSets"/>).
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.Stack.#ctor(Microsoft.PSharp.TestingServices.SchedulingStrategies.IRandomNumberGenerator,Microsoft.PSharp.TestingServices.SchedulingStrategies.IContract)">
+            <summary>
+            Construct the stack.
+            </summary>
+            <param name="rand">If non-null, then randomized DPOR is assumed.
+            The stack will not be backtracked in <see cref="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.Stack.PrepareForNextSchedule"/>.</param>
+            <param name="contract">IContract</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.Stack.Push(System.Collections.Generic.List{Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable},System.Int32)">
+            <summary>
+            Push a list of tid entries onto the stack.
+            If we are replaying, this will verify that
+            the list is what we expected.
+            </summary>
+            <param name="machines"></param>
+            <param name="prevThreadIndex"></param>
+            <returns>true if a new element was added to the stack, otherwise the existing entry was verified</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.Stack.GetNumSteps">
+            <summary>
+            Get the number of entries on the stack 
+            (not including those that are yet to be replayed).
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.Stack.GetInternalSize">
+            <summary>
+            Get the real size of the stack
+            (including entries that are yet to be replayed).
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.Stack.GetTop">
+            <summary>
+            Get the top entry of the stack.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.Stack.GetSecondFromTop">
+            <summary>
+            Get the second from top entry of the stack.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.Stack.GetTopAsRealTop">
+            <summary>
+            Gets the top of stack and also ensures that this is the real top of stack.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.Stack.GetSelectedOrFirstBacktrackNotSlept(System.Int32)">
+            <summary>
+            Get the next thread to schedule: either the preselected thread entry
+            from the current schedule prefix that we are replaying or the first
+            suitable thread entry from the real top of the stack.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.Stack.PrepareForNextSchedule">
+            <summary>
+            Prepare for the next schedule by popping entries from the stack
+            until we find some tid entries that are not slept.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.Stack.Clear">
+            <summary>
+            Clear the stack.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.Stack.ClearAboveTop">
+            <summary>
+            Clear all entries beyond the current top of stack.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntry">
+            <summary>
+            Thread entry stored on the stack of a depth-first search to track which threads existed
+            and whether they have been executed already, etc.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntry.Id">
+            <summary>
+            The id/index of this thread in the original thread creation order list of threads.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntry.Enabled">
+            <summary>
+            Is the thread enabled?
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntry.Sleep">
+            <summary>
+            Skip exploring this thread from here.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntry.Backtrack">
+            <summary>
+            Backtrack to this transition?
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntry.OpType">
+            <summary>
+            Operation type.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntry.TargetType">
+            <summary>
+            Target type. E.g. thread, queue, mutex, variable.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntry.TargetId">
+            <summary>
+            Target of the operation.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntry.SendStepIndex">
+            <summary>
+            For a receive operation: the step of the corresponding send.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntry.#ctor(System.Int32,System.Boolean,Microsoft.PSharp.TestingServices.SchedulingStrategies.OperationType,Microsoft.PSharp.TestingServices.SchedulingStrategies.OperationTargetType,System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <param name="enabled"></param>
+            <param name="opType"></param>
+            <param name="targetType"></param>
+            <param name="targetId"></param>
+            <param name="sendStepIndex"></param>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntry.ComparerSingleton">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntry.Comparer">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntry.Comparer.Equals(Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntry,Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntry)">
+            <summary>Determines whether the specified objects are equal.</summary>
+            <returns>true if the specified objects are equal; otherwise, false.</returns>
+            <param name="x">The first object to compare.</param>
+            <param name="y">The second object to compare.</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntry.Comparer.GetHashCode(Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntry)">
+            <summary>Returns a hash code for the specified object.</summary>
+            <returns>A hash code for the specified object.</returns>
+            <param name="obj">The <see cref="T:System.Object" /> for which a hash code is to be returned.</param>
+            <exception cref="T:System.ArgumentNullException">The type of <paramref name="obj" /> is a reference type and <paramref name="obj" /> is null.</exception>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntryList">
+            <summary>
+            The elements of the <see cref="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.Stack"/> 
+            used by <see cref="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPORStrategy"/>.
+            Stores a list of <see cref="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntry"/>;
+            one for each <see cref="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable"/>.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntryList.List">
+            <summary>
+            The actual list.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntryList.NondetChoices">
+            <summary>
+            A list of random choices made by the <see cref="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntryList.SelectedEntry"/> thread as part of its
+            visible operation.
+            Can be null.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntryList.NextNondetChoiceIndex">
+            <summary>
+            When replaying/adding nondet choices,
+            this is the index of the next nondet choice.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntryList.#ctor(System.Collections.Generic.List{Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntry})">
+            <summary>
+            Construct a TidEntryList.
+            </summary>
+            <param name="list"></param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntryList.MakeOrReplayNondetChoice(System.Boolean,Microsoft.PSharp.TestingServices.SchedulingStrategies.IRandomNumberGenerator,Microsoft.PSharp.TestingServices.SchedulingStrategies.IContract)">
+            <summary>
+            Get a nondet choice.
+            This may replay a nondet choice or make (and record) a new nondet choice.
+            </summary>
+            <param name="isBoolChoice">If true, a boolean choice; otherwise, an int choice.</param>
+            <param name="rand">Random</param>
+            <param name="contract">IContract</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntryList.BacktrackNondetChoices(Microsoft.PSharp.TestingServices.SchedulingStrategies.IContract)">
+            <summary>
+            This method is used in a DFS exploration of nondet choice.
+            It will pop off bool choices that are 1 until
+            it reaches a 0 that will then be changed to a 1.
+            The NextNondetChoiceIndex will be reset ready for replay.
+            </summary>
+            <param name="contract">IContract</param>
+            <returns>false if there are no more nondet choices to explore</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntryList.RewindNondetChoicesForReplay">
+            <summary>
+            Prepares the list of nondet choices for replay.
+            This is used by random DPOR, which does not need to
+            backtrack individual nondet choices, but may need to replay all of them.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntryList.ClearNondetChoicesFromNext">
+            <summary>
+            Clears the list of nondet choices for replay from the next nondet choice onwards.
+            That is, nondet choices that have already been replayed remain in the list.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntryList.SetAllEnabledToBeBacktracked(Microsoft.PSharp.TestingServices.SchedulingStrategies.IContract)">
+            <summary>
+            Add all enabled threads to the backtrack set.
+            </summary>
+            <param name="contract">IContract</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntryList.ShowEnabled">
+            <summary>
+            Utility method to show the enabled threads.
+            </summary>
+            <returns>string</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntryList.ShowSelected(Microsoft.PSharp.TestingServices.SchedulingStrategies.IContract)">
+            <summary>
+            Utility method to show the selected thread.
+            </summary>
+            <param name="contract">IContract</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntryList.ShowBacktrack">
+            <summary>
+            Utility method to show the threads in the backtrack set.
+            </summary>
+            <returns>string</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntryList.GetFirstBacktrackNotSlept(System.Int32)">
+            <summary>
+            Gets the first thread in backtrack that is not slept.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntryList.GetAllBacktrackNotSleptNotSelected(Microsoft.PSharp.TestingServices.SchedulingStrategies.IContract)">
+            <summary>
+            Gets all threads in backtrack that are not slept and not selected.
+            </summary>
+            <param name="contract">IContract</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntryList.HasBacktrackNotSleptNotSelected">
+            <summary>
+            
+            </summary>
+            <returns>true if some threads are: in backtrack and not slept and not selected.</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntryList.SetSelectedToSleep(Microsoft.PSharp.TestingServices.SchedulingStrategies.IContract)">
+            <summary>
+            Sets the selected thread to be slept.
+            </summary>
+            <param name="contract">IContract</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntryList.AllDoneOrSlept">
+            <summary>
+            
+            </summary>
+            <returns>true if all threads are done or slept.</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntryList.TryGetSelected(Microsoft.PSharp.TestingServices.SchedulingStrategies.IContract)">
+            <summary>
+            Tries to get the single selected thread.
+            </summary>
+            <param name="contract">IContract</param>
+            <returns>The selected thread index or -1 if no thread is selected.</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntryList.IsNoneSelected(Microsoft.PSharp.TestingServices.SchedulingStrategies.IContract)">
+            <summary>
+            Are no threads selected?
+            </summary>
+            <param name="contract">IContract</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntryList.GetSelected(Microsoft.PSharp.TestingServices.SchedulingStrategies.IContract)">
+            <summary>
+            Gets the selected thread.
+            Asserts that there is a selected thread.
+            </summary>
+            <param name="contract">IContract</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntryList.ClearSelected(Microsoft.PSharp.TestingServices.SchedulingStrategies.IContract)">
+            <summary>
+            Deselect the selected thread.
+            </summary>
+            <param name="contract">IContract</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntryList.AddFirstEnabledNotSleptToBacktrack(System.Int32,Microsoft.PSharp.TestingServices.SchedulingStrategies.IContract)">
+            <summary>
+            Add the first enabled and not slept thread to the backtrack set.
+            </summary>
+            <param name="startingFrom">a thread id to start from</param>
+            <param name="contract">IContract</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntryList.AddToBacktrack(System.Int32,Microsoft.PSharp.TestingServices.SchedulingStrategies.IContract)">
+            <summary>
+            Add a thread to the backtrack set.
+            </summary>
+            <param name="tid">a thread id to add</param>
+            <param name="contract">IContract</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntryList.AddRandomEnabledNotSleptToBacktrack(Microsoft.PSharp.TestingServices.SchedulingStrategies.IRandomNumberGenerator)">
+            <summary>
+            Add a random enabled and not slept thread to the backtrack set.
+            </summary>
+            <param name="rand"></param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidEntryList.SetSelected(System.Int32,Microsoft.PSharp.TestingServices.SchedulingStrategies.IContract)">
+            <summary>
+            Sets the selected thread id.
+            There must not already be a selected thread id.
+            </summary>
+            <param name="tid">thread id to be set to selected</param>
+            <param name="contract">IContract</param>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidForRaceReplay">
+            <summary>
+            Stores a thread id for replaying a race.
+            Also stores the nondeterministic choices made by a thread.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidForRaceReplay.Id">
+            <summary>
+            The thread id for replay.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidForRaceReplay.NondetChoices">
+            <summary>
+            The list of nondet choices for replay.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.TidForRaceReplay.#ctor(System.Int32,System.Collections.Generic.List{Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.NonDetChoice})">
+            <summary>
+            Construct a thread id for replay.
+            </summary>
+            <param name="id"></param>
+            <param name="nondetChoices"></param>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPORStrategy">
+            <summary>
+            Dynamic partial-order reduction (DPOR) scheduling strategy.
+            In fact, this uses the Source DPOR algorithm.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPORStrategy.Stack">
+            <summary>
+            The stack datastructure used to perform the
+            depth-first search.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPORStrategy.Dpor">
+            <summary>
+            The actual DPOR algorithm implementation.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPORStrategy.UseSleepSets">
+            <summary>
+            Whether to use sleep sets.
+            See <see cref="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPOR.SleepSets"/>.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPORStrategy.Rand">
+            <summary>
+            If non-null, we perform random DPOR
+            using this RNG.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPORStrategy.Contract">
+            <summary>
+            A way for the ISchedulable to assert conditions.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPORStrategy.StepLimit">
+            <summary>
+            The step limit.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPORStrategy.RaceReversalIterationsLimit">
+            <summary>
+            When doing random DPOR, we do an initial execution 
+            and then try to reverse races.
+            This int specifies how many iterations of race reversing to perform
+            before performing a new initial iteration.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPORStrategy.NumRaceReversalIterationsCounter">
+            <summary>
+            Counter for <see cref="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPORStrategy.RaceReversalIterationsLimit"/>.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPORStrategy.NumIterations">
+            <summary>
+            Number of iterations.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPORStrategy.#ctor(Microsoft.PSharp.TestingServices.SchedulingStrategies.IContract,Microsoft.PSharp.TestingServices.SchedulingStrategies.IRandomNumberGenerator,System.Int32,System.Int32,System.Boolean,System.Boolean)">
+            <summary>
+            Creates the DPOR strategy.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPORStrategy.GetNextHelper(Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable@,System.Collections.Generic.List{Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable},Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable)">
+            <summary>
+            Returns or forces the next choice to schedule.
+            </summary>
+            <param name="next">Next</param>
+            <param name="choices">Choices</param>
+            <param name="current">Curent</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPORStrategy.GetNextBooleanChoiceHelper(System.Int32,System.Nullable{System.Boolean}@)">
+            <summary>
+            Returns or forces the next boolean choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPORStrategy.GetNextIntegerChoiceHelper(System.Int32,System.Nullable{System.Int32}@)">
+            <summary>
+            Returns or forces the next integer choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPORStrategy.AbdandonReplay(System.Boolean)">
+            <summary>
+            Abandon the replay of a schedule prefix and/or a race suffice.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPORStrategy.GetNext(Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable@,System.Collections.Generic.List{Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable},Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable)">
+            <summary>
+            Returns the next choice to schedule.
+            </summary>
+            <param name="next">Next</param>
+            <param name="choices">Choices</param>
+            <param name="current">Curent</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPORStrategy.GetNextBooleanChoice(System.Int32,System.Boolean@)">
+            <summary>
+            Returns the next boolean choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPORStrategy.GetNextIntegerChoice(System.Int32,System.Int32@)">
+            <summary>
+            Returns the next integer choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPORStrategy.ForceNext(Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable,System.Collections.Generic.List{Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable},Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable)">
+            <summary>
+            Forces the next choice to schedule.
+            </summary>
+            <param name="next">Next</param>
+            <param name="choices">Choices</param>
+            <param name="current">Curent</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPORStrategy.ForceNextBooleanChoice(System.Int32,System.Boolean)">
+            <summary>
+            Forces the next boolean choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPORStrategy.ForceNextIntegerChoice(System.Int32,System.Int32)">
+            <summary>
+            Forces the next integer choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPORStrategy.GetScheduledSteps">
+            <summary>
+            Returns the explored steps.
+            </summary>
+            <returns>Explored steps</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPORStrategy.HasReachedMaxSchedulingSteps">
+            <summary>
+            True if the scheduling strategy has reached the max
+            scheduling steps for the given scheduling iteration.
+            </summary>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPORStrategy.IsFair">
+            <summary>
+            Checks if this a fair scheduling strategy.
+            </summary>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPORStrategy.PrepareForNextIteration">
+            <summary>
+            Prepares the next scheduling iteration.
+            </summary>
+            <returns>False if all schedules have been explored</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPORStrategy.Reset">
+            <summary>
+            Resets the scheduling strategy.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.DPORStrategy.GetDescription">
+            <summary>
+            Returns a textual description of the scheduling strategy.
+            </summary>
+            <returns>String</returns>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.PCTStrategy">
+            <summary>
+            A priority-based probabilistic scheduling strategy.
+            
+            This strategy is described in the following paper:
+            https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/asplos277-pct.pdf
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.PCTStrategy.Logger">
+            <summary>
+            Logger used by the strategy.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.PCTStrategy.RandomNumberGenerator">
+            <summary>
+            Random number generator.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.PCTStrategy.MaxScheduledSteps">
+            <summary>
+            The maximum number of steps to schedule.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.PCTStrategy.ScheduledSteps">
+            <summary>
+            The number of scheduled steps.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.PCTStrategy.MaxPrioritySwitchPoints">
+            <summary>
+            Max number of priority switch points.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.PCTStrategy.ScheduleLength">
+            <summary>
+            Approximate length of the schedule across all iterations.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.PCTStrategy.PrioritizedSchedulableChoices">
+            <summary>
+            List of prioritized schedulable choices.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.PCTStrategy.PriorityChangePoints">
+            <summary>
+            Set of priority change points.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.PCTStrategy.#ctor(System.Int32,System.Int32,Microsoft.PSharp.TestingServices.SchedulingStrategies.ILogger)">
+            <summary>
+            Creates a PCT strategy that uses the default random
+            number generator (seed is based on current time).
+            </summary>
+            <param name="maxSteps">Max scheduling steps</param>
+            <param name="maxPrioritySwitchPoints">Max number of priority switch points</param>
+            <param name="logger">ILogger</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.PCTStrategy.#ctor(System.Int32,System.Int32,Microsoft.PSharp.TestingServices.SchedulingStrategies.ILogger,Microsoft.PSharp.TestingServices.SchedulingStrategies.IRandomNumberGenerator)">
+            <summary>
+            Creates a PCT strategy that uses the specified random number generator.
+            </summary>
+            <param name="maxSteps">Max scheduling steps</param>
+            <param name="maxPrioritySwitchPoints">Max number of priority switch points</param>
+            <param name="logger">ILogger</param>
+            <param name="random">IRandomNumberGenerator</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.PCTStrategy.GetNext(Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable@,System.Collections.Generic.List{Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable},Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable)">
+            <summary>
+            Returns the next choice to schedule.
+            </summary>
+            <param name="next">Next</param>
+            <param name="choices">Choices</param>
+            <param name="current">Curent</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.PCTStrategy.GetNextBooleanChoice(System.Int32,System.Boolean@)">
+            <summary>
+            Returns the next boolean choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.PCTStrategy.GetNextIntegerChoice(System.Int32,System.Int32@)">
+            <summary>
+            Returns the next integer choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.PCTStrategy.ForceNext(Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable,System.Collections.Generic.List{Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable},Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable)">
+            <summary>
+            Forces the next choice to schedule.
+            </summary>
+            <param name="next">Next</param>
+            <param name="choices">Choices</param>
+            <param name="current">Curent</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.PCTStrategy.GetNextHelper(Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable@,System.Collections.Generic.List{Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable},Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable)">
+            <summary>
+            Returns or forces the next choice to schedule.
+            </summary>
+            <param name="next">Next</param>
+            <param name="choices">Choices</param>
+            <param name="current">Curent</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.PCTStrategy.ForceNextBooleanChoice(System.Int32,System.Boolean)">
+            <summary>
+            Forces the next boolean choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.PCTStrategy.ForceNextIntegerChoice(System.Int32,System.Int32)">
+            <summary>
+            Forces the next integer choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.PCTStrategy.PrepareForNextIteration">
+            <summary>
+            Prepares for the next scheduling iteration. This is invoked
+            at the end of a scheduling iteration. It must return false
+            if the scheduling strategy should stop exploring.
+            </summary>
+            <returns>True to start the next iteration</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.PCTStrategy.Reset">
+            <summary>
+            Resets the scheduling strategy. This is typically invoked by
+            parent strategies to reset child strategies.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.PCTStrategy.GetScheduledSteps">
+            <summary>
+            Returns the scheduled steps.
+            </summary>
+            <returns>Scheduled steps</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.PCTStrategy.HasReachedMaxSchedulingSteps">
+            <summary>
+            True if the scheduling strategy has reached the max
+            scheduling steps for the given scheduling iteration.
+            </summary>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.PCTStrategy.IsFair">
+            <summary>
+            Checks if this is a fair scheduling strategy.
+            </summary>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.PCTStrategy.GetDescription">
+            <summary>
+            Returns a textual description of the scheduling strategy.
+            </summary>
+            <returns>String</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.PCTStrategy.GetPrioritizedChoice(System.Collections.Generic.List{Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable},Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable)">
+            <summary>
+            Returns the prioritized choice.
+            </summary>
+            <param name="choices">Choices</param>
+            <param name="current">Curent</param>
+            <returns>ISchedulable</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.PCTStrategy.GetHighestPriorityEnabledChoice(System.Collections.Generic.IEnumerable{Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable})">
+            <summary>
+            Returns the highest-priority enabled choice.
+            </summary>
+            <param name="choices">Choices</param>
+            <returns>ISchedulable</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.PCTStrategy.Shuffle(System.Collections.Generic.IList{System.Int32})">
+            <summary>
+            Shuffles the specified list using the Fisher-Yates algorithm.
+            </summary>
+            <param name="list">IList</param>
+            <returns>IList</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.PCTStrategy.MovePriorityChangePointForward">
+            <summary>
+            Moves the current priority change point forward. This is a useful
+            optimization when a priority change point is assigned in either a
+            sequential execution or a nondeterministic choice.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.ProbabilisticRandomStrategy">
+            <summary>
+            A randomized scheduling strategy with increased probability
+            to remain in the same scheduling choice.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.ProbabilisticRandomStrategy.NumberOfCoinFlips">
+            <summary>
+            Number of coin flips.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ProbabilisticRandomStrategy.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Creates a random strategy that uses the default random
+            number generator (seed is based on current time).
+            </summary>
+            <param name="maxSteps">Max scheduling steps</param>
+            <param name="numberOfCoinFlips">Number of coin flips</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ProbabilisticRandomStrategy.#ctor(System.Int32,System.Int32,Microsoft.PSharp.TestingServices.SchedulingStrategies.IRandomNumberGenerator)">
+            <summary>
+            Creates a random strategy that uses the specified random number generator.
+            </summary>
+            <param name="maxSteps">Max scheduling steps</param>
+            <param name="numberOfCoinFlips">Number of coin flips</param>
+            <param name="random">IRandomNumberGenerator</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ProbabilisticRandomStrategy.GetNext(Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable@,System.Collections.Generic.List{Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable},Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable)">
+            <summary>
+            Returns the next choice to schedule.
+            </summary>
+            <param name="next">Next</param>
+            <param name="choices">Choices</param>
+            <param name="current">Curent</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ProbabilisticRandomStrategy.GetDescription">
+            <summary>
+            Returns a textual description of the scheduling strategy.
+            </summary>
+            <returns>String</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ProbabilisticRandomStrategy.ShouldCurrentMachineChange">
+            <summary>
+            Flip the coin a specified number of times.
+            </summary>
+            <returns>Boolean</returns>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.RandomStrategy">
+            <summary>
+            A simple (but effective) randomized scheduling strategy.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.RandomStrategy.RandomNumberGenerator">
+            <summary>
+            Random number generator.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.RandomStrategy.MaxScheduledSteps">
+            <summary>
+            The maximum number of steps to schedule.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.RandomStrategy.ScheduledSteps">
+            <summary>
+            The number of scheduled steps.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.RandomStrategy.#ctor(System.Int32)">
+            <summary>
+            Creates a random strategy that uses the default random
+            number generator (seed is based on current time).
+            </summary>
+            <param name="maxSteps">Max scheduling steps</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.RandomStrategy.#ctor(System.Int32,Microsoft.PSharp.TestingServices.SchedulingStrategies.IRandomNumberGenerator)">
+            <summary>
+            Creates a random strategy that uses the specified random number generator.
+            </summary>
+            <param name="maxSteps">Max scheduling steps</param>
+            <param name="random">IRandomNumberGenerator</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.RandomStrategy.GetNext(Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable@,System.Collections.Generic.List{Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable},Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable)">
+            <summary>
+            Returns the next choice to schedule.
+            </summary>
+            <param name="next">Next</param>
+            <param name="choices">Choices</param>
+            <param name="current">Curent</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.RandomStrategy.GetNextBooleanChoice(System.Int32,System.Boolean@)">
+            <summary>
+            Returns the next boolean choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.RandomStrategy.GetNextIntegerChoice(System.Int32,System.Int32@)">
+            <summary>
+            Returns the next integer choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.RandomStrategy.ForceNext(Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable,System.Collections.Generic.List{Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable},Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable)">
+            <summary>
+            Forces the next choice to schedule.
+            </summary>
+            <param name="next">Next</param>
+            <param name="choices">Choices</param>
+            <param name="current">Curent</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.RandomStrategy.ForceNextBooleanChoice(System.Int32,System.Boolean)">
+            <summary>
+            Forces the next boolean choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.RandomStrategy.ForceNextIntegerChoice(System.Int32,System.Int32)">
+            <summary>
+            Forces the next integer choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.RandomStrategy.PrepareForNextIteration">
+            <summary>
+            Prepares for the next scheduling iteration. This is invoked
+            at the end of a scheduling iteration. It must return false
+            if the scheduling strategy should stop exploring.
+            </summary>
+            <returns>True to start the next iteration</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.RandomStrategy.Reset">
+            <summary>
+            Resets the scheduling strategy. This is typically invoked by
+            parent strategies to reset child strategies.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.RandomStrategy.GetScheduledSteps">
+            <summary>
+            Returns the scheduled steps.
+            </summary>
+            <returns>Scheduled steps</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.RandomStrategy.HasReachedMaxSchedulingSteps">
+            <summary>
+            True if the scheduling strategy has reached the depth
+            bound for the given scheduling iteration.
+            </summary>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.RandomStrategy.IsFair">
+            <summary>
+            Checks if this is a fair scheduling strategy.
+            </summary>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.RandomStrategy.GetDescription">
+            <summary>
+            Returns a textual description of the scheduling strategy.
+            </summary>
+            <returns>String</returns>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.BasicReductionStrategy">
+            <summary>
+            This strategy uses basic partial-order reduction to reduce
+            the choice-space for a provided child strategy.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.BasicReductionStrategy.ReductionStrategy">
+            <summary>
+            Type of reduction strategy.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.BasicReductionStrategy.ReductionStrategy.None">
+            <summary>
+            No reduction.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.BasicReductionStrategy.ReductionStrategy.OmitSchedulingPoints">
+            <summary>
+            Reduction strategy that omits scheduling points.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.BasicReductionStrategy.ReductionStrategy.ForceSchedule">
+            <summary>
+            Reduction strategy that forces scheduling points.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.BasicReductionStrategy.ChildStrategy">
+            <summary>
+            The child strategy.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.BasicReductionStrategy.Reduction">
+            <summary>
+            The reduction strategy.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.BasicReductionStrategy.#ctor(Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulingStrategy,Microsoft.PSharp.TestingServices.SchedulingStrategies.BasicReductionStrategy.ReductionStrategy,System.Int32)">
+            <summary>
+            Creates a reduction strategy that reduces the choice-space for a child strategy.
+            </summary>
+            <param name="childStrategy">Child strategy.</param>
+            <param name="reductionStrategy">The reduction strategy used.</param>
+            <param name="stepLimit">The step limit.</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.BasicReductionStrategy.GetNext(Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable@,System.Collections.Generic.List{Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable},Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable)">
+            <summary>
+            Returns the next choice to schedule.
+            </summary>
+            <param name="next">Next</param>
+            <param name="choices">Choices</param>
+            <param name="current">Curent</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.BasicReductionStrategy.GetNextBooleanChoice(System.Int32,System.Boolean@)">
+            <summary>
+            Returns the next boolean choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.BasicReductionStrategy.GetNextIntegerChoice(System.Int32,System.Int32@)">
+            <summary>
+            Returns the next integer choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.BasicReductionStrategy.ForceNext(Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable,System.Collections.Generic.List{Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable},Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable)">
+            <summary>
+            Forces the next choice to schedule.
+            </summary>
+            <param name="next">Next</param>
+            <param name="choices">Choices</param>
+            <param name="current">Curent</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.BasicReductionStrategy.ForceNextBooleanChoice(System.Int32,System.Boolean)">
+            <summary>
+            Forces the next boolean choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.BasicReductionStrategy.ForceNextIntegerChoice(System.Int32,System.Int32)">
+            <summary>
+            Forces the next integer choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.BasicReductionStrategy.PrepareForNextIteration">
+            <summary>
+            Prepares for the next scheduling iteration. This is invoked
+            at the end of a scheduling iteration. It must return false
+            if the scheduling strategy should stop exploring.
+            </summary>
+            <returns>True to start the next iteration</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.BasicReductionStrategy.Reset">
+            <summary>
+            Resets the scheduling strategy. This is typically invoked by
+            parent strategies to reset child strategies.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.BasicReductionStrategy.GetScheduledSteps">
+            <summary>
+            Returns the scheduled steps.
+            </summary>
+            <returns>Scheduled steps</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.BasicReductionStrategy.HasReachedMaxSchedulingSteps">
+            <summary>
+            True if the scheduling strategy has reached the max
+            scheduling steps for the given scheduling iteration.
+            </summary>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.BasicReductionStrategy.IsFair">
+            <summary>
+            Checks if this is a fair scheduling strategy.
+            </summary>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.BasicReductionStrategy.GetDescription">
+            <summary>
+            Returns a textual description of the scheduling strategy.
+            </summary>
+            <returns>String</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.BasicReductionStrategy.GetNextHelper(Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable@,System.Collections.Generic.List{Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable},Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable)">
+            <summary>
+            Returns or forces the next choice to schedule.
+            </summary>
+            <param name="next">Next</param>
+            <param name="choices">Choices</param>
+            <param name="current">Curent</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.ComboStrategy">
+            <summary>
+            This strategy combines two given strategies, using them to schedule
+            the prefix and suffix of an execution.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.ComboStrategy.PrefixStrategy">
+            <summary>
+            The prefix strategy.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.ComboStrategy.SuffixStrategy">
+            <summary>
+            The suffix strategy.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ComboStrategy.#ctor(Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulingStrategy,Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulingStrategy)">
+            <summary>
+            Creates a combo strategy that uses the two specified strategies.
+            </summary>
+            <param name="prefixStrategy">Prefix strategy </param>
+            <param name="suffixStrategy">Suffix strategy</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ComboStrategy.GetNext(Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable@,System.Collections.Generic.List{Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable},Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable)">
+            <summary>
+            Returns the next choice to schedule.
+            </summary>
+            <param name="next">Next</param>
+            <param name="choices">Choices</param>
+            <param name="current">Curent</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ComboStrategy.GetNextBooleanChoice(System.Int32,System.Boolean@)">
+            <summary>
+            Returns the next boolean choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ComboStrategy.GetNextIntegerChoice(System.Int32,System.Int32@)">
+            <summary>
+            Returns the next integer choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ComboStrategy.ForceNext(Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable,System.Collections.Generic.List{Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable},Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable)">
+            <summary>
+            Forces the next choice to schedule.
+            </summary>
+            <param name="next">Next</param>
+            <param name="choices">Choices</param>
+            <param name="current">Curent</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ComboStrategy.ForceNextBooleanChoice(System.Int32,System.Boolean)">
+            <summary>
+            Forces the next boolean choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ComboStrategy.ForceNextIntegerChoice(System.Int32,System.Int32)">
+            <summary>
+            Forces the next integer choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ComboStrategy.PrepareForNextIteration">
+            <summary>
+            Prepares for the next scheduling iteration. This is invoked
+            at the end of a scheduling iteration. It must return false
+            if the scheduling strategy should stop exploring.
+            </summary>
+            <returns>True to start the next iteration</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ComboStrategy.Reset">
+            <summary>
+            Resets the scheduling strategy. This is typically invoked by
+            parent strategies to reset child strategies.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ComboStrategy.GetScheduledSteps">
+            <summary>
+            Returns the scheduled steps.
+            </summary>
+            <returns>Scheduled steps</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ComboStrategy.HasReachedMaxSchedulingSteps">
+            <summary>
+            True if the scheduling strategy has reached the max
+            scheduling steps for the given scheduling iteration.
+            </summary>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ComboStrategy.IsFair">
+            <summary>
+            Checks if this is a fair scheduling strategy.
+            </summary>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ComboStrategy.GetDescription">
+            <summary>
+            Returns a textual description of the scheduling strategy.
+            </summary>
+            <returns>String</returns>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.ContractAsserter">
+            <summary>
+            Allows the caller to assert a condition that should be true.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ContractAsserter.Assert(System.Boolean,System.String)">
+            <summary>
+            Assert a condition that should be true.
+            </summary>
+            <param name="condition">The condition.</param>
+            <param name="msg">An error message if the condition is false.</param>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.IContract">
+            <summary>
+            Interface for a contract that can be used to assert that
+            a condition in a scheduling strategy should be true.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.IContract.Assert(System.Boolean,System.String)">
+            <summary>
+            Assert a condition that should be true.
+            </summary>
+            <param name="condition">The condition.</param>
+            <param name="msg">An error message if the condition is false.</param>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.ILogger">
+            <summary>
+            Interface for a logger that can be used by a scheduling strategy.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ILogger.Write(System.String)">
+            <summary>
+            Writes the specified string value.
+            </summary>
+            <param name="value">Text</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ILogger.Write(System.String,System.Object[])">
+            <summary>
+            Writes the text representation of the specified array of objects.
+            </summary>
+            <param name="format">Text</param>
+            <param name="args">Arguments</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ILogger.WriteLine(System.String)">
+            <summary>
+            Writes the specified string value, followed by the
+            current line terminator.
+            </summary>
+            <param name="value">Text</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.SchedulingStrategies.ILogger.WriteLine(System.String,System.Object[])">
+            <summary>
+            Writes the text representation of the specified array of objects,
+            followed by the current line terminator.
+            </summary>
+            <param name="format">Text</param>
+            <param name="args">Arguments</param>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,3465 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.PSharp.TestingServices</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.PSharp.TestingServices.AbstractTestingEngine">
+            <summary>
+            The P# abstract testing engine.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.AbstractTestingEngine.Configuration">
+            <summary>
+            Configuration.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.AbstractTestingEngine.Assembly">
+            <summary>
+            The P# assembly to analyze.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.AbstractTestingEngine.TestMethod">
+            <summary>
+            A P# test method.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.AbstractTestingEngine.TestInitMethod">
+            <summary>
+            The P# test initialization method.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.AbstractTestingEngine.TestDisposeMethod">
+            <summary>
+            The P# test dispose method.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.AbstractTestingEngine.TestIterationDisposeMethod">
+            <summary>
+            The P# test dispose method per iteration.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.AbstractTestingEngine.TestAction">
+            <summary>
+            A P# test action.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.AbstractTestingEngine.PerIterationCallbacks">
+            <summary>
+            Set of callbacks to invoke at the end
+            of each iteration.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.AbstractTestingEngine.Logger">
+            <summary>
+            The installed logger.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.AbstractTestingEngine.Strategy">
+            <summary>
+            The bug-finding scheduling strategy.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.AbstractTestingEngine.RandomNumberGenerator">
+            <summary>
+            Random number generator used by the scheduling strategies.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.AbstractTestingEngine.SchedulingStrategyLogger">
+            <summary>
+            The logger used by the scheduling strategies.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.AbstractTestingEngine.ErrorReporter">
+            <summary>
+            The error reporter.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.AbstractTestingEngine.Profiler">
+            <summary>
+            The profiler.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.AbstractTestingEngine.CancellationTokenSource">
+            <summary>
+            The testing task cancellation token source.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.AbstractTestingEngine.PrintGuard">
+            <summary>
+            A guard for printing info.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.AbstractTestingEngine.TestReport">
+            <summary>
+            Data structure containing information
+            gathered during testing.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.AbstractTestingEngine.Reporter">
+            <summary>
+            Interface for registering runtime operations.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.AbstractTestingEngine.Run">
+            <summary>
+            Runs the P# testing engine.
+            </summary>
+            <returns>ITestingEngine</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.AbstractTestingEngine.Stop">
+            <summary>
+            Stops the P# testing engine.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.AbstractTestingEngine.TryEmitTraces(System.String,System.String)">
+            <summary>
+            Tries to emit the testing traces, if any.
+            </summary>
+            <param name="directory">Directory name</param>
+            <param name="file">File name</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.AbstractTestingEngine.RegisterPerIterationCallBack(System.Action{System.Int32})">
+            <summary>
+            Registers a callback to invoke at the end
+            of each iteration. The callback takes as
+            a parameter an integer representing the
+            current iteration.
+            </summary>
+            <param name="callback">Callback</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.AbstractTestingEngine.Report">
+            <summary>
+            Returns a report with the testing results.
+            </summary>
+            <returns>Report</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.AbstractTestingEngine.#ctor(Microsoft.PSharp.Configuration)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="configuration">Configuration</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.AbstractTestingEngine.#ctor(Microsoft.PSharp.Configuration,System.Reflection.Assembly)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="configuration">Configuration</param>
+            <param name="assembly">Assembly</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.AbstractTestingEngine.#ctor(Microsoft.PSharp.Configuration,System.Action{Microsoft.PSharp.PSharpRuntime})">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="configuration">Configuration</param>
+            <param name="action">Action</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.AbstractTestingEngine.Initialize">
+            <summary>
+            Initialized the testing engine.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.AbstractTestingEngine.Execute(System.Threading.Tasks.Task)">
+            <summary>
+            Executes the specified testing task.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.AbstractTestingEngine.FindEntryPoint">
+            <summary>
+            Finds the entry point to the P# program.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.AbstractTestingEngine.FindTestMethod(System.Type)">
+            <summary>
+            Finds the test method with the specified attribute.
+            Returns null if no such method is found.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.AbstractTestingEngine.FindTestMethodsWithAttribute(System.Type)">
+            <summary>
+            Finds the test methods with the specified attribute.
+            Returns an empty list if no such methods are found.
+            </summary>
+            <param name="attribute">Type</param>
+            <returns>MethodInfos</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.AbstractTestingEngine.GetScheduleForReplay(System.Boolean@)">
+            <summary>
+            Returns the schedule to replay.
+            </summary>
+            <param name="isFair">Is strategy used during replay fair.</param>
+            <returns>Schedule</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.AbstractTestingEngine.GetOutputDirectory">
+            <summary>
+            Returns (and creates if it does not exist) the output directory.
+            </summary>
+            <returns>Path</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.AbstractTestingEngine.CreateRuntimeTracesDirectory">
+            <summary>
+            Creates the runtime traces directory.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.AbstractTestingEngine.GetRuntimeTracesDirectory">
+            <summary>
+            Returns the runtime traces directory.
+            </summary>
+            <returns>Path</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.AbstractTestingEngine.CleanTemporaryFiles">
+            <summary>
+            Cleans the temporary files.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.AbstractTestingEngine.SetLogger(Microsoft.PSharp.IO.ILogger)">
+            <summary>
+            Installs the specified <see cref="T:Microsoft.PSharp.IO.ILogger"/>.
+            </summary>
+            <param name="logger">ILogger</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.AbstractTestingEngine.SetRandomNumberGenerator">
+            <summary>
+            Sets the random number generator to be used by the scheduling strategy.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.BugFindingEngine">
+            <summary>
+            The P# bug-finding engine.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.BugFindingEngine.ReadableTrace">
+            <summary>
+            The readable trace, if any.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.BugFindingEngine.BugTrace">
+            <summary>
+            The bug trace, if any.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.BugFindingEngine.ReproducableTrace">
+            <summary>
+            The reproducable trace, if any.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingEngine.Create(Microsoft.PSharp.Configuration,System.Action{Microsoft.PSharp.PSharpRuntime})">
+            <summary>
+            Creates a new P# bug-finding engine.
+            </summary>
+            <param name="configuration">Configuration</param>
+            <param name="action">Action</param>
+            <returns>BugFindingEngine</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingEngine.Create(Microsoft.PSharp.Configuration)">
+            <summary>
+            Creates a new P# bug-finding engine.
+            </summary>
+            <param name="configuration">Configuration</param>
+            <returns>BugFindingEngine</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingEngine.Create(Microsoft.PSharp.Configuration,System.Reflection.Assembly)">
+            <summary>
+            Creates a new P# bug-finding engine.
+            </summary>
+            <param name="configuration">Configuration</param>
+            <param name="assembly">Assembly</param>
+            <returns>BugFindingEngine</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingEngine.Run">
+            <summary>
+            Runs the P# testing engine.
+            </summary>
+            <returns>ITestingEngine</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingEngine.TryEmitTraces(System.String,System.String)">
+            <summary>
+            Tries to emit the testing traces, if any.
+            </summary>
+            <param name="directory">Directory name</param>
+            <param name="file">File name</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingEngine.Report">
+            <summary>
+            Returns a report with the testing results.
+            </summary>
+            <returns>Report</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingEngine.#ctor(Microsoft.PSharp.Configuration)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="configuration">Configuration</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingEngine.#ctor(Microsoft.PSharp.Configuration,System.Reflection.Assembly)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="configuration">Configuration</param>
+            <param name="assembly">Assembly</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingEngine.#ctor(Microsoft.PSharp.Configuration,System.Action{Microsoft.PSharp.PSharpRuntime})">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="configuration">Configuration</param>
+            <param name="action">Action</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingEngine.Initialize">
+            <summary>
+            Initializes the bug-finding engine.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingEngine.CreateBugFindingTask">
+            <summary>
+            Creates a new bug-finding task.
+            </summary>
+            <returns>Task</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingEngine.RunNextIteration(System.Int32)">
+            <summary>
+            Runs the next testing iteration.
+            </summary>
+            <param name="iteration">Iteration</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingEngine.GatherIterationStatistics(Microsoft.PSharp.TestingServices.BugFindingRuntime)">
+            <summary>
+            Gathers the exploration strategy statistics for
+            the latest testing iteration.
+            </summary>
+            <param name="runtime">BugFindingRuntime</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingEngine.ConstructReproducableTrace(Microsoft.PSharp.TestingServices.BugFindingRuntime)">
+            <summary>
+            Constructs a reproducable trace.
+            </summary>
+            <param name="runtime">BugFindingRuntime</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingEngine.ShouldPrintIteration(System.Int32)">
+            <summary>
+            Returns true if the engine should print the current iteration.
+            </summary>
+            <param name="iteration">Iteration</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.ITestingEngine">
+            <summary>
+            Interface of a P# testing engine.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.ITestingEngine.TestReport">
+            <summary>
+            Data structure containing information
+            gathered during testing.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.ITestingEngine.Reporter">
+            <summary>
+            Interface for registering runtime operations.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.ITestingEngine.Run">
+            <summary>
+            Runs the P# testing engine.
+            </summary>
+            <returns>ITestingEngine</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.ITestingEngine.Stop">
+            <summary>
+            Stops the P# testing engine.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.ITestingEngine.TryEmitTraces(System.String,System.String)">
+            <summary>
+            Tries to emit the testing traces, if any.
+            </summary>
+            <param name="directory">Directory name</param>
+            <param name="file">File name</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.ITestingEngine.RegisterPerIterationCallBack(System.Action{System.Int32})">
+            <summary>
+            Registers a callback to invoke at the end
+            of each iteration. The callback takes as
+            a parameter an integer representing the
+            current iteration.
+            </summary>
+            <param name="callback">Callback</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.ITestingEngine.Report">
+            <summary>
+            Returns a report with the testing results.
+            </summary>
+            <returns>Report</returns>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.ReplayEngine">
+            <summary>
+            The P# replay engine.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.ReplayEngine.InternalError">
+            <summary>
+            Text describing an internal replay error.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.ReplayEngine.Create(Microsoft.PSharp.Configuration)">
+            <summary>
+            Creates a new P# replaying engine.
+            </summary>
+            <param name="configuration">Configuration</param>
+            <returns>ReplayEngine</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.ReplayEngine.Create(Microsoft.PSharp.Configuration,System.Reflection.Assembly)">
+            <summary>
+            Creates a new P# replaying engine.
+            </summary>
+            <param name="configuration">Configuration</param>
+            <param name="assembly">Assembly</param>
+            <returns>ReplayEngine</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.ReplayEngine.Create(Microsoft.PSharp.Configuration,System.Action{Microsoft.PSharp.PSharpRuntime})">
+            <summary>
+            Creates a new P# replaying engine.
+            </summary>
+            <param name="configuration">Configuration</param>
+            <param name="action">Action</param>
+            <returns>ReplayEngine</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.ReplayEngine.Create(Microsoft.PSharp.Configuration,System.Action{Microsoft.PSharp.PSharpRuntime},System.String)">
+            <summary>
+            Creates a new P# replaying engine.
+            </summary>
+            <param name="configuration">Configuration</param>
+            <param name="action">Action</param>
+            <param name="trace">Reproducable trace</param>
+            <returns>ReplayEngine</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.ReplayEngine.Run">
+            <summary>
+            Runs the P# testing engine.
+            </summary>
+            <returns>ITestingEngine</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.ReplayEngine.Report">
+            <summary>
+            Returns a report with the testing results.
+            </summary>
+            <returns>Report</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.ReplayEngine.#ctor(Microsoft.PSharp.Configuration)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="configuration">Configuration</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.ReplayEngine.#ctor(Microsoft.PSharp.Configuration,System.Reflection.Assembly)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="configuration">Configuration</param>
+            <param name="assembly">Assembly</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.ReplayEngine.#ctor(Microsoft.PSharp.Configuration,System.Action{Microsoft.PSharp.PSharpRuntime})">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="configuration">Configuration</param>
+            <param name="action">Action</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.ReplayEngine.CreateBugReproducingTask">
+            <summary>
+            Creates a bug-reproducing task.
+            </summary>
+            <returns>Task</returns>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.TestingEngineFactory">
+            <summary>
+            The P# testing engine factory.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.TestingEngineFactory.CreateBugFindingEngine(Microsoft.PSharp.Configuration)">
+            <summary>
+            Creates a new P# bug-finding engine.
+            </summary>
+            <param name="configuration">Configuration</param>
+            <returns>BugFindingEngine</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.TestingEngineFactory.CreateBugFindingEngine(Microsoft.PSharp.Configuration,System.Reflection.Assembly)">
+            <summary>
+            Creates a new P# bug-finding engine.
+            </summary>
+            <param name="configuration">Configuration</param>
+            <param name="assembly">Assembly</param>
+            <returns>BugFindingEngine</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.TestingEngineFactory.CreateBugFindingEngine(Microsoft.PSharp.Configuration,System.Action{Microsoft.PSharp.PSharpRuntime})">
+            <summary>
+            Creates a new P# bug-finding engine.
+            </summary>
+            <param name="configuration">Configuration</param>
+            <param name="action">Action</param>
+            <returns>BugFindingEngine</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.TestingEngineFactory.CreateReplayEngine(Microsoft.PSharp.Configuration)">
+            <summary>
+            Creates a new P# replay engine.
+            </summary>
+            <param name="configuration">Configuration</param>
+            <returns>BugFindingEngine</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.TestingEngineFactory.CreateReplayEngine(Microsoft.PSharp.Configuration,System.Reflection.Assembly)">
+            <summary>
+            Creates a new P# replay engine.
+            </summary>
+            <param name="configuration">Configuration</param>
+            <param name="assembly">Assembly</param>
+            <returns>BugFindingEngine</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.TestingEngineFactory.CreateReplayEngine(Microsoft.PSharp.Configuration,System.Action{Microsoft.PSharp.PSharpRuntime})">
+            <summary>
+            Creates a new P# replay engine.
+            </summary>
+            <param name="configuration">Configuration</param>
+            <param name="action">Action</param>
+            <returns>BugFindingEngine</returns>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.RaceDetection.RaceDetectionEngine.MS">
+            <summary>
+            The machine shadow state. M[mId] will get us the instrumentation
+            state for a machine with id mId.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.RaceDetection.RaceDetectionEngine.VS">
+            <summary>
+            The variable shadow state. V[(objHandle, offset)] will get us the instrumentation
+            state for a read/write to objHandle at offset.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.RaceDetection.RaceDetectionEngine.ES">
+            <summary>
+            An auxiliary data structure to help enforce the "deq-happens-after-enq" rule
+            At a deq, look up the vector clock snapshot captured at the corresponding enqueue
+            as ES[seq#], where the enqueue has global sequence number seq#
+            We use the seq# to disambiguate multiple posts with the same source, target and event object
+            since in P#, the reuse of events is permitted.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.RaceDetection.RaceDetectionEngine.DescriptiveName">
+            <summary>
+            Track the names of machines. Used when we report races
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.RaceDetection.RaceDetectionEngine.Log">
+            <summary>
+            A logger and configuration from the runtime to report races
+            found (and possibly debug logs).
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.RaceDetection.RaceDetectionEngine.Config">
+            <summary>
+            Configuration.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.RaceDetection.RaceDetectionEngine.Runtime">
+            <summary>
+            We need a reference to the runtime to query it for the currently
+            executing machine's Id at read/write operations
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.RaceDetection.RaceDetectionEngine.EnqueueCount">
+            <summary>
+            Counter to track the number of enqueue operations.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.RaceDetection.RaceDetectionEngine.DequeueCount">
+            <summary>
+            Counter to track the number of dequeue operations.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.RaceDetection.RaceDetectionEngine.ReadCount">
+            <summary>
+            Counter to track the number of read operations.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.RaceDetection.RaceDetectionEngine.WriteCount">
+            <summary>
+            Counter to track the number of write operations.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.RaceDetection.RaceDetectionEngine.CreateCount">
+            <summary>
+            Counter to track the number of create machine operations.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.RaceDetection.RaceDetectionEngine.#ctor(Microsoft.PSharp.Configuration,Microsoft.PSharp.IO.ILogger,Microsoft.PSharp.TestingServices.TestReport)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.RaceDetection.Util.Epoch">
+            <summary>
+            The epochs used by the FastTrack algorithm.
+            Adapted from https://github.com/stephenfreund/RoadRunner/blob/master/src/tools/util/Epoch.java
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.RaceDetection.Util.Epoch.Zero">
+            <summary>
+            The zero epoch.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.RaceDetection.Util.Epoch.ReadShared">
+            <summary>
+            Denotes if the epoch represents a read shared variable,
+            in which case we switch to full-width vector clocks.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.RaceDetection.Util.Epoch.MId(System.Int64)">
+            <summary>
+            Returns the MId for an epoch.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.RaceDetection.Util.Epoch.Clock(System.Int64)">
+            <summary>
+            Returns the Clock for an epoch.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.RaceDetection.Util.Epoch.MakeEpoch(System.Int64,System.Int64)">
+            <summary>
+            Obtains an epoch c@t from machine identifier t and clock c.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.RaceDetection.Util.Epoch.MakeEpoch(Microsoft.PSharp.MachineId,System.Int64)">
+            <summary>
+            Obtains an epoch c@t from machineId t = mId.Value and clock c.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.RaceDetection.Util.Epoch.Tick(System.Int64)">
+            <summary>
+            Increments the clock for this epoch by 1.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.RaceDetection.Util.Epoch.Tick(System.Int64,System.Int64)">
+            <summary>
+            Increments the clock for this epoch by amount.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.RaceDetection.Util.Epoch.Leq(System.Int64,System.Int64)">
+            <summary>
+            Checks if this epoch occurs earlier than the other.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.RaceDetection.Util.Epoch.Max(System.Int64,System.Int64)">
+            <summary>
+            Returns the epoch that is the join of the two passed in.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.RaceDetection.Util.Epoch.ToString(System.Int64)">
+            <summary>
+            Following the FastTrack convention, represent an epoch as
+            m:c where m is the machine Id and c is its clock.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.RaceDetection.Util.VectorClock">
+            <summary>
+            The class representing vector clocks.
+            Adapted from the roadrunner tool:
+            "The ROADRUNNER Dynamic Analysis Framework for Concurrent Programs" by Flanagan and Freund in PASTE '10.
+            (See: https://github.com/stephenfreund/RoadRunner/blob/master/src/tools/util/VectorClock.java)
+            Maps each machine(Id) to its clock. The clock is represented as an Epoch c@t.
+            Here, c is the clock value and t the identifier for the machine
+            We re-encode the mId into the value so that comparisons between epochs and VCs
+            are direct. Currently used by the BugFindingRuntime which does not
+            run machines concurrently. Future (multi-threaded) clients will need to call the APIs with
+            exclusive access to certain parameters/this (as indicated in the comments)
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.RaceDetection.Util.VectorClock.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.RaceDetection.Util.VectorClock.#ctor(Microsoft.PSharp.TestingServices.RaceDetection.Util.VectorClock)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.RaceDetection.Util.VectorClock.#ctor(System.Int64)">
+            <summary>
+            size >= 0
+            Requires exclusive access to this.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.RaceDetection.Util.VectorClock.MakeVC(System.Int64)">
+            <summary>
+            size >= 0.
+            Requires exclusive access to this.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.RaceDetection.Util.VectorClock.Copy(Microsoft.PSharp.TestingServices.RaceDetection.Util.VectorClock)">
+            <summary>
+             Copies the other vector clock into this.
+             Requires: exclusive access to this and other.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.RaceDetection.Util.VectorClock.Max(Microsoft.PSharp.TestingServices.RaceDetection.Util.VectorClock)">
+            <summary>
+             this = this ⨆ other.
+             Requires: exclusive access to this and other.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.RaceDetection.Util.VectorClock.Leq(Microsoft.PSharp.TestingServices.RaceDetection.Util.VectorClock)">
+            <summary>
+             Returns true if this ≤ other. Requires: exclusive access to this and other.
+             </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.RaceDetection.Util.VectorClock.AnyGt(Microsoft.PSharp.TestingServices.RaceDetection.Util.VectorClock)">
+            <summary>
+             Returns true if any clock in this.Values is greater than in other.Values.
+             Requires: exclusive access to this and other.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.RaceDetection.Util.VectorClock.NextGT(Microsoft.PSharp.TestingServices.RaceDetection.Util.VectorClock,System.Int32)">
+            <summary>
+             Returns the first index i >= start such that this.Values[i] > other.Values[i],
+             -1 is no such index exists.
+             Requires: exclusive access to this and other.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.RaceDetection.Util.VectorClock.Tick(System.Int64)">
+            <summary>
+             Increments the clock component for mId.
+             Requires: exclusive access to this.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.RaceDetection.Util.VectorClock.SetComponent(System.Int64,System.Int64)">
+            <summary>
+             Sets the clock component for mId to v.
+             Here, v is an epoch, not a simple long.
+             Requires: exclusive access to this.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.RaceDetection.Util.VectorClock.SetComponent(System.UInt64,System.Int64)">
+            <summary>
+             Sets the clock component for mId to v. 
+             Here, v is an epoch, not a simple long.
+             Requires: exclusive access to this.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.RaceDetection.Util.VectorClock.ToString">
+            <summary>
+             Requires: exclusive access to this.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.RaceDetection.Util.VectorClock.GetComponent(System.Int64)">
+            <summary>
+             Gets the clock component for mId, as an epoch. Requires: exclusive access to this.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.RaceDetection.Util.VectorClock.Size">
+            <summary>
+             Gets the size of our VC. Requires: exclusive access to this.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.RaceDetection.Util.VectorClock.ClearFrom(System.Int64[],System.Int32)">
+            <summary>
+            Clears the clock values from pos to end.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.RaceDetection.Util.VectorClock.EnsureCapacity(System.Int64)">
+            <summary>
+            Grows our clock to be as long as len
+            sets the added entries to 0@0.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.IRegisterRuntimeOperation">
+            <summary>
+            Interface to register interesting runtime operations.
+            For race detection, the interesting operations are:
+            1. Reads and writes to the (shared) heap
+            2. Enqueues (posts) and dequeues (action begins)
+            3. Creation of a new machine
+            In addition, this interface also allows clients to query
+            the runtime for the currently running machine, and whether
+            the runtime is in an action.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.IRegisterRuntimeOperation.InAction">
+            <summary>
+            InAction[machineId.Value] = true iff the runtime executing an action
+            in machine with Id machineId
+            Reads and writes are instrumented only provided we're in an action.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.IRegisterRuntimeOperation.InMonitor">
+            <summary>
+            InMonitor = -1 iff the runtime is not inside a monitor
+            and the monitor id otherwise
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.IRegisterRuntimeOperation.RegisterRead(System.UInt64,System.String,System.UIntPtr,System.UIntPtr,System.UIntPtr,System.Boolean)">
+            <summary>
+            Process a read to a heap location.
+            <param name="source">The machine performing the read</param>
+            <param name="sourceInformation"> Line number of this read</param>
+            <param name="location">The base address for the heap location read</param>
+            <param name="objHandle">The object handle</param>
+            <param name="offset">The offset</param>
+            <param name="isVolatile">Was the location declared volatile?</param>
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.IRegisterRuntimeOperation.RegisterWrite(System.UInt64,System.String,System.UIntPtr,System.UIntPtr,System.UIntPtr,System.Boolean)">
+            <summary>
+            Process a write to a heap location.
+            <param name="source">The machine performing the write</param>
+            <param name="sourceInformation"> Line number of this write</param>
+            <param name="location">The base address for the heap location written</param>
+            <param name="objHandle">The object handle</param>
+            <param name="offset">The offset</param>
+            <param name="isVolatile">Was the location declared volatile?</param>
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.IRegisterRuntimeOperation.RegisterEnqueue(Microsoft.PSharp.MachineId,Microsoft.PSharp.MachineId,Microsoft.PSharp.Event,System.UInt64)">
+            <summary>
+            Process the enqueue of an event by a machine.
+            <param name="source">The id of the machine that is the origin of the enqueue/post</param>
+            <param name="target">The id of the machine receiving the event</param>
+            <param name="e">The event sent</param>
+            <param name="sequenceNumber">Is n if this is the n'th enqueue</param>
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.IRegisterRuntimeOperation.RegisterDequeue(Microsoft.PSharp.MachineId,Microsoft.PSharp.MachineId,Microsoft.PSharp.Event,System.UInt64)">
+            <summary>
+            Process the deq and begin of an action by a machine.
+            <param name="source">The id of the machine that originally posted the event</param>
+            <param name="target">The id of the machine processing the event</param>
+            <param name="e">The event being processed</param>
+            <param name="sequenceNumber">Is n if this is the n'th enqueue</param>
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.IRegisterRuntimeOperation.RegisterCreateMachine(Microsoft.PSharp.MachineId,Microsoft.PSharp.MachineId)">
+            <summary>
+            Update the internal data structures and vector clocks.
+            when a machine creates another
+            <param name="source">The id of the machine that is the creator</param>
+            <param name="target">The id of the machine that is freshly created</param>
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.IRegisterRuntimeOperation.SetRuntime(Microsoft.PSharp.PSharpRuntime)">
+            <summary>
+            Set the runtime an implementer should forward TryGetCurrentMachineId calls to.
+            </summary>
+            <param name="runtime"></param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.IRegisterRuntimeOperation.TryGetCurrentMachineId(System.UInt64@)">
+            <summary>
+            Return true if the runtime is currently executing a machine's action.
+            If it is, write its Id to the out parameter as a ulong.
+            </summary>
+            <param name="machineId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.IRegisterRuntimeOperation.ClearAll">
+            <summary>
+            Clear the internal state the reporter maintains.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.BugFindingRuntime">
+            <summary>
+            Class implementing the P# bug-finding runtime.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.BugFindingRuntime.Scheduler">
+            <summary>
+            The bug-finding scheduler.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.BugFindingRuntime.TaskScheduler">
+            <summary>
+            The asynchronous task scheduler.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.BugFindingRuntime.ScheduleTrace">
+            <summary>
+            The P# program schedule trace.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.BugFindingRuntime.BugTrace">
+            <summary>
+            The bug trace.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.BugFindingRuntime.CoverageInfo">
+            <summary>
+            Data structure containing information
+            regarding testing coverage.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.BugFindingRuntime.Reporter">
+            <summary>
+            Interface for registering runtime operations.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.BugFindingRuntime.StateCache">
+            <summary>
+            The P# program state cache.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.BugFindingRuntime.Monitors">
+            <summary>
+            List of monitors in the program.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.BugFindingRuntime.TaskMap">
+            <summary>
+            Map from task ids to machines.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.BugFindingRuntime.AllCreatedMachineIds">
+            <summary>
+            Set of all machine Ids created by this runtime.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.BugFindingRuntime.RootTaskId">
+            <summary>
+            The root task id.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.BugFindingRuntime.startEventHandlerCalled">
+            <summary>
+            Records if a machine was triggered by an enqueue
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.#ctor(Microsoft.PSharp.Configuration,Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulingStrategy,Microsoft.PSharp.TestingServices.IRegisterRuntimeOperation)">
+            <summary>
+            Constructor.
+            <param name="configuration">Configuration</param>
+            <param name="strategy">SchedulingStrategy</param>
+            <param name="reporter">Reporter to register runtime operations.</param>
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.Initialize">
+            <summary>
+            Initializes various components of the runtime.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.CreateMachine(System.Type,Microsoft.PSharp.Event,System.Nullable{System.Guid})">
+            <summary>
+            Creates a new machine of the specified type and with
+            the specified optional event. This event can only be
+            used to access its payload, and cannot be handled.
+            </summary>
+            <param name="type">Type of the machine</param>
+            <param name="operationGroupId">Optional operation group id</param>
+            <param name="e">Event</param>
+            <returns>MachineId</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.CreateMachine(Microsoft.PSharp.MachineId,System.Type,Microsoft.PSharp.Event,System.Nullable{System.Guid})">
+            <summary>
+            Creates a new machine of the specified <see cref="T:System.Type"/>, using the specified
+            unbound machine id, and passes the specified optional <see cref="T:Microsoft.PSharp.Event"/>. This
+            event can only be used to access its payload, and cannot be handled.
+            </summary>
+            <param name="mid">Unbound machine id</param>
+            <param name="type">Type of the machine</param>
+            <param name="e">Event</param>
+            <param name="operationGroupId">Optional operation group id</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.CreateMachine(System.Type,System.String,Microsoft.PSharp.Event,System.Nullable{System.Guid})">
+            <summary>
+            Creates a new machine of the specified type and name, and
+            with the specified optional event. This event can only be
+            used to access its payload, and cannot be handled.
+            </summary>
+            <param name="type">Type of the machine</param>
+            <param name="friendlyName">Friendly machine name used for logging</param>
+            <param name="operationGroupId">Optional operation group id</param>
+            <param name="e">Event</param>
+            <returns>MachineId</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.CreateMachine(Microsoft.PSharp.MachineId,System.Type,System.String,Microsoft.PSharp.Event,System.Nullable{System.Guid})">
+            <summary>
+            Creates a new machine of the specified <see cref="T:System.Type"/> and name, using the specified
+            unbound machine id, and passes the specified optional <see cref="T:Microsoft.PSharp.Event"/>. This event
+            can only be used to access its payload, and cannot be handled.
+            </summary>
+            <param name="mid">Unbound machine id</param>
+            <param name="type">Type of the machine</param>
+            <param name="friendlyName">Friendly machine name used for logging</param>
+            <param name="operationGroupId">Optional operation group id</param>
+            <param name="e">Event</param>
+            <returns>MachineId</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.CreateMachineAndExecute(System.Type,Microsoft.PSharp.Event,System.Nullable{System.Guid})">
+            <summary>
+            Creates a new machine of the specified <see cref="T:System.Type"/> and name, and
+            with the specified optional <see cref="T:Microsoft.PSharp.Event"/>. This event can only be
+            used to access its payload, and cannot be handled. The method returns only
+            when the machine is initialized and the <see cref="T:Microsoft.PSharp.Event"/> (if any) is handled.
+            </summary>
+            <param name="type">Type of the machine</param>
+            <param name="operationGroupId">Optional operation group id</param>
+            <param name="e">Event</param>
+            <returns>MachineId</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.CreateMachineAndExecute(Microsoft.PSharp.MachineId,System.Type,Microsoft.PSharp.Event,System.Nullable{System.Guid})">
+            <summary>
+            Creates a new machine of the specified <see cref="T:System.Type"/>, using the specified
+            unbound machine id, and passes the specified optional <see cref="T:Microsoft.PSharp.Event"/>. This
+            event can only be used to access its payload, and cannot be handled. The method
+            returns only when the machine is initialized and the <see cref="T:Microsoft.PSharp.Event"/> (if any)
+            is handled.
+            </summary>
+            <param name="mid">Unbound machine id</param>
+            <param name="type">Type of the machine</param>
+            <param name="e">Event</param>
+            <param name="operationGroupId">Optional operation group id</param>
+            <returns>MachineId</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.CreateMachineAndExecute(System.Type,System.String,Microsoft.PSharp.Event,System.Nullable{System.Guid})">
+            <summary>
+            Creates a new machine of the specified <see cref="T:System.Type"/> and name, and
+            with the specified optional <see cref="T:Microsoft.PSharp.Event"/>. This event can only be
+            used to access its payload, and cannot be handled. The method returns only
+            when the machine is initialized and the <see cref="T:Microsoft.PSharp.Event"/> (if any) is handled.
+            </summary>
+            <param name="type">Type of the machine</param>
+            <param name="friendlyName">Friendly machine name used for logging</param>
+            <param name="operationGroupId">Optional operation group id</param>
+            <param name="e">Event</param>
+            <returns>MachineId</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.CreateMachineAndExecute(Microsoft.PSharp.MachineId,System.Type,System.String,Microsoft.PSharp.Event,System.Nullable{System.Guid})">
+            <summary>
+            Creates a new machine of the specified <see cref="T:System.Type"/> and name, using the specified
+            unbound machine id, and passes the specified optional <see cref="T:Microsoft.PSharp.Event"/>. This event
+            can only be used to access its payload, and cannot be handled. The method returns only
+            when the machine is initialized and the <see cref="T:Microsoft.PSharp.Event"/> (if any) is handled.
+            </summary>
+            <param name="mid">Unbound machine id</param>
+            <param name="type">Type of the machine</param>
+            <param name="friendlyName">Friendly machine name used for logging</param>
+            <param name="operationGroupId">Optional operation group id</param>
+            <param name="e">Event</param>
+            <returns>MachineId</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.RemoteCreateMachine(System.Type,System.String,Microsoft.PSharp.Event,System.Nullable{System.Guid})">
+            <summary>
+            Creates a new remote machine of the specified type and with
+            the specified optional event. This event can only be used
+            to access its payload, and cannot be handled.
+            </summary>
+            <param name="type">Type of the machine</param>
+            <param name="endpoint">Endpoint</param>
+            <param name="operationGroupId">Optional operation group id</param>
+            <param name="e">Event</param>
+            <returns>MachineId</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.RemoteCreateMachine(System.Type,System.String,System.String,Microsoft.PSharp.Event,System.Nullable{System.Guid})">
+            <summary>
+            Creates a new remote machine of the specified type and name, and
+            with the specified optional event. This event can only be used
+            to access its payload, and cannot be handled.
+            </summary>
+            <param name="type">Type of the machine</param>
+            <param name="friendlyName">Friendly machine name used for logging</param>
+            <param name="endpoint">Endpoint</param>
+            <param name="operationGroupId">Optional operation group id</param>
+            <param name="e">Event</param>
+            <returns>MachineId</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.SendEvent(Microsoft.PSharp.MachineId,Microsoft.PSharp.Event,Microsoft.PSharp.SendOptions)">
+            <summary>
+            Sends an asynchronous event to a machine.
+            </summary>
+            <param name="target">Target machine id</param>
+            <param name="e">Event</param>
+            <param name="options">Optional parameters of a send operation.</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.SendEventAndExecute(Microsoft.PSharp.MachineId,Microsoft.PSharp.Event,Microsoft.PSharp.SendOptions)">
+            <summary>
+            Sends an <see cref="T:Microsoft.PSharp.Event"/> to a machine. Returns immediately
+            if the target machine was already running. Otherwise blocks until the machine handles
+            the event and reaches quiescense again.
+            </summary>
+            <param name="target">Target machine id</param>
+            <param name="e">Event</param>
+            <param name="options">Optional parameters of a send operation.</param>
+            <returns>True if event was handled, false if the event was only enqueued</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.RemoteSendEvent(Microsoft.PSharp.MachineId,Microsoft.PSharp.Event,Microsoft.PSharp.SendOptions)">
+            <summary>
+            Sends an asynchronous event to a remote machine, which
+            is modeled as a local machine during testing.
+            </summary>
+            <param name="target">Target machine id</param>
+            <param name="e">Event</param>
+            <param name="options">Optional parameters of a send operation.</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.RegisterMonitor(System.Type)">
+            <summary>
+            Registers a new specification monitor of the specified <see cref="T:System.Type"/>.
+            </summary>
+            <param name="type">Type of the monitor</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.InvokeMonitor``1(Microsoft.PSharp.Event)">
+            <summary>
+            Invokes the specified monitor with the specified <see cref="T:Microsoft.PSharp.Event"/>.
+            </summary>
+            <typeparam name="T">Type of the monitor</typeparam>
+            <param name="e">Event</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.InvokeMonitor(System.Type,Microsoft.PSharp.Event)">
+            <summary>
+            Invokes the specified monitor with the specified <see cref="T:Microsoft.PSharp.Event"/>.
+            </summary>
+            <param name="type">Type of the monitor</param>
+            <param name="e">Event</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.GetCurrentOperationGroupId(Microsoft.PSharp.MachineId)">
+            <summary>
+            Returns the operation group id of the specified machine. Returns <see cref="F:System.Guid.Empty"/>
+            if the id is not set, or if the <see cref="T:Microsoft.PSharp.MachineId"/> is not associated with this runtime.
+            During testing, the runtime asserts that the specified machine is currently executing.
+            </summary>
+            <param name="currentMachine">MachineId of the currently executing machine.</param>
+            <returns>Guid</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.Stop">
+            <summary>
+            Notifies each active machine to halt execution to allow the runtime
+            to reach quiescence. This is an experimental feature, which should
+            be used only for testing purposes.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.RunTestHarness(System.Reflection.MethodInfo,System.Action{Microsoft.PSharp.PSharpRuntime})">
+            <summary>
+            Runs the specified test method inside a test harness machine.
+            </summary>
+            <param name="testAction">Action</param>
+            <param name="testMethod">MethodInfo</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.CreateMachine(Microsoft.PSharp.MachineId,System.Type,System.String,Microsoft.PSharp.Event,Microsoft.PSharp.Machine,System.Nullable{System.Guid})">
+            <summary>
+            Creates a new <see cref="T:Microsoft.PSharp.Machine"/> of the specified <see cref="T:System.Type"/>.
+            </summary>
+            <param name="mid">Unbound machine id</param>
+            <param name="type">Type of the machine</param>
+            <param name="friendlyName">Friendly machine name used for logging</param>
+            <param name="operationGroupId">Operation group id</param>
+            <param name="e">Event passed during machine construction</param>
+            <param name="creator">Creator machine</param>
+            <returns>MachineId</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.CreateMachineAndExecute(Microsoft.PSharp.MachineId,System.Type,System.String,Microsoft.PSharp.Event,Microsoft.PSharp.Machine,System.Nullable{System.Guid})">
+            <summary>
+            Creates a new <see cref="T:Microsoft.PSharp.Machine"/> of the specified <see cref="T:System.Type"/>. The
+            method returns only when the machine is initialized and the <see cref="T:Microsoft.PSharp.Event"/>
+            (if any) is handled.
+            </summary>
+            <param name="mid">Unbound machine id</param>
+            <param name="type">Type of the machine</param>
+            <param name="friendlyName">Friendly machine name used for logging</param>
+            <param name="operationGroupId">Operation group id</param>
+            <param name="e">Event passed during machine construction</param>
+            <param name="creator">Creator machine</param>
+            <returns>MachineId</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.CreateRemoteMachine(System.Type,System.String,System.String,Microsoft.PSharp.Event,Microsoft.PSharp.Machine,System.Nullable{System.Guid})">
+            <summary>
+            Creates a new remote <see cref="T:Microsoft.PSharp.Machine"/> of the specified
+            <see cref="T:System.Type"/>, which is modeled as a local
+            machine during testing.
+            </summary>
+            <param name="type">Type of the machine</param>
+            <param name="friendlyName">Friendly machine name used for logging</param>
+            <param name="endpoint">Endpoint</param>
+            <param name="operationGroupId">Operation group id</param>
+            <param name="e">Event passed during machine construction</param>
+            <param name="creator">Creator machine</param>
+            <returns>MachineId</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.CreateMachine(Microsoft.PSharp.MachineId,System.Type,System.String,Microsoft.PSharp.Machine)">
+            <summary>
+            Creates a new <see cref="T:Microsoft.PSharp.Machine"/> of the specified <see cref="T:System.Type"/>.
+            </summary>
+            <param name="mid">Unbound machine id</param>
+            <param name="type">Type of the machine</param>
+            <param name="friendlyName">Friendly machine name used for logging</param>
+            <param name="creator">The id of the machine that created the returned machine.</param>
+            <returns>Machine</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.SendEvent(Microsoft.PSharp.MachineId,Microsoft.PSharp.Event,Microsoft.PSharp.AbstractMachine,Microsoft.PSharp.SendOptions)">
+            <summary>
+            Sends an asynchronous <see cref="T:Microsoft.PSharp.Event"/> to a machine.
+            </summary>
+            <param name="mid">MachineId</param>
+            <param name="e">Event</param>
+            <param name="sender">Sender machine</param>
+            <param name="options">Optional parameters of a send operation.</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.SendEventAndExecute(Microsoft.PSharp.MachineId,Microsoft.PSharp.Event,Microsoft.PSharp.AbstractMachine,Microsoft.PSharp.SendOptions)">
+            <summary>
+            Sends an <see cref="T:Microsoft.PSharp.Event"/> to a machine. Returns immediately
+            if the target machine was already running. Otherwise blocks until the machine handles
+            the event and reaches quiescense again.
+            </summary>
+            <param name="mid">MachineId</param>
+            <param name="e">Event</param>
+            <param name="sender">Sender machine</param>
+            <param name="options">Optional parameters of a send operation.</param>
+            <returns>True if event was handled, false if the event was only enqueued</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.SendEventRemotely(Microsoft.PSharp.MachineId,Microsoft.PSharp.Event,Microsoft.PSharp.AbstractMachine,Microsoft.PSharp.SendOptions)">
+            <summary>
+            Sends an asynchronous <see cref="T:Microsoft.PSharp.Event"/> to a remote machine, which
+            is modeled as a local machine during testing.
+            </summary>
+            <param name="mid">MachineId</param>
+            <param name="e">Event</param>
+            <param name="sender">Sender machine</param>
+            <param name="options">Optional parameters of a send operation.</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.EnqueueEvent(Microsoft.PSharp.Machine,Microsoft.PSharp.Event,Microsoft.PSharp.AbstractMachine,System.Guid,System.Boolean,System.Boolean@)">
+            <summary>
+            Enqueues an asynchronous <see cref="T:Microsoft.PSharp.Event"/> to a machine.
+            </summary>
+            <param name="machine">Machine</param>
+            <param name="e">Event</param>
+            <param name="sender">Sender machine</param>
+            <param name="operationGroupId">Operation group id</param>
+            <param name="mustHandle">MustHandle event</param>
+            <param name="runNewHandler">Run a new handler</param>
+            <returns>EventInfo</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.RunMachineEventHandler(Microsoft.PSharp.Machine,Microsoft.PSharp.Event,System.Boolean,Microsoft.PSharp.MachineId,Microsoft.PSharp.EventInfo)">
+            <summary>
+            Runs a new asynchronous machine event handler.
+            This is a fire and forget invocation.
+            </summary>
+            <param name="machine">Machine that executes this event handler.</param>
+            <param name="initialEvent">Event for initializing the machine.</param>
+            <param name="isFresh">If true, then this is a new machine.</param>
+            <param name="syncCaller">Caller machine that is blocked for quiscence.</param>
+            <param name="enablingEvent">If non-null, the event info of the sent event that caused the event handler to be restarted.</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.CheckStartEventHandler(Microsoft.PSharp.Machine)">
+            <summary>
+            Checks that a machine can start its event handler. Returns false if the event
+            handler should not be started. The bug finding runtime may return false because
+            it knows that there are currently no events in the inbox that can be handled.
+            </summary>
+            <param name="machine">Machine</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.Wait">
+            <summary>
+            Waits until all P# machines have finished execution.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.TryCreateMonitor(System.Type)">
+            <summary>
+            Tries to create a new monitor of the given type.
+            </summary>
+            <param name="type">Type of the monitor</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.Monitor(System.Type,Microsoft.PSharp.AbstractMachine,Microsoft.PSharp.Event)">
+            <summary>
+            Invokes the specified monitor with the given event.
+            </summary>
+            <param name="sender">Sender machine</param>
+            <param name="type">Type of the monitor</param>
+            <param name="e">Event</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.Assert(System.Boolean)">
+            <summary>
+            Checks if the assertion holds, and if not it throws an
+            <see cref="T:Microsoft.PSharp.AssertionFailureException"/> exception.
+            </summary>
+            <param name="predicate">Predicate</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.Assert(System.Boolean,System.String,System.Object[])">
+            <summary>
+            Checks if the assertion holds, and if not it throws an
+            <see cref="T:Microsoft.PSharp.AssertionFailureException"/> exception.
+            </summary>
+            <param name="predicate">Predicate</param>
+            <param name="s">Message</param>
+            <param name="args">Message arguments</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.AssertTransitionStatement(Microsoft.PSharp.Machine)">
+            <summary>
+            Asserts that a transition statement (raise, goto or pop) has not
+            already been called. Records that RGP has been called.
+            </summary>
+            <param name="machine">Machine</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.AssertNoPendingTransitionStatement(Microsoft.PSharp.Machine,System.String)">
+            <summary>
+            Asserts that a transition statement (raise, goto or pop)
+            has not already been called.
+            </summary>
+            <param name="machine">Machine</param>
+            <param name="calledAPI">Called API</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.AssertCorrectCallerMachine(Microsoft.PSharp.Machine,System.String)">
+            <summary>
+            Asserts that the machine calling a P# machine method is also
+            the machine that is currently executing.
+            </summary>
+            <param name="callerMachine">Caller machine</param>
+            <param name="calledAPI">Called API name</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.AssertNoMonitorInHotStateAtTermination">
+            <summary>
+            Checks that no monitor is in a hot state upon program termination.
+            If the program is still running, then this method returns without
+            performing a check.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.GetNondeterministicBooleanChoice(Microsoft.PSharp.AbstractMachine,System.Int32)">
+            <summary>
+            Returns a nondeterministic boolean choice, that can be
+            controlled during analysis or testing.
+            </summary>
+            <param name="caller">Machine</param>
+            <param name="maxValue">Max value</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.GetFairNondeterministicBooleanChoice(Microsoft.PSharp.AbstractMachine,System.String)">
+            <summary>
+            Returns a fair nondeterministic boolean choice, that can be
+            controlled during analysis or testing.
+            </summary>
+            <param name="caller">Machine</param>
+            <param name="uniqueId">Unique id</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.GetNondeterministicIntegerChoice(Microsoft.PSharp.AbstractMachine,System.Int32)">
+            <summary>
+            Returns a nondeterministic integer choice, that can be
+            controlled during analysis or testing.
+            </summary>
+            <param name="caller">Machine</param>
+            <param name="maxValue">Max value</param>
+            <returns>Integer</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.NotifyEnteredState(Microsoft.PSharp.Machine)">
+            <summary>
+            Notifies that a machine entered a state.
+            </summary>
+            <param name="machine">Machine</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.NotifyEnteredState(Microsoft.PSharp.Monitor)">
+            <summary>
+            Notifies that a monitor entered a state.
+            </summary>
+            <param name="monitor">Monitor</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.NotifyExitedState(Microsoft.PSharp.Machine)">
+            <summary>
+            Notifies that a machine exited a state.
+            </summary>
+            <param name="machine">Machine</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.NotifyExitedState(Microsoft.PSharp.Monitor)">
+            <summary>
+            Notifies that a monitor exited a state.
+            </summary>
+            <param name="monitor">Monitor</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.NotifyInvokedAction(Microsoft.PSharp.Machine,System.Reflection.MethodInfo,Microsoft.PSharp.Event)">
+            <summary>
+            Notifies that a machine invoked an action.
+            </summary>
+            <param name="machine">Machine</param>
+            <param name="action">Action</param>
+            <param name="receivedEvent">Event</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.NotifyCompletedAction(Microsoft.PSharp.Machine,System.Reflection.MethodInfo,Microsoft.PSharp.Event)">
+            <summary>
+            Notifies that a machine completed an action.
+            </summary>
+            <param name="machine">Machine</param>
+            <param name="action">Action</param>
+            <param name="receivedEvent">Event</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.NotifyInvokedAction(Microsoft.PSharp.Monitor,System.Reflection.MethodInfo,Microsoft.PSharp.Event)">
+            <summary>
+            Notifies that a monitor invoked an action.
+            </summary>
+            <param name="monitor">Monitor</param>
+            <param name="action">Action</param>
+            <param name="receivedEvent">Event</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.NotifyRaisedEvent(Microsoft.PSharp.Machine,Microsoft.PSharp.EventInfo)">
+            <summary>
+            Notifies that a machine raised an <see cref="T:Microsoft.PSharp.Event"/>.
+            </summary>
+            <param name="machine">Machine</param>
+            <param name="eventInfo">EventInfo</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.NotifyRaisedEvent(Microsoft.PSharp.Monitor,Microsoft.PSharp.EventInfo)">
+            <summary>
+            Notifies that a monitor raised an <see cref="T:Microsoft.PSharp.Event"/>.
+            </summary>
+            <param name="monitor">Monitor</param>
+            <param name="eventInfo">EventInfo</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.NotifyDequeuedEvent(Microsoft.PSharp.Machine,Microsoft.PSharp.EventInfo)">
+            <summary>
+            Notifies that a machine dequeued an event.
+            </summary>
+            <param name="machine">Machine</param>
+            <param name="eventInfo">EventInfo</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.NotifyPop(Microsoft.PSharp.Machine)">
+            <summary>
+            Notifies that a machine invoked pop.
+            </summary>
+            <param name="machine">Machine</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.NotifyReceiveCalled(Microsoft.PSharp.Machine)">
+            <summary>
+            Notifies that a machine called Receive.
+            </summary>
+            <param name="machine">Machine</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.NotifyHandleRaisedEvent(Microsoft.PSharp.Machine,Microsoft.PSharp.EventInfo)">
+            <summary>
+            Notifies that a machine is handling a raised event.
+            </summary>
+            <param name="machine">Machine</param>
+            <param name="eventInfo">EventInfo</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.NotifyWaitEvents(Microsoft.PSharp.Machine,Microsoft.PSharp.EventInfo)">
+            <summary>
+            Notifies that a machine is waiting to receive one or more events.
+            </summary>
+            <param name="machine">Machine</param>
+            <param name="eventInfoInInbox">The event info if it is in the inbox, else null</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.NotifyReceivedEvent(Microsoft.PSharp.Machine,Microsoft.PSharp.EventInfo)">
+            <summary>
+            Notifies that a machine received an event that it was waiting for.
+            </summary>
+            <param name="machine">Machine</param>
+            <param name="eventInfo">EventInfo</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.NotifyHalted(Microsoft.PSharp.Machine,System.Collections.Generic.LinkedList{Microsoft.PSharp.EventInfo})">
+            <summary>
+            Notifies that a machine has halted.
+            </summary>
+            <param name="machine">Machine</param>
+            <param name="inbox">Machine inbox.</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.NotifyDefaultEventHandlerCheck(Microsoft.PSharp.Machine)">
+            <summary>
+            Notifies that the inbox of the specified machine is about to be
+            checked to see if the default event handler should fire.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.NotifyDefaultHandlerFired(Microsoft.PSharp.Machine)">
+            <summary>
+            Notifies that the default handler of the specified machine has been fired.
+            </summary>
+            <param name="machine">Machine</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.ReportActivityCoverageOfReceivedEvent(Microsoft.PSharp.Machine,Microsoft.PSharp.EventInfo)">
+            <summary>
+            Reports coverage for the specified received event.
+            </summary>
+            <param name="machine">Machine</param>
+            <param name="eventInfo">EventInfo</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.ReportActivityCoverageOfMonitorEvent(Microsoft.PSharp.AbstractMachine,Microsoft.PSharp.Monitor,Microsoft.PSharp.Event)">
+            <summary>
+            Reports coverage for the specified monitor event.
+            </summary>
+            <param name="sender">Sender machine</param>
+            <param name="monitor">Monitor</param>
+            <param name="e">Event</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.ReportActivityCoverageOfMachine(Microsoft.PSharp.Machine)">
+            <summary>
+            Reports coverage for the specified machine.
+            </summary>
+            <param name="machine">Machine</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.ReportActivityCoverageOfMonitor(Microsoft.PSharp.Monitor)">
+            <summary>
+            Reports coverage for the specified monitor.
+            </summary>
+            <param name="monitor">Monitor</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.ReportActivityCoverageOfStateTransition(Microsoft.PSharp.Machine,Microsoft.PSharp.EventInfo)">
+            <summary>
+            Reports coverage for the specified state transition.
+            </summary>
+            <param name="machine">Machine</param>
+            <param name="eventInfo">EventInfo</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.ReportActivityCoverageOfPopTransition(Microsoft.PSharp.Machine,System.Type,System.Type)">
+            <summary>
+            Reports coverage for a pop transition.
+            </summary>
+            <param name="machine">Machine</param>
+            <param name="fromState">Top of the stack state</param>
+            <param name="toState">Next to top state of the stack</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.ReportActivityCoverageOfMonitorTransition(Microsoft.PSharp.Monitor,Microsoft.PSharp.Event)">
+            <summary>
+            Reports coverage for the specified state transition.
+            </summary>
+            <param name="monitor">Monitor</param>
+            <param name="e">Event</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.GetCurrentMachine">
+            <summary>
+            Gets the currently executing <see cref="T:Microsoft.PSharp.Machine"/>.
+            </summary>
+            <returns>Machine or null, if not present</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.GetCurrentMachineId">
+            <summary>
+            Gets the id of the currently executing <see cref="T:Microsoft.PSharp.Machine"/>.
+            <returns>MachineId or null, if not present</returns>
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.GetProgramState">
+            <summary>
+            Returns the fingerprint of the current program state.
+            </summary>
+            <returns>Fingerprint</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.Log(System.String,System.Object[])">
+            <summary>
+            Logs the specified text.
+            </summary>
+            <param name="format">Text</param>
+            <param name="args">Arguments</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.WrapAndThrowException(System.Exception,System.String,System.Object[])">
+            <summary>
+            Throws an <see cref="T:Microsoft.PSharp.AssertionFailureException"/> exception
+            containing the specified exception.
+            </summary>
+            <param name="exception">Exception</param>
+            <param name="s">Message</param>
+            <param name="args">Message arguments</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.BugFindingRuntime.Dispose">
+            <summary>
+            Disposes runtime resources.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.TestHarnessMachine">
+            <summary>
+            The P# test harness machine. This is the root machine
+            that executes a test method during bug-finding.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.TestHarnessMachine.TestMethod">
+            <summary>
+            The test method.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.TestHarnessMachine.TestAction">
+            <summary>
+            The test action.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.TestHarnessMachine.#ctor(System.Reflection.MethodInfo,System.Action{Microsoft.PSharp.PSharpRuntime})">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="testMethod">MethodInfo</param>
+            <param name="testAction">Action</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.TestHarnessMachine.Run">
+            <summary>
+            Runs the test harness.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.TestHarnessMachine.ReportUnhandledException(System.Exception)">
+            <summary>
+            Wraps the unhandled exception inside an <see cref="T:Microsoft.PSharp.AssertionFailureException"/>
+            exception, and throws it to the user.
+            </summary>
+            <param name="ex">Exception</param>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.Scheduling.CycleDetectionStrategy">
+            <summary>
+            Strategy for detecting liveness property violations using partial state-caching
+            and cycle-replaying. It contains a nested <see cref="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulingStrategy"/> that
+            is used for scheduling decisions. Note that liveness property violations are
+            checked only if the nested strategy is fair.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.CycleDetectionStrategy.StateCache">
+            <summary>
+            The state cache of the program.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.CycleDetectionStrategy.ScheduleTrace">
+            <summary>
+            The schedule trace of the program.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.CycleDetectionStrategy.HotMonitors">
+            <summary>
+            Monitors that are stuck in the hot state
+            for the duration of the latest found
+            potential cycle.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.CycleDetectionStrategy.PotentialCycle">
+            <summary>
+            The latest found potential cycle.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.CycleDetectionStrategy.PotentialCycleFingerprints">
+            <summary>
+            Fingerprints captured in the latest potential cycle.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.CycleDetectionStrategy.IsReplayingCycle">
+            <summary>
+            Is strategy trying to replay a potential cycle.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.CycleDetectionStrategy.LivenessTemperature">
+            <summary>
+            A counter that increases in each step of the execution,
+            as long as the P# program remains in the same cycle,
+            with the liveness monitors at the hot state.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.CycleDetectionStrategy.EndOfCycleIndex">
+            <summary>
+            The index of the last scheduling step in
+            the currently detected cycle.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.CycleDetectionStrategy.CurrentCycleIndex">
+            <summary>
+            The current cycle index.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.CycleDetectionStrategy.Seed">
+            <summary>
+            Nondeterminitic seed.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.CycleDetectionStrategy.Random">
+            <summary>
+            Randomizer.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.CycleDetectionStrategy.FingerprintIndexMap">
+            <summary>
+            Map of fingerprints to schedule step indexes.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.CycleDetectionStrategy.#ctor(Microsoft.PSharp.Configuration,Microsoft.PSharp.TestingServices.StateCaching.StateCache,Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleTrace,System.Collections.Generic.List{Microsoft.PSharp.Monitor},Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulingStrategy)">
+            <summary>
+            Creates a liveness strategy that checks the specific monitors
+            for liveness property violations, and uses the specified
+            strategy for scheduling decisions.
+            </summary>
+            <param name="configuration">Configuration</param>
+            <param name="cache">StateCache</param>
+            <param name="trace">ScheduleTrace</param>
+            <param name="monitors">List of monitors</param>
+            <param name="strategy">ISchedulingStrategy</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.CycleDetectionStrategy.GetNext(Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable@,System.Collections.Generic.List{Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable},Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable)">
+            <summary>
+            Returns the next choice to schedule.
+            </summary>
+            <param name="next">Next</param>
+            <param name="choices">Choices</param>
+            <param name="current">Curent</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.CycleDetectionStrategy.GetNextBooleanChoice(System.Int32,System.Boolean@)">
+            <summary>
+            Returns the next boolean choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.CycleDetectionStrategy.GetNextIntegerChoice(System.Int32,System.Int32@)">
+            <summary>
+            Returns the next integer choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.CycleDetectionStrategy.PrepareForNextIteration">
+            <summary>
+            Prepares for the next scheduling iteration. This is invoked
+            at the end of a scheduling iteration. It must return false
+            if the scheduling strategy should stop exploring.
+            </summary>
+            <returns>True to start the next iteration</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.CycleDetectionStrategy.Reset">
+            <summary>
+            Resets the scheduling strategy. This is typically invoked by
+            parent strategies to reset child strategies.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.CycleDetectionStrategy.HasReachedMaxSchedulingSteps">
+            <summary>
+            True if the scheduling strategy has reached the max
+            scheduling steps for the given scheduling iteration.
+            </summary>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.CycleDetectionStrategy.IsFair">
+            <summary>
+            Checks if this is a fair scheduling strategy.
+            </summary>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.CycleDetectionStrategy.CaptureAndCheckProgramState">
+            <summary>
+            Captures the program state and checks for liveness violations.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.CycleDetectionStrategy.CheckLivenessTemperature">
+            <summary>
+            Checks the liveness temperature of each monitor, and
+            reports an error if one of the liveness monitors has
+            passed the temperature threshold.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.CycleDetectionStrategy.CheckLivenessAtTraceCycle(System.Collections.Generic.List{System.Int32})">
+            <summary>
+            Checks liveness at a schedule trace cycle.
+            </summary>
+            <param name="indices">Indices corresponding to the fingerprint of root</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.CycleDetectionStrategy.IsSchedulingFair(System.Collections.Generic.List{Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleStep})">
+            <summary>
+            Checks if the scheduling is fair in a schedule trace cycle.
+            </summary>
+            <param name="cycle">Cycle of states</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.CycleDetectionStrategy.GetHotMonitors(System.Collections.Generic.List{Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleStep})">
+            <summary>
+            Gets all monitors that are in hot state, but not in cold
+            state during the schedule trace cycle.
+            </summary>
+            <param name="cycle">Cycle of states</param>
+            <returns>Monitors</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.CycleDetectionStrategy.EscapeUnfairCycle">
+            <summary>
+            Escapes the unfair cycle and continues to explore the
+            schedule with the original scheduling strategy.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.CycleDetectionStrategy.DebugPrintScheduleTrace">
+            <summary>
+            Prints the program schedule trace. Works only
+            if debug mode is enabled.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.CycleDetectionStrategy.DebugPrintPotentialCycle">
+            <summary>
+            Prints the potential cycle. Works only if
+            debug mode is enabled.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.Scheduling.LivenessCheckingStrategy">
+            <summary>
+            Abstract strategy for detecting liveness property violations. It
+            contains a nested <see cref="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulingStrategy"/> that is used
+            for scheduling decisions.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.LivenessCheckingStrategy.Configuration">
+            <summary>
+            The configuration.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.LivenessCheckingStrategy.Monitors">
+            <summary>
+            List of monitors in the program.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.LivenessCheckingStrategy.SchedulingStrategy">
+            <summary>
+            Strategy used for scheduling decisions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.LivenessCheckingStrategy.#ctor(Microsoft.PSharp.Configuration,System.Collections.Generic.List{Microsoft.PSharp.Monitor},Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulingStrategy)">
+            <summary>
+            Creates a liveness strategy that checks the specific monitors
+            for liveness property violations, and uses the specified
+            strategy for scheduling decisions.
+            </summary>
+            <param name="configuration">Configuration</param>
+            <param name="monitors">List of monitors</param>
+            <param name="strategy">ISchedulingStrategy</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.LivenessCheckingStrategy.GetNext(Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable@,System.Collections.Generic.List{Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable},Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable)">
+            <summary>
+            Returns the next choice to schedule.
+            </summary>
+            <param name="next">Next</param>
+            <param name="choices">Choices</param>
+            <param name="current">Curent</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.LivenessCheckingStrategy.GetNextBooleanChoice(System.Int32,System.Boolean@)">
+            <summary>
+            Returns the next boolean choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.LivenessCheckingStrategy.GetNextIntegerChoice(System.Int32,System.Int32@)">
+            <summary>
+            Returns the next integer choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.LivenessCheckingStrategy.ForceNext(Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable,System.Collections.Generic.List{Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable},Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable)">
+            <summary>
+            Forces the next choice to schedule.
+            </summary>
+            <param name="next">Next</param>
+            <param name="choices">Choices</param>
+            <param name="current">Curent</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.LivenessCheckingStrategy.ForceNextBooleanChoice(System.Int32,System.Boolean)">
+            <summary>
+            Forces the next boolean choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.LivenessCheckingStrategy.ForceNextIntegerChoice(System.Int32,System.Int32)">
+            <summary>
+            Forces the next integer choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.LivenessCheckingStrategy.PrepareForNextIteration">
+            <summary>
+            Prepares for the next scheduling iteration. This is invoked
+            at the end of a scheduling iteration. It must return false
+            if the scheduling strategy should stop exploring.
+            </summary>
+            <returns>True to start the next iteration</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.LivenessCheckingStrategy.Reset">
+            <summary>
+            Resets the scheduling strategy. This is typically invoked by
+            parent strategies to reset child strategies.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.LivenessCheckingStrategy.GetScheduledSteps">
+            <summary>
+            Returns the scheduled steps.
+            </summary>
+            <returns>Scheduled steps</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.LivenessCheckingStrategy.HasReachedMaxSchedulingSteps">
+            <summary>
+            True if the scheduling strategy has reached the max
+            scheduling steps for the given scheduling iteration.
+            </summary>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.LivenessCheckingStrategy.IsFair">
+            <summary>
+            Checks if this is a fair scheduling strategy.
+            </summary>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.LivenessCheckingStrategy.GetDescription">
+            <summary>
+            Returns a textual description of the scheduling strategy.
+            </summary>
+            <returns>String</returns>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.Scheduling.TemperatureCheckingStrategy">
+            <summary>
+            Strategy for detecting liveness property violations using the "temperature"
+            method. It contains a nested <see cref="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulingStrategy"/> that is used
+            for scheduling decisions. Note that liveness property violations are checked
+            only if the nested strategy is fair.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.TemperatureCheckingStrategy.#ctor(Microsoft.PSharp.Configuration,System.Collections.Generic.List{Microsoft.PSharp.Monitor},Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulingStrategy)">
+            <summary>
+            Creates a liveness strategy that checks the specific monitors
+            for liveness property violations, and uses the specified
+            strategy for scheduling decisions.
+            </summary>
+            <param name="configuration">Configuration</param>
+            <param name="monitors">List of monitors</param>
+            <param name="strategy">ISchedulingStrategy</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.TemperatureCheckingStrategy.GetNext(Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable@,System.Collections.Generic.List{Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable},Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable)">
+            <summary>
+            Returns the next choice to schedule.
+            </summary>
+            <param name="next">Next</param>
+            <param name="choices">Choices</param>
+            <param name="current">Curent</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.TemperatureCheckingStrategy.GetNextBooleanChoice(System.Int32,System.Boolean@)">
+            <summary>
+            Returns the next boolean choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.TemperatureCheckingStrategy.GetNextIntegerChoice(System.Int32,System.Int32@)">
+            <summary>
+            Returns the next integer choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.TemperatureCheckingStrategy.CheckLivenessTemperature">
+            <summary>
+            Checks the liveness temperature of each monitor, and
+            reports an error if one of the liveness monitors has
+            passed the temperature threshold.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.Scheduling.InteractiveStrategy">
+            <summary>
+            Class representing an interactive scheduling strategy.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.InteractiveStrategy.Configuration">
+            <summary>
+            The configuration.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.InteractiveStrategy.Logger">
+            <summary>
+            The installed logger.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.InteractiveStrategy.InputCache">
+            <summary>
+            The input cache.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.InteractiveStrategy.ExploredSteps">
+            <summary>
+            The number of explored steps.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.InteractiveStrategy.#ctor(Microsoft.PSharp.Configuration,Microsoft.PSharp.IO.ILogger)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="configuration">Configuration</param>
+            <param name="logger">ILogger</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.InteractiveStrategy.GetNext(Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable@,System.Collections.Generic.List{Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable},Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable)">
+            <summary>
+            Returns the next choice to schedule.
+            </summary>
+            <param name="next">Next</param>
+            <param name="choices">Choices</param>
+            <param name="current">Curent</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.InteractiveStrategy.GetNextBooleanChoice(System.Int32,System.Boolean@)">
+            <summary>
+            Returns the next boolean choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.InteractiveStrategy.GetNextIntegerChoice(System.Int32,System.Int32@)">
+            <summary>
+            Returns the next integer choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.InteractiveStrategy.ForceNext(Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable,System.Collections.Generic.List{Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable},Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable)">
+            <summary>
+            Forces the next choice to schedule.
+            </summary>
+            <param name="next">Next</param>
+            <param name="choices">Choices</param>
+            <param name="current">Curent</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.InteractiveStrategy.ForceNextBooleanChoice(System.Int32,System.Boolean)">
+            <summary>
+            Forces the next boolean choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.InteractiveStrategy.ForceNextIntegerChoice(System.Int32,System.Int32)">
+            <summary>
+            Forces the next integer choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.InteractiveStrategy.PrepareForNextIteration">
+            <summary>
+            Prepares for the next scheduling iteration. This is invoked
+            at the end of a scheduling iteration. It must return false
+            if the scheduling strategy should stop exploring.
+            </summary>
+            <returns>True to start the next iteration</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.InteractiveStrategy.Reset">
+            <summary>
+            Resets the scheduling strategy. This is typically invoked by
+            parent strategies to reset child strategies.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.InteractiveStrategy.GetScheduledSteps">
+            <summary>
+            Returns the scheduled steps.
+            </summary>
+            <returns>Scheduled steps</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.InteractiveStrategy.HasReachedMaxSchedulingSteps">
+            <summary>
+            True if the scheduling strategy has reached the max
+            scheduling steps for the given scheduling iteration.
+            </summary>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.InteractiveStrategy.IsFair">
+            <summary>
+            Checks if this is a fair scheduling strategy.
+            </summary>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.InteractiveStrategy.GetDescription">
+            <summary>
+            Returns a textual description of the scheduling strategy.
+            </summary>
+            <returns>String</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.InteractiveStrategy.Replay">
+            <summary>
+            Replays an earlier point of the execution.
+            </summary>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.InteractiveStrategy.Jump">
+            <summary>
+            Jumps to a later point in the execution.
+            </summary>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.InteractiveStrategy.AddInInputCache(System.Int32)">
+            <summary>
+            Adds in the input cache.
+            </summary>
+            <param name="steps">Number of steps</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.InteractiveStrategy.RemoveFromInputCache(System.Int32)">
+            <summary>
+            Removes from the input cache.
+            </summary>
+            <param name="steps">Number of steps</param>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.Scheduling.ReplayStrategy">
+            <summary>
+            Class representing a replaying scheduling strategy.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.ReplayStrategy.Configuration">
+            <summary>
+            The configuration.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.ReplayStrategy.ScheduleTrace">
+            <summary>
+            The P# program schedule trace.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.ReplayStrategy.SuffixStrategy">
+            <summary>
+            The suffix strategy.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.ReplayStrategy.IsSchedulerFair">
+            <summary>
+            Is the scheduler that produced the
+            schedule trace fair?
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.ReplayStrategy.IsReplaying">
+            <summary>
+            Is the scheduler replaying the trace?
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.ReplayStrategy.ScheduledSteps">
+            <summary>
+            The number of scheduled steps.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.Scheduling.ReplayStrategy.ErrorText">
+            <summary>
+            Text describing a replay error.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.ReplayStrategy.#ctor(Microsoft.PSharp.Configuration,Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleTrace,System.Boolean)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="configuration">Configuration</param>
+            <param name="trace">ScheduleTrace</param>
+            <param name="isFair">Is scheduler fair</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.ReplayStrategy.#ctor(Microsoft.PSharp.Configuration,Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleTrace,System.Boolean,Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulingStrategy)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="configuration">Configuration</param>
+            <param name="trace">ScheduleTrace</param>
+            <param name="isFair">Is scheduler fair</param>
+            <param name="suffixStrategy">The suffix strategy.</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.ReplayStrategy.GetNext(Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable@,System.Collections.Generic.List{Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable},Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable)">
+            <summary>
+            Returns the next choice to schedule.
+            </summary>
+            <param name="next">Next</param>
+            <param name="choices">Choices</param>
+            <param name="current">Curent</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.ReplayStrategy.GetNextBooleanChoice(System.Int32,System.Boolean@)">
+            <summary>
+            Returns the next boolean choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.ReplayStrategy.GetNextIntegerChoice(System.Int32,System.Int32@)">
+            <summary>
+            Returns the next integer choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.ReplayStrategy.ForceNext(Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable,System.Collections.Generic.List{Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable},Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable)">
+            <summary>
+            Forces the next choice to schedule.
+            </summary>
+            <param name="next">Next</param>
+            <param name="choices">Choices</param>
+            <param name="current">Curent</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.ReplayStrategy.ForceNextBooleanChoice(System.Int32,System.Boolean)">
+            <summary>
+            Forces the next boolean choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.ReplayStrategy.ForceNextIntegerChoice(System.Int32,System.Int32)">
+            <summary>
+            Forces the next integer choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="next">Next</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.ReplayStrategy.PrepareForNextIteration">
+            <summary>
+            Prepares for the next scheduling iteration. This is invoked
+            at the end of a scheduling iteration. It must return false
+            if the scheduling strategy should stop exploring.
+            </summary>
+            <returns>True to start the next iteration</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.ReplayStrategy.Reset">
+            <summary>
+            Resets the scheduling strategy. This is typically invoked by
+            parent strategies to reset child strategies.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.ReplayStrategy.GetScheduledSteps">
+            <summary>
+            Returns the scheduled steps.
+            </summary>
+            <returns>Scheduled steps</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.ReplayStrategy.HasReachedMaxSchedulingSteps">
+            <summary>
+            True if the scheduling strategy has reached the depth
+            bound for the given scheduling iteration.
+            </summary>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.ReplayStrategy.IsFair">
+            <summary>
+            Checks if this is a fair scheduling strategy.
+            </summary>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.ReplayStrategy.GetDescription">
+            <summary>
+            Returns a textual description of the scheduling strategy.
+            </summary>
+            <returns>String</returns>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.Scheduling.AsynchronousTaskScheduler">
+            <summary>
+            The P# asynchronous task scheduler.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.AsynchronousTaskScheduler.Runtime">
+            <summary>
+            The P# bug-finding runtime.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.AsynchronousTaskScheduler.TaskMap">
+            <summary>
+            Map from task ids to machines.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.AsynchronousTaskScheduler.#ctor(Microsoft.PSharp.TestingServices.BugFindingRuntime,System.Collections.Concurrent.ConcurrentDictionary{System.Int32,Microsoft.PSharp.Machine})">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="runtime">PSharpBugFindingRuntime</param>
+            <param name="taskMap">Task map</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.AsynchronousTaskScheduler.QueueTask(System.Threading.Tasks.Task)">
+            <summary>
+            Enqueues the given task. If the task does not correspond to a P# machine,
+            then it wraps it in a task machine and schedules it.
+            </summary>
+            <param name="task">Task</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.AsynchronousTaskScheduler.TryExecuteTaskInline(System.Threading.Tasks.Task,System.Boolean)">
+            <summary>
+            Tries to execute the task inline.
+            </summary>
+            <param name="task">Task</param>
+            <param name="taskWasPreviouslyQueued">Boolean</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.AsynchronousTaskScheduler.GetScheduledTasks">
+            <summary>
+            Returns the wrapped in a machine scheduled tasks.
+            </summary>
+            <returns>Scheduled tasks</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.AsynchronousTaskScheduler.Execute(System.Threading.Tasks.Task)">
+            <summary>
+            Executes the given scheduled task on the
+            thread pool.
+            </summary>
+            <param name="task">Task</param>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.Scheduling.BugFindingScheduler">
+            <summary>
+            Class implementing the basic P# bug-finding scheduler.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.BugFindingScheduler.Runtime">
+            <summary>
+            The P# bug-finding runtime.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.BugFindingScheduler.Strategy">
+            <summary>
+            The scheduling strategy to be used for bug-finding.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.BugFindingScheduler.SchedulableInfoMap">
+            <summary>
+            Map from unique ids to schedulable infos.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.BugFindingScheduler.CompletionSource">
+            <summary>
+            The scheduler completion source.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.BugFindingScheduler.IsSchedulerRunning">
+            <summary>
+            Checks if the scheduler is running.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.Scheduling.BugFindingScheduler.ScheduledMachine">
+            <summary>
+            The currently schedulable info.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.Scheduling.BugFindingScheduler.ScheduledSteps">
+            <summary>
+            Number of scheduled steps.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.Scheduling.BugFindingScheduler.HasFullyExploredSchedule">
+            <summary>
+            Checks if the schedule has been fully explored.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.Scheduling.BugFindingScheduler.BugFound">
+            <summary>
+            True if a bug was found.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.Scheduling.BugFindingScheduler.BugReport">
+            <summary>
+            Bug report.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.BugFindingScheduler.#ctor(Microsoft.PSharp.TestingServices.BugFindingRuntime,Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulingStrategy)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="runtime">BugFindingRuntime</param>
+            <param name="strategy">SchedulingStrategy</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.BugFindingScheduler.Schedule(Microsoft.PSharp.TestingServices.SchedulingStrategies.OperationType,Microsoft.PSharp.TestingServices.SchedulingStrategies.OperationTargetType,System.UInt64)">
+            <summary>
+            Schedules the next <see cref="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.ISchedulable"/> operation to execute.
+            </summary>
+            <param name="operationType">Type of the operation.</param>
+            <param name="targetType">Type of the target of the operation.</param>
+            <param name="targetId">Id of the target.</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.BugFindingScheduler.GetNextNondeterministicBooleanChoice(System.Int32,System.String)">
+            <summary>
+            Returns the next nondeterministic boolean choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <param name="uniqueId">Unique id</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.BugFindingScheduler.GetNextNondeterministicIntegerChoice(System.Int32)">
+            <summary>
+            Returns the next nondeterministic integer choice.
+            </summary>
+            <param name="maxValue">Max value</param>
+            <returns>Integer</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.BugFindingScheduler.WaitForEventHandlerToStart(Microsoft.PSharp.TestingServices.Scheduling.SchedulableInfo)">
+            <summary>
+            Waits for the event handler to start.
+            </summary>
+            <param name="info">SchedulableInfo</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.BugFindingScheduler.Stop">
+            <summary>
+            Stops the scheduler.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.BugFindingScheduler.Wait">
+            <summary>
+            Blocks until the scheduler terminates.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.BugFindingScheduler.NotifyEventHandlerCreated(Microsoft.PSharp.TestingServices.Scheduling.SchedulableInfo)">
+            <summary>
+            Notify that an event handler has been created.
+            </summary>
+            <param name="info">SchedulableInfo</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.BugFindingScheduler.NotifyMonitorRegistered(Microsoft.PSharp.TestingServices.Scheduling.SchedulableInfo)">
+            <summary>
+            Notify that a monitor was registered.
+            </summary>
+            <param name="info">SchedulableInfo</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.BugFindingScheduler.NotifyEventHandlerStarted(Microsoft.PSharp.TestingServices.Scheduling.SchedulableInfo)">
+            <summary>
+            Notify that the event handler has started.
+            </summary>
+            <param name="info">SchedulableInfo</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.BugFindingScheduler.NotifyAssertionFailure(System.String,System.Boolean)">
+            <summary>
+            Notify that an assertion has failed.
+            </summary>
+            <param name="text">Bug report</param>
+            <param name="killTasks">Kill tasks</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.BugFindingScheduler.GetEnabledSchedulableIds">
+            <summary>
+            Returns the enabled schedulable ids.
+            </summary>
+            <returns>Enabled machine ids</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.BugFindingScheduler.GetReport">
+            <summary>
+            Returns a test report with the scheduling statistics.
+            </summary>
+            <returns>TestReport</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.BugFindingScheduler.NumberOfAvailableMachinesToSchedule">
+            <summary>
+            Returns the number of available machines to schedule.
+            </summary>
+            <returns>Int</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.BugFindingScheduler.CheckIfProgramHasLivelocked(System.Collections.Generic.IEnumerable{Microsoft.PSharp.TestingServices.Scheduling.SchedulableInfo})">
+            <summary>
+            Checks for a livelock. This happens when there are no more enabled
+            machines, but there is one or more non-enabled machines that are
+            waiting to receive an event.
+            </summary>
+            <param name="choices">SchedulableInfos</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.BugFindingScheduler.CheckIfExternalSynchronizationIsUsed">
+            <summary>
+            Checks if external (non-P#) synchronisation was used to invoke
+            the scheduler. If yes, it stops the scheduler, reports an error
+            and kills all enabled machines.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.BugFindingScheduler.CheckIfSchedulingStepsBoundIsReached">
+            <summary>
+            Checks if the scheduling steps bound has been reached. If yes,
+            it stops the scheduler and kills all enabled machines.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.BugFindingScheduler.KillRemainingMachines">
+            <summary>
+            Kills any remaining machines at the end of the schedule.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.Scheduling.SchedulableInfo">
+            <summary>
+            Stores information for a schedulable machine that can be
+            used during scheduling and testing.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.Scheduling.SchedulableInfo.TaskId">
+            <summary>
+            Id of the task executing the event handler of the machine.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.Scheduling.SchedulableInfo.IsEnabled">
+            <summary>
+            Is machine enabled.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.Scheduling.SchedulableInfo.NextOperationType">
+            <summary>
+            Type of the next operation of the machine.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.Scheduling.SchedulableInfo.NextTargetType">
+            <summary>
+            The target type of the next operation of the machine.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.Scheduling.SchedulableInfo.NextTargetId">
+            <summary>
+            Target id of the next operation of the machine.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.Scheduling.SchedulableInfo.NextOperationMatchingSendIndex">
+            <summary>
+            If the next operation is <see cref="F:Microsoft.PSharp.TestingServices.SchedulingStrategies.OperationType.Receive"/>
+            then this gives the step index of the corresponding Send. 
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.Scheduling.SchedulableInfo.OperationCount">
+            <summary>
+            Monotonically increasing operation count.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.Scheduling.SchedulableInfo.NextOperationGroupId">
+            <summary>
+            Unique id of the group of operations that
+            contains the next operation.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.Scheduling.SchedulableInfo.EventHandlerOperationCount">
+            <summary>
+            Monotonically increasing operation count for the current event handler.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.SchedulableInfo.IsActive">
+            <summary>
+            Is the machine active.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.SchedulableInfo.IsEventHandlerRunning">
+            <summary>
+            Is the event handler running.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Scheduling.SchedulableInfo.SkipNextReceiveSchedulingPoint">
+            <summary>
+            True if it should skip the next receive scheduling point,
+            because it was already called in the end of the previous
+            event handler.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.SchedulableInfo.#ctor(Microsoft.PSharp.MachineId)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="mid">MachineId</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.SchedulableInfo.SetNextOperation(Microsoft.PSharp.TestingServices.SchedulingStrategies.OperationType,Microsoft.PSharp.TestingServices.SchedulingStrategies.OperationTargetType,System.UInt64)">
+            <summary>
+            Sets the next operation to schedule.
+            </summary>
+            <param name="operationType">Type of the operation.</param>
+            <param name="targetType">Type of the target of the operation.</param>
+            <param name="targetId">Id of the target.</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.SchedulableInfo.NotifyEventHandlerCreated(System.Int32,System.Int32)">
+            <summary>
+            Notify that an event handler has been created and will
+            run on the specified task id.
+            </summary>
+            <param name="taskId">TaskId</param>
+            <param name="sendIndex">The index of the send that caused the event handler to be restarted, or 0 if this does not apply.</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Scheduling.SchedulableInfo.NotifyEventHandlerCompleted">
+            <summary>
+            Notify that the event handler has completed.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.StateCaching.Fingerprint">
+            <summary>
+            Class implementing a program state fingerprint.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.StateCaching.Fingerprint.HashValue">
+            <summary>
+            The hash value of the fingerprint.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.StateCaching.Fingerprint.#ctor(System.Int32)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="hash">HashValue</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.StateCaching.Fingerprint.Equals(System.Object)">
+            <summary>
+            Returns true if the fingerprint is equal to
+            the given object.
+            </summary>
+            <param name="obj">Object</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.StateCaching.Fingerprint.GetHashCode">
+            <summary>
+            Returns the hashcode of the fingerprint.
+            </summary>
+            <returns>HashCode</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.StateCaching.Fingerprint.ToString">
+            <summary>
+            Returns a string representation of the fingerprint.
+            </summary>
+            <returns>Text</returns>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.StateCaching.MonitorStatus">
+            <summary>
+            Monitor status.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.StateCaching.State">
+            <summary>
+            Represents a snapshot of the program state.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.StateCaching.State.Fingerprint">
+            <summary>
+            The fingerprint of the trace step.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.StateCaching.State.MonitorStatus">
+            <summary>
+            Map from monitors to their liveness status.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.StateCaching.State.EnabledMachineIds">
+            <summary>
+            Ids of the enabled machines. Only relevant
+            if this is a scheduling trace step.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.StateCaching.State.#ctor(Microsoft.PSharp.TestingServices.StateCaching.Fingerprint,System.Collections.Generic.HashSet{System.UInt64},System.Collections.Generic.Dictionary{Microsoft.PSharp.Monitor,Microsoft.PSharp.TestingServices.StateCaching.MonitorStatus})">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="fingerprint">Fingerprint</param>
+            <param name="enabledMachineIds">Ids of enabled machines</param>
+            <param name="monitorStatus">Monitor status</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.StateCaching.State.PrettyPrint">
+            <summary>
+            Pretty prints the state.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.StateCaching.StateCache">
+            <summary>
+            Class implementing a P# state cache.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.StateCaching.StateCache.Runtime">
+            <summary>
+            The P# bug-finding runtime.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.StateCaching.StateCache.Fingerprints">
+            <summary>
+            Set of fingerprints.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.StateCaching.StateCache.#ctor(Microsoft.PSharp.TestingServices.BugFindingRuntime)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="runtime">BugFindingRuntime</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.StateCaching.StateCache.CaptureState(Microsoft.PSharp.TestingServices.StateCaching.State@,Microsoft.PSharp.TestingServices.StateCaching.Fingerprint@,System.Collections.Generic.Dictionary{Microsoft.PSharp.TestingServices.StateCaching.Fingerprint,System.Collections.Generic.List{System.Int32}},Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleStep,System.Collections.Generic.List{Microsoft.PSharp.Monitor})">
+            <summary>
+            Captures a snapshot of the program state.
+            </summary>
+            <param name="state">Captured state</param>
+            <param name="fingerprint">Fingerprint</param>
+            <param name="fingerprintIndexMap">Fingerprint to schedule step index map</param>
+            <param name="scheduleStep">ScheduleStep</param>
+            <param name="monitors">List of monitors</param>
+            <returns>True if state already exists</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.StateCaching.StateCache.GetMonitorStatus(System.Collections.Generic.List{Microsoft.PSharp.Monitor})">
+            <summary>
+            Returns the monitor status.
+            </summary>
+            <param name="monitors">List of monitors</param>
+            <returns>Monitor status</returns>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.Coverage.ActivityCoverageReporter">
+            <summary>
+            The P# code coverage reporter.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Coverage.ActivityCoverageReporter.CoverageInfo">
+            <summary>
+            Data structure containing information
+            regarding testing coverage.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Coverage.ActivityCoverageReporter.#ctor(Microsoft.PSharp.TestingServices.Coverage.CoverageInfo)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="coverageInfo">CoverageInfo</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Coverage.ActivityCoverageReporter.EmitVisualizationGraph(System.String)">
+            <summary>
+            Emits the visualization graph.
+            </summary>
+            <param name="graphFile">Graph file</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Coverage.ActivityCoverageReporter.EmitCoverageReport(System.String)">
+            <summary>
+            Emits the code coverage report.
+            </summary>
+            <param name="coverageFile">Code coverage file</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Coverage.ActivityCoverageReporter.WriteVisualizationGraph(System.Xml.XmlTextWriter)">
+            <summary>
+            Writes the visualization graph.
+            </summary>
+            <param name="writer">XmlTextWriter</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Coverage.ActivityCoverageReporter.WriteCoverageFile(System.IO.TextWriter)">
+            <summary>
+            Writes the visualization graph.
+            </summary>
+            <param name="writer">TextWriter</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Coverage.ActivityCoverageReporter.GetStateId(System.String,System.String)">
+            <summary>
+            Gets the state id.
+            </summary>
+            <param name="machineName">Machine name</param>
+            <param name="stateName">State name</param>
+            <returns>State id</returns>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.Coverage.CoverageInfo">
+            <summary>
+            Class for storing coverage-specific data
+            across multiple testing iterations. 
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.Coverage.CoverageInfo.MachinesToStates">
+            <summary>
+            Map from machines to states.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.Coverage.CoverageInfo.RegisteredEvents">
+            <summary>
+            Set of (machines, states, registered events).
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.Coverage.CoverageInfo.Transitions">
+            <summary>
+            Set of machine transitions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Coverage.CoverageInfo.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Coverage.CoverageInfo.AddTransition(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Adds a new transition.
+            </summary>
+            <param name="machineOrigin">Origin machine</param>
+            <param name="stateOrigin">Origin state</param>
+            <param name="edgeLabel">Edge label</param>
+            <param name="machineTarget">Target machine</param>
+            <param name="stateTarget">Target state</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Coverage.CoverageInfo.DeclareMachineState(System.String,System.String)">
+            <summary>
+            Declares a state.
+            </summary>
+            <param name="machine">Machine name</param>
+            <param name="state">state name</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Coverage.CoverageInfo.DeclareStateEvent(System.String,System.String,System.String)">
+            <summary>
+            Declares a registered state, event pair.
+            </summary>
+            <param name="machine">Machine name</param>
+            <param name="state">state name</param>
+            <param name="eventName">Event name that the state is prepared to handle</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Coverage.CoverageInfo.Merge(Microsoft.PSharp.TestingServices.Coverage.CoverageInfo)">
+            <summary>
+            Merges the information from the specified
+            coverage info. This is not thread-safe.
+            </summary>
+            <param name="coverageInfo">CoverageInfo</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Coverage.CoverageInfo.AddState(System.String,System.String)">
+            <summary>
+            Adds a new state.
+            </summary>
+            <param name="machineName">Machine name</param>
+            <param name="stateName">State name</param>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.Coverage.Transition">
+            <summary>
+            A P# program transition.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Coverage.Transition.MachineOrigin">
+            <summary>
+            The origin machine.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Coverage.Transition.StateOrigin">
+            <summary>
+            The origin state.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Coverage.Transition.EdgeLabel">
+            <summary>
+            The edge label.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Coverage.Transition.MachineTarget">
+            <summary>
+            The target machine.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Coverage.Transition.StateTarget">
+            <summary>
+            The target state.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Coverage.Transition.#ctor(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="machineOrigin">Origin machine</param>
+            <param name="stateOrigin">Origin state</param>
+            <param name="edgeLabel">Edge label</param>
+            <param name="machineTarget">Target machine</param>
+            <param name="stateTarget">Target state</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Coverage.Transition.ToString">
+            <summary>
+            Pretty print.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.TestReport">
+            <summary>
+            Class implementing the P# test report.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.TestReport.Configuration">
+            <summary>
+            Configuration of the program-under-test.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.TestReport.CoverageInfo">
+            <summary>
+            Information regarding code coverage.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.TestReport.NumOfExploredFairSchedules">
+            <summary>
+            Number of explored fair schedules.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.TestReport.NumOfExploredUnfairSchedules">
+            <summary>
+            Number of explored unfair schedules.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.TestReport.NumOfFoundBugs">
+            <summary>
+            Number of found bugs.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.TestReport.BugReports">
+            <summary>
+            List of unique bug reports.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.TestReport.MinExploredFairSteps">
+            <summary>
+            The min explored scheduling steps in average,
+            in fair tests.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.TestReport.MaxExploredFairSteps">
+            <summary>
+            The max explored scheduling steps in average,
+            in fair tests.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.TestReport.TotalExploredFairSteps">
+            <summary>
+            The total explored scheduling steps (across
+            all testing iterations), in fair tests.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.TestReport.MaxFairStepsHitInFairTests">
+            <summary>
+            Number of times the fair max steps bound was hit,
+            in fair tests.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.TestReport.MaxUnfairStepsHitInFairTests">
+            <summary>
+            Number of times the unfair max steps bound was hit,
+            in fair tests.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.TestReport.MaxUnfairStepsHitInUnfairTests">
+            <summary>
+            Number of times the unfair max steps bound was hit,
+            in unfair tests.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.TestReport.Lock">
+            <summary>
+            Lock for the test report.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.TestReport.#ctor(Microsoft.PSharp.Configuration)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="configuration">Configuration</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.TestReport.Merge(Microsoft.PSharp.TestingServices.TestReport)">
+            <summary>
+            Merges the information from the specified
+            test report.
+            </summary>
+            <param name="testReport">TestReport</param>
+            <returns>True if merged successfully</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.TestReport.GetText(Microsoft.PSharp.Configuration,System.String)">
+            <summary>
+            Returns the testing report as a string, given a configuration and an optional prefix.
+            </summary>
+            <param name="configuration">Configuration</param>
+            <param name="prefix">Prefix</param>
+            <returns>Textrt</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.TestReport.Clone">
+            <summary>
+            Clones the test report.
+            </summary>
+            <returns>TestReport</returns>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.Tracing.Error.BugTrace">
+            <summary>
+            Class implementing a P# bug trace. A trace is a
+            series of transitions from some initial state to
+            some end state.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Tracing.Error.BugTrace.Steps">
+            <summary>
+            The steps of the bug trace.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.Tracing.Error.BugTrace.Count">
+            <summary>
+            The number of steps in the bug trace.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.Tracing.Error.BugTrace.Item(System.Int32)">
+            <summary>
+            Index for the bug trace.
+            </summary>
+            <param name="index">Index</param>
+            <returns>BugTraceStep</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Error.BugTrace.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Error.BugTrace.AddCreateMachineStep(Microsoft.PSharp.Machine,Microsoft.PSharp.MachineId,Microsoft.PSharp.EventInfo)">
+            <summary>
+            Adds a bug trace step.
+            </summary>
+            <param name="machine">Machine</param>
+            <param name="targetMachine">Target machine</param>
+            <param name="eventInfo">EventInfo</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Error.BugTrace.AddCreateMonitorStep(Microsoft.PSharp.MachineId)">
+            <summary>
+            Adds a bug trace step.
+            </summary>
+            <param name="monitor">MachineId</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Error.BugTrace.AddSendEventStep(Microsoft.PSharp.MachineId,System.String,Microsoft.PSharp.EventInfo,Microsoft.PSharp.MachineId)">
+            <summary>
+            Adds a bug trace step.
+            </summary>
+            <param name="machine">Machine</param>
+            <param name="machineState">MachineState</param>
+            <param name="eventInfo">EventInfo</param>
+            <param name="targetMachine">Target machine</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Error.BugTrace.AddDequeueEventStep(Microsoft.PSharp.MachineId,System.String,Microsoft.PSharp.EventInfo)">
+            <summary>
+            Adds a bug trace step.
+            </summary>
+            <param name="machine">Machine</param>
+            <param name="machineState">MachineState</param>
+            <param name="eventInfo">EventInfo</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Error.BugTrace.AddRaiseEventStep(Microsoft.PSharp.MachineId,System.String,Microsoft.PSharp.EventInfo)">
+            <summary>
+            Adds a bug trace step.
+            </summary>
+            <param name="machine">Machine</param>
+            <param name="machineState">MachineState</param>
+            <param name="eventInfo">EventInfo</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Error.BugTrace.AddGotoStateStep(Microsoft.PSharp.MachineId,System.String)">
+            <summary>
+            Adds a bug trace step.
+            </summary>
+            <param name="machine">Machine</param>
+            <param name="machineState">MachineState</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Error.BugTrace.AddInvokeActionStep(Microsoft.PSharp.MachineId,System.String,System.Reflection.MethodInfo)">
+            <summary>
+            Adds a bug trace step.
+            </summary>
+            <param name="machine">Machine</param>
+            <param name="machineState">MachineState</param>
+            <param name="action">MethodInfo</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Error.BugTrace.AddWaitToReceiveStep(Microsoft.PSharp.MachineId,System.String,System.String)">
+            <summary>
+            Adds a bug trace step.
+            </summary>
+            <param name="machine">Machine</param>
+            <param name="machineState">MachineState</param>
+            <param name="eventNames">Event names</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Error.BugTrace.AddReceivedEventStep(Microsoft.PSharp.MachineId,System.String,Microsoft.PSharp.EventInfo)">
+            <summary>
+            Adds a bug trace step.
+            </summary>
+            <param name="machine">Machine</param>
+            <param name="machineState">MachineState</param>
+            <param name="eventInfo">EventInfo</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Error.BugTrace.AddRandomChoiceStep(Microsoft.PSharp.MachineId,System.String,System.Boolean)">
+            <summary>
+            Adds a bug trace step.
+            </summary>
+            <param name="machine">Machine</param>
+            <param name="machineState">MachineState</param>
+            <param name="choice">Choice</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Error.BugTrace.AddRandomChoiceStep(Microsoft.PSharp.MachineId,System.String,System.Int32)">
+            <summary>
+            Adds a bug trace step.
+            </summary>
+            <param name="machine">Machine</param>
+            <param name="machineState">MachineState</param>
+            <param name="choice">Choice</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Error.BugTrace.AddHaltStep(Microsoft.PSharp.MachineId,System.String)">
+            <summary>
+            Adds a bug trace step.
+            </summary>
+            <param name="machine">Machine</param>
+            <param name="machineState">MachineState</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Error.BugTrace.Pop">
+            <summary>
+            Returns the latest bug trace step and
+            removes it from the trace.
+            </summary>
+            <returns>BugTraceStep</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Error.BugTrace.Peek">
+            <summary>
+            Returns the latest bug trace step
+            without removing it.
+            </summary>
+            <returns>BugTraceStep</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Error.BugTrace.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Returns an enumerator.
+            </summary>
+            <returns>IEnumerator</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Error.BugTrace.System#Collections#Generic#IEnumerable{Microsoft#PSharp#TestingServices#Tracing#Error#BugTraceStep}#GetEnumerator">
+            <summary>
+            Returns an enumerator.
+            </summary>
+            <returns>IEnumerator</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Error.BugTrace.Push(Microsoft.PSharp.TestingServices.Tracing.Error.BugTraceStep)">
+            <summary>
+            Pushes a new step to the trace.
+            </summary>
+            <param name="step">BugTraceStep</param>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.Tracing.Error.BugTraceStep">
+            <summary>
+            Class implementing a P# bug trace step.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Tracing.Error.BugTraceStep.Index">
+            <summary>
+            The unique index of this bug trace step.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.Tracing.Error.BugTraceStep.Type">
+            <summary>
+            The type of this bug trace step.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Tracing.Error.BugTraceStep.Machine">
+            <summary>
+            The machine initiating the action.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Tracing.Error.BugTraceStep.MachineState">
+            <summary>
+            The machine state.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Tracing.Error.BugTraceStep.EventInfo">
+            <summary>
+            Information about the event being sent.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Tracing.Error.BugTraceStep.InvokedAction">
+            <summary>
+            The invoked action.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Tracing.Error.BugTraceStep.TargetMachine">
+            <summary>
+            The target machine.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Tracing.Error.BugTraceStep.RandomBooleanChoice">
+            <summary>
+            The taken nondeterministic boolean choice.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Tracing.Error.BugTraceStep.RandomIntegerChoice">
+            <summary>
+            The taken nondeterministic integer choice.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Tracing.Error.BugTraceStep.ExtraInfo">
+            <summary>
+            Extra information that can be used to
+            enhance the trace reported to the user.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Tracing.Error.BugTraceStep.Previous">
+            <summary>
+            Previous bug trace step.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Tracing.Error.BugTraceStep.Next">
+            <summary>
+            Next bug trace step.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Error.BugTraceStep.Create(System.Int32,Microsoft.PSharp.TestingServices.Tracing.Error.BugTraceStepType,Microsoft.PSharp.MachineId,System.String,Microsoft.PSharp.EventInfo,System.Reflection.MethodInfo,Microsoft.PSharp.MachineId,System.Nullable{System.Boolean},System.Nullable{System.Int32},System.String)">
+            <summary>
+            Creates a bug trace step.
+            </summary>
+            <param name="index">Index</param>
+            <param name="type">BugTraceStepType</param>
+            <param name="machine">Machine</param>
+            <param name="machineState">MachineState</param>
+            <param name="eventInfo">EventInfo</param>
+            <param name="action">MethodInfo</param>
+            <param name="targetMachine">Target machine</param>
+            <param name="boolChoice">Boolean choice</param>
+            <param name="intChoice">Integer choice</param>
+            <param name="extraInfo">Extra info</param>
+            <returns>BugTraceStep</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Error.BugTraceStep.Equals(System.Object)">
+            <summary>
+            Determines whether the specified System.Object is equal
+            to the current System.Object.
+            </summary>
+            <param name="obj">Object</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Error.BugTraceStep.GetHashCode">
+            <summary>
+            Returns the hash code for this instance.
+            </summary>
+            <returns>int</returns>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.Tracing.Error.BugTraceStepType">
+            <summary>
+            The bug trace step type.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleStep">
+            <summary>
+            Class implementing a P# program schedule step.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleStep.Index">
+            <summary>
+            The unique index of this schedule step.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleStep.Type">
+            <summary>
+            The type of this schedule step.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleStep.ScheduledMachineId">
+            <summary>
+            The id of the scheduled machine. Only relevant if this is
+            a regular schedule step.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleStep.NondetId">
+            <summary>
+            The non-deterministic choice id. Only relevant if
+            this is a choice schedule step.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleStep.BooleanChoice">
+            <summary>
+            The non-deterministic boolean choice value. Only relevant if
+            this is a choice schedule step.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleStep.IntegerChoice">
+            <summary>
+            The non-deterministic integer choice value. Only relevant if
+            this is a choice schedule step.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleStep.Previous">
+            <summary>
+            Previous schedule step.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleStep.Next">
+            <summary>
+            Next schedule step.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleStep.State">
+            <summary>
+            Snapshot of the program state in this schedule step.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleStep.CreateSchedulingChoice(System.Int32,System.UInt64)">
+            <summary>
+            Creates a schedule step.
+            </summary>
+            <param name="index">Index</param>
+            <param name="scheduledMachineId">Scheduled machine id</param>
+            <returns>ScheduleStep</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleStep.CreateNondeterministicBooleanChoice(System.Int32,System.Boolean)">
+            <summary>
+            Creates a nondeterministic boolean choice schedule step.
+            </summary>
+            <param name="index">Index</param>
+            <param name="choice">Choice</param>
+            <returns>ScheduleStep</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleStep.CreateFairNondeterministicBooleanChoice(System.Int32,System.String,System.Boolean)">
+            <summary>
+            Creates a fair nondeterministic boolean choice schedule step.
+            </summary>
+            <param name="index">Index</param>
+            <param name="uniqueId">Unique id</param>
+            <param name="choice">Choice</param>
+            <returns>ScheduleStep</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleStep.CreateNondeterministicIntegerChoice(System.Int32,System.Int32)">
+            <summary>
+            Creates a nondeterministic integer choice schedule step.
+            </summary>
+            <param name="index">Index</param>
+            <param name="choice">Choice</param>
+            <returns>ScheduleStep</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleStep.Equals(System.Object)">
+            <summary>
+            Determines whether the specified System.Object is equal
+            to the current System.Object.
+            </summary>
+            <param name="obj">Object</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleStep.GetHashCode">
+            <summary>
+            Returns the hash code for this instance.
+            </summary>
+            <returns>int</returns>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleStepType">
+            <summary>
+            The schedule step type.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleTrace">
+            <summary>
+            Class implementing a P# program schedule trace.
+            A trace is a series of transitions from some
+            initial state to some end state.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleTrace.Steps">
+            <summary>
+            The steps of the schedule trace.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleTrace.Count">
+            <summary>
+            The number of steps in the schedule trace.
+            </summary>
+        </member>
+        <member name="P:Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleTrace.Item(System.Int32)">
+            <summary>
+            Index for the schedule trace.
+            </summary>
+            <param name="index">Index</param>
+            <returns>ScheduleStep</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleTrace.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleTrace.#ctor(System.String[])">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="traceDump">Trace</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleTrace.AddSchedulingChoice(System.UInt64)">
+            <summary>
+            Adds a scheduling choice.
+            </summary>
+            <param name="scheduledMachineId">Scheduled machine id</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleTrace.AddNondeterministicBooleanChoice(System.Boolean)">
+            <summary>
+            Adds a nondeterministic boolean choice.
+            </summary>
+            <param name="choice">Choice</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleTrace.AddFairNondeterministicBooleanChoice(System.String,System.Boolean)">
+            <summary>
+            Adds a fair nondeterministic boolean choice.
+            </summary>
+            <param name="uniqueId">Unique nondet id</param>
+            <param name="choice">Choice</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleTrace.AddNondeterministicIntegerChoice(System.Int32)">
+            <summary>
+            Adds a nondeterministic integer choice.
+            </summary>
+            <param name="choice">Choice</param>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleTrace.Pop">
+            <summary>
+            Returns the latest schedule step and removes
+            it from the trace.
+            </summary>
+            <returns>ScheduleStep</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleTrace.Peek">
+            <summary>
+            Returns the latest schedule step without removing it.
+            </summary>
+            <returns>ScheduleStep</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleTrace.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Returns an enumerator.
+            </summary>
+            <returns>IEnumerator</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleTrace.System#Collections#Generic#IEnumerable{Microsoft#PSharp#TestingServices#Tracing#Schedule#ScheduleStep}#GetEnumerator">
+            <summary>
+            Returns an enumerator.
+            </summary>
+            <returns>IEnumerator</returns>
+        </member>
+        <member name="M:Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleTrace.Push(Microsoft.PSharp.TestingServices.Tracing.Schedule.ScheduleStep)">
+            <summary>
+            Pushes a new step to the trace.
+            </summary>
+            <param name="step">ScheduleStep</param>
+        </member>
+        <member name="T:Microsoft.PSharp.QuiescentEvent">
+            <summary>
+            Signals that a machine has reached Quiescence
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.QuiescentEvent.mid">
+            <summary>
+            MachineId
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.QuiescentEvent.#ctor(Microsoft.PSharp.MachineId)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="T:Microsoft.PSharp.IO.SchedulingStrategyLogger">
+            <summary>
+            Logger for scheduling strategies. This is a converter from an <see cref="T:Microsoft.PSharp.IO.ILogger"/> to
+            an <see cref="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.ILogger"/>. If debugging is enabled,
+            it uses the <see cref="T:Microsoft.PSharp.IO.ConsoleLogger"/>, or the <see cref="T:Microsoft.PSharp.IO.DisposingLogger"/> if
+            debugging is disabled.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.IO.SchedulingStrategyLogger.DefaultLogger">
+            <summary>
+            Default logger.
+            </summary>
+        </member>
+        <member name="F:Microsoft.PSharp.IO.SchedulingStrategyLogger.InstalledLogger">
+            <summary>
+            Installed logger.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PSharp.IO.SchedulingStrategyLogger.#ctor(Microsoft.PSharp.Configuration)">
+            <summary>
+            Creates a new logger that converts logs from an <see cref="T:Microsoft.PSharp.IO.ILogger"/> to
+            an <see cref="T:Microsoft.PSharp.TestingServices.SchedulingStrategies.ILogger"/>.
+            </summary>
+            <param name="configuration">Configuration</param>
+        </member>
+        <member name="M:Microsoft.PSharp.IO.SchedulingStrategyLogger.Write(System.String)">
+            <summary>
+            Writes the specified string value.
+            </summary>
+            <param name="value">Text</param>
+        </member>
+        <member name="M:Microsoft.PSharp.IO.SchedulingStrategyLogger.Write(System.String,System.Object[])">
+            <summary>
+            Writes the text representation of the specified array of objects.
+            </summary>
+            <param name="format">Text</param>
+            <param name="args">Arguments</param>
+        </member>
+        <member name="M:Microsoft.PSharp.IO.SchedulingStrategyLogger.WriteLine(System.String)">
+            <summary>
+            Writes the specified string value, followed by the
+            current line terminator.
+            </summary>
+            <param name="value">Text</param>
+        </member>
+        <member name="M:Microsoft.PSharp.IO.SchedulingStrategyLogger.WriteLine(System.String,System.Object[])">
+            <summary>
+            Writes the text representation of the specified array of objects,
+            followed by the current line terminator.
+            </summary>
+            <param name="format">Text</param>
+            <param name="args">Arguments</param>
+        </member>
+        <member name="M:Microsoft.PSharp.IO.SchedulingStrategyLogger.SetLogger(Microsoft.PSharp.IO.ILogger)">
+            <summary>
+            Installs the specified <see cref="T:Microsoft.PSharp.IO.ILogger"/>.
+            </summary>
+            <param name="logger">ILogger</param>
+        </member>
+        <member name="M:Microsoft.PSharp.IO.SchedulingStrategyLogger.ResetToDefaultLogger">
+            <summary>
+            Resets the installed <see cref="T:Microsoft.PSharp.IO.ILogger"/> to the default logger.
+            </summary>
+        </member>
+    </members>
+</doc>
