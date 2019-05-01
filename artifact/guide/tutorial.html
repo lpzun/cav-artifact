@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=windows-1252">
+    <link type="text/css" rel="stylesheet" href="css/project.css">
+    <link rel="stylesheet" href="css/navi.css">
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <title>Artifact Evaluation Guide</title>
+    <style>
+
+        img {
+            width: auto;
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h2 align="center">Artifact for Submission 172:</h2>
+        <h3 align="center">Verifying Asynchronous Event-Driven Programs Using Partial Abstract Transformers</h3>
+        <!--Navigation bar-->
+        <div id="cssmenu">
+            <ul>
+                <li><a href='../index.html'>Checklist</a></li>
+                <li><a href='tool.html'>Tool</a></li>
+                <li><a href='doc.html'>Documentation</a></li>
+                <li class='active'><a href='tutorial.html'>Tutorial</a></li>
+                <li><a href='experiments.html'>Experiments</a></li>
+            </ul>
+        </div>
+        <!--end of Navigation bar-->
+        <!-- customize your content begin here -->
+        <div id="tool">
+            <h3>Tutorial</h3>
+
+            <h4>Prerequisites</h4>
+            <p>
+                <ul>
+                    <li>
+                        Our tool can only run on the <b>64-bit Windows 10</b>. Using <b>Windows Command Prompt</b> will maximize its functionality.
+                    </li>
+                    <br />
+                    <li>
+                        To better understand our tool PAT, please read the design description under Documentation tab first.
+                    </li>
+                    <br />
+                    <li>
+                        For this tutorial, please enter the <code>artifact/examples/tutorial/</code> directory.
+                    </li>
+                    <br />
+                    <li>
+                        To have the executable of our tool readily available, please add the
+                        location <code>your-unpacked-path /artifact/bin/x64/Binaries/</code> to the PATH
+                        environment variable.
+                    </li>
+                </ul>
+            </p>
+
+            <h4>1. Help Info</h4>
+            The following command prints usage help info:
+
+            <pre><code>pt /h</code></pre>
+            Some options related to our tool (PAT = <code>pt /os-list</code>) are explained as follows
+            <pre>
+---------------------------------------------
+Options ::
+---------------------------------------------
+/h                       Print the help message
+
+Flags related to exhaustive state space exploration:
+/dfs                     Perform DFS exploration of the state space
+/os-list                 Perform OS exploration (based on DFS) of the state space, with queue list abstraction
+/queue-bound:k           Bound queue size to k (i.e. a machine's send is disabled when its current buffer is 
+                         size k) (default: 0=unbounded for DFS, 1 for OS).
+                         In case of /os-list search, this bound applies to the first-round queue and is 
+                         incremented subsequently.
+/queue-prefix:p          Keep prefix of queue of length p(>=0) /exact/ (abstraction applies to suffix starting 
+                         at position p) (default: 0)
+/interactive             Interactive mode: need users to press button to increase queue bound and continue 
+                         exploration
+/file-dump               Pretty-print accumulated states into files. For debugging only; this may create LARGE 
+                         files!
+
+Flags related to QuTL model checker:
+/qutl:formula            Use QuTL formula to specify the properties which states should satisfy
+/concrete                Invoke concrete model checker to test the correctness of QuTL formula!
+
+If none of /psharp, /dfs, /os-... are specified: perform random testing</pre>
+
+            </p>
+
+            <p>
+                We illustrate tool usage through a motivating example <a href="../examples/tutorial/pingflood/pingflood.p">pingflood.p</a>,
+                included in the <code>examples/tutorial/pingflood/</code> directory.
+            </p>
+
+            <h4>2. Compile a P program</h4>
+            <p>
+                A P compiler <code>pc.exe</code> is included in the directory <code>/bin/x64/Binaries</code>, and a batch
+                script to compile <code>pingflood.p</code> is also attached in <code>/examples/tutorial/pingflood/</code>.
+                So, simply run the following command to compile <code>pingflood.p</code>.
+                <pre>./build.bat</pre>
+                After compilation, you will get a file named <code>pingflood.dll</code>. Our tool PAT will run verification
+                on it.
+            </p>
+            <b><i>Warning:</i></b>
+            The compilation might take minutes. So, please be patient.
+
+            <h4>3. Run PAT</h4>
+
+            <b><i>Remark</i>:</b> The convergence detection by iteratively increasing the unabstracted prefix of queues.
+            For example,
+
+            <pre>pt /os-list pingflood.dll /queue-prefix:0
+pt /os-list pingflood.dll /queue-prefix:1
+pt /os-list pingflood.dll /queue-prefix:2
+pt /os-list pingflood.dll /queue-prefix:3
+pt /os-list pingflood.dll /queue-prefix:4</pre>
+
+            <b><i>Explanation</i>:</b>
+            <ul>
+                <li><code>pingflood.dll</code>: a compiled P program which is the target of verification.</li>
+                <li><code>/os-list              </code>: launch the <b>list abstraction</b>.</li>
+                <li>
+                    <code>/queue-prefix</code>: the size of the un-abstracted prefix of queues (default value is 0). During verification, 
+                    this value will
+                    be iteratively increased, until either encounter a <i>convergence</i> if applicable, or reach an (artificially specified)
+                    upper bound.
+                </li>
+            </ul>
+            <b><i>Example</i>:</b> The example does NOT converge when the value of <code>/queue-prefix</code> is <code>0~3</code>.
+            But it converges when the value of <code>queue-prefix</code> is <code>4</code>. The output with <code>queue-prefix:4</code>
+            is shown at the bottom of this page.
+
+            <h4>4. Run PAT+I</h4>
+            <p>
+                Other than iteratively increasing the un-abstracted prefix of an abstract queue, an alternative solution is to
+                specify some invariant (i.e., the QuTL formula) to exclude the noise.
+            </p>
+
+            <b><i>Remark</i>:</b> PAT+Invariant,
+            it will enable QuTL model checker to excluding the noise which might prevent convergence. In the current
+            implementation, the QuTL formula is written in
+            <a href="https://en.wikipedia.org/wiki/Reverse_Polish_notation">Reverse Polish Notation (RPN)</a>
+            (i.e. postfix notation). This is a limitation of the usability. We will improve this and use the
+            infix notation in the next version.
+
+            <pre><code>pt /os-list pingflood.dll /qutl:"true:$ DONE = DONE # 0 = => () DONE WAIT ! G => () G &"</code></pre>
+
+            <b><i>Explanation</i>:</b>
+            <ul>
+                <li>
+                    <code>/qutl:formula</code>:
+                    The entire formula is a collection of machine-wise QuTL subformulae. The subformulae are separated by semicolon (;).
+                    For example, program <code>pingflood.p</code> has two machines. So, the formula in the example
+                    has two subformulae:
+                    <br />
+                    <ul>
+                        <li>The QuTL subformula for machine <code>server</code> is: <code>true</code></li>
+                        <br />
+                        <li>
+                            The QuTL subformula for machine <code>client</code> is:
+                            <code>$ DONE = DONE # 0 = => () DONE WAIT ! G => () G &</code>,
+                            whose infix form is <code>($ = DONE => #DONE = 0) & G(DONE => G !WAIT)</code>.
+
+                            <p>
+                                <b><i>Remark</i>:</b> In the paper, we present only the second part <code>G(DONE => G !WAIT)</code>.
+                                The reason is that these two parts actually presents a same constraint: As along as a DONE event
+                                has appeared, then DONE will never appears in the queue again.
+                                Notation <code>$</code> represents the current processing event. So, it means if the current
+                                processing event is DONE, then there won't be event DONE any more.
+                                We need the first part to help us complete the semantics.
+                            </p>
+                    </ul>
+                </li>
+            </ul>
+
+            <b><i>Example</i>:</b> The example converges with the invariant, even when <code>queue-prefix:0</code>.
+            The output
+            is shown at the bottom of this page.
+
+            <h4>5. Example Output</h4>
+            <div class="row">
+                <div class="column">
+                    <p><i>PAT (with <code>/queue-prefix:p</code>)</i></p>
+                    <object width="380" height="650" data="pingflood-pat4.txt"></object>
+                </div>
+                <div class="column">
+                    <p><i>PAT+I (with <code>/qutl:formula</code>)</i></p>
+                    <object width="380" height="650" data="pingflood-pati.txt"></object>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+Using queue bound of 1
+
+Number of concrete states visited     = 7
+Number of abstract states encountered = 7
+Number of abstract successors found   = 0
+Maximum queue size  encountered       = 1
+Maximum stack size  encountered       = 5
+
+Using queue bound of 2
+
+Number of concrete states visited     = 10
+Number of abstract states encountered = 10
+Number of abstract successors found   = 0
+Maximum queue size  encountered       = 2
+Maximum stack size  encountered       = 6
+
+Using queue bound of 3
+
+Number of concrete states visited     = 13
+Number of abstract states encountered = 13
+Number of abstract successors found   = 0
+Maximum queue size  encountered       = 3
+Maximum stack size  encountered       = 7
+
+Using queue bound of 4
+
+Number of concrete states visited     = 36
+Number of abstract states encountered = 36
+Number of abstract successors found   = 0
+Maximum queue size  encountered       = 4
+Maximum stack size  encountered       = 20
+
+Using queue bound of 5
+
+Number of concrete states visited     = 43
+Number of abstract states encountered = 43
+Number of abstract successors found   = 10
+Maximum queue size  encountered       = 5
+Maximum stack size  encountered       = 22
+
+Using queue bound of 6
+
+Number of concrete states visited     = 50
+Number of abstract states encountered = 43
+Number of abstract successors found   = 10
+Maximum queue size  encountered       = 6
+Maximum stack size  encountered       = 24
+
+New plateau detected.
+Running abstract state convergence test with list abstraction ... Abstract state sequence converged!
+Time elapsed: 0.07 seconds

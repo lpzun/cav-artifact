@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=windows-1252">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link type="text/css" rel="stylesheet" href="css/project.css">
+    <link rel="stylesheet" href="css/navi.css">
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <title>Artifact Evaluation Guide</title>
+</head>
+<body>
+    <div class="content">
+        <h2 align="center">Artifact for Submission 172:</h2>
+        <h3 align="center">Verifying Asynchronous Event-Driven Programs Using Partial Abstract Transformers</h3>
+        <!--Navigation bar-->
+        <div id="cssmenu">
+            <ul>
+                <li><a href='../index.html'>Checklist</a></li>
+                <li><a href='tool.html'>Tool</a></li>
+                <li class='active'><a href='doc.html'>Documentation</a></li>
+                <li><a href='tutorial.html'>Tutorial</a></li>
+                <li><a href='experiments.html'>Experiments</a></li>
+            </ul>
+        </div>
+        <!--end of Navigation bar-->
+        <!-- customize your content begin here -->
+        <h3>1. Design Description</h3>
+        <div id="design">
+            <div class="row" align="center">
+                <div class="column" align="center">
+                    <p><i>An overview of PAT</i></p>
+                    <object width="400" height="450" data="design.pdf"></object>
+                </div>
+            </div>
+            <p>
+                The above figure demonstrates the architecture of our tool. It contains two
+                components: PAT and QuTL MCer.
+                <ul>
+                    <li>
+                        PAT implements the core idea of our approach (Algorithm 1, Section 4 of the paper). It contains two main procedures:
+                        the procedure of observation <b>sequence construction</b> using list abstraction, and that of <b>convergence detector</b>
+                        using the partial abstract transformer.
+                    </li>
+                    <br />
+                    <li>
+                        QuTL MCer (QuTL model checker) implements the QuTL model checking algorithms
+                        (Section 5 of the paper). When enable, it is used to filter the suprious abstract states in the process of
+                        convergence detection. It contains two main procedures: a <b>concrete MCer</b> is called on
+                        concrete states in the process of sequence construction. Its main purpose is to verify
+                        whether the input invariant is valid or not. If the concrete MCer reports a violation,
+                        then the user has to rewritten the invariant. Otherwise, the invariant will be fed
+                        to <b>abstract MCer</b> to filter infeasible abstract states -- the ones does not satisfy the invariant.
+                    </li>
+                </ul>
+            </p>
+
+
+            <p>
+                <b>Usage:</b> To use our tool, the users first need to compile a P program, which is done via P compiler
+                (See tutorial and Section 6 of the paper for more details). Then, our tool will run the verification on the compiled P program.
+                Our tool provides rich features to perform verification. Two main features are presented as follows:
+                <ul>
+                    <li>
+                        <code>/queue-prefix:p</code>:: to verify P program by specifying an
+                        unabstracted prefix of queues. An advantage of this approach is that it is fully automatic. 
+                    </li>
+                    <br />
+                    <li>
+                        <code>/qutl:formula  </code>:: verify P program WITH QuTL MCer.
+                    </li>
+                </ul>
+                Of course, we can even combine above two features together, namely we verify a P program by inputing an invariant, and meanwhile
+                specify an unabstracted prefix. 
+            </p>
+        </div>
+
+        <h3>2. Programmer's Guide</h3>
+        <div id="documentation">
+            See <a href="../doc/html/index.html">here</a> for the off-the-shelf programmer's guide in <b>html</b> format.
+        </div>
+    </div>
+</body>
+</html>
