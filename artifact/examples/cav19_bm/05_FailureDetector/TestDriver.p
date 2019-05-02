@@ -9,7 +9,7 @@ machine Driver {
     start state Init {
         entry {
             Init(0, null);
-            announce M_START, nodemap;
+            //announce M_START, nodemap;
             fd = new FailureDetector(nodeseq);
             send fd, REGISTER_CLIENT, this;
             Fail(0);

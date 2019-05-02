@@ -42,11 +42,11 @@
                     </li>
                     <br />
                     <li>
-                        To better understand our tool PAT, please read the design description under Documentation tab first.
+                        To better understand our tool PAT, please read the design description under <code>Documentation</code> tab first.
                     </li>
                     <br />
                     <li>
-                        For this tutorial, please enter the <code>artifact/examples/tutorial/</code> directory.
+                        For this tutorial, please enter the <code>examples/tutorial/</code> directory.
                     </li>
                     <br />
                     <li>
@@ -92,15 +92,16 @@ If none of /psharp, /dfs, /os-... are specified: perform random testing</pre>
 
             <p>
                 We illustrate tool usage through a motivating example <a href="../examples/tutorial/pingflood/pingflood.p">pingflood.p</a>,
-                included in the <code>examples/tutorial/pingflood/</code> directory.
+                included in the <code>examples/tutorial/pingflood/</code> directory. It is the same example we show in Section 2 of the paper
+                except some functions / variables use different names.
             </p>
 
             <h4>2. Compile a P program</h4>
             <p>
-                A P compiler <code>pc.exe</code> is included in the directory <code>/bin/x64/Binaries</code>, and a batch
-                script to compile <code>pingflood.p</code> is also attached in <code>/examples/tutorial/pingflood/</code>.
+                A P compiler <code>pc.exe</code> is included in the directory <code>bin/x64/Binaries</code>, and a batch
+                script to compile <code>pingflood.p</code> is also attached in <code>examples/tutorial/pingflood/</code>.
                 So, simply run the following command to compile <code>pingflood.p</code>.
-                <pre>./build.bat</pre>
+                <pre>build.bat</pre>
                 After compilation, you will get a file named <code>pingflood.dll</code>. Our tool PAT will run verification
                 on it.
             </p>
@@ -109,7 +110,7 @@ If none of /psharp, /dfs, /os-... are specified: perform random testing</pre>
 
             <h4>3. Run PAT</h4>
 
-            <b><i>Remark</i>:</b> The convergence detection by iteratively increasing the unabstracted prefix of queues.
+            <b><i>Remark</i>:</b> verify P programs via iteratively increasing the unabstracted prefix of queues.
             For example,
 
             <pre>pt /os-list pingflood.dll /queue-prefix:0
@@ -123,31 +124,46 @@ pt /os-list pingflood.dll /queue-prefix:4</pre>
                 <li><code>pingflood.dll</code>: a compiled P program which is the target of verification.</li>
                 <li><code>/os-list              </code>: launch the <b>list abstraction</b>.</li>
                 <li>
-                    <code>/queue-prefix</code>: the size of the un-abstracted prefix of queues (default value is 0). During verification, 
+                    <code>/queue-prefix</code>: the size of the un-abstracted prefix of queues (default value is 0). During verification,
                     this value will
                     be iteratively increased, until either encounter a <i>convergence</i> if applicable, or reach an (artificially specified)
                     upper bound.
                 </li>
             </ul>
             <b><i>Example</i>:</b> The example does NOT converge when the value of <code>/queue-prefix</code> is <code>0~3</code>.
-            But it converges when the value of <code>queue-prefix</code> is <code>4</code>. The output with <code>queue-prefix:4</code>
-            is shown at the bottom of this page.
+            But it converges when the value of <code>queue-prefix</code> is <code>4</code>. The output of <code>queue-prefix:4</code>
+            is shown at the bottom of this page. Whenever there is a plateau but meanwhile our tool cannot determine the convergence,
+            our tool provides two options to users:
+<pre>
+(c)ontinue, by increasing the queue bound, ignoring the unreached successor, OR
+(i)nvestigate; we will then locate the state with that hash code.</pre>
+
+            The second one <code>(i)nvestigate</code> typically tell users why convergence does not appear at this point.
+            Subsequently, users might be able to get some hints to design queue invariants to exclude spurious abstract states, if any.
 
             <h4>4. Run PAT+I</h4>
             <p>
                 Other than iteratively increasing the un-abstracted prefix of an abstract queue, an alternative solution is to
-                specify some invariant (i.e., the QuTL formula) to exclude the noise.
+                specify some invariant (i.e., the QuTL formula) to exclude the spurious abstract states.
             </p>
 
-            <b><i>Remark</i>:</b> PAT+Invariant,
-            it will enable QuTL model checker to excluding the noise which might prevent convergence. In the current
-            implementation, the QuTL formula is written in
-            <a href="https://en.wikipedia.org/wiki/Reverse_Polish_notation">Reverse Polish Notation (RPN)</a>
-            (i.e. postfix notation). This is a limitation of the usability. We will improve this and use the
-            infix notation in the next version.
+            <p>
+                <b><i>Remark</i>:</b> PAT+Invariant,
+                it will enable QuTL model checker to excluding the spurious abstract states which might prevent convergence. In the current
+                implementation, the QuTL formula is written in
+                <a href="https://en.wikipedia.org/wiki/Reverse_Polish_notation">Reverse Polish Notation (RPN)</a>
+                (i.e. postfix notation). This is a limitation of the usability. We will improve this and use the
+                infix notation in the next version.
+            </p>
+            <p>
+                One thing we hope users keep in mind is that: Typically, there are many different helpful invariants.
+                For instance, for the given example, one invariant is the same as we present in the paper.
+                The other one is as follows:
 
-            <pre><code>pt /os-list pingflood.dll /qutl:"true:$ DONE = DONE # 0 = => () DONE WAIT ! G => () G &"</code></pre>
+                <pre><code>pt /os-list pingflood.dll /qutl:"true:$ DONE = DONE # 0 = => () PING PING G => () G &"</code></pre>
 
+                We have included both invariants in the batch script <code>run.bat</code> under directory <code>tutorial/pingflood/</code>.
+            </p>
             <b><i>Explanation</i>:</b>
             <ul>
                 <li>
@@ -157,20 +173,25 @@ pt /os-list pingflood.dll /queue-prefix:4</pre>
                     has two subformulae:
                     <br />
                     <ul>
-                        <li>The QuTL subformula for machine <code>server</code> is: <code>true</code></li>
+                        <li>The QuTL subformula for machine <code>server</code> (the <code>Main</code> machine in the code) is: <code>true</code></li>
                         <br />
                         <li>
                             The QuTL subformula for machine <code>client</code> is:
-                            <code>$ DONE = DONE # 0 = => () DONE WAIT ! G => () G &</code>,
-                            whose infix form is <code>($ = DONE => #DONE = 0) & G(DONE => G !WAIT)</code>.
+                            <code>$ DONE = DONE # 0 = => () PING PING G => () G &</code>,
+                            whose infix form is <code>($ = DONE => #DONE = 0) & G(PING => G PING)</code>.
 
                             <p>
-                                <b><i>Remark</i>:</b> In the paper, we present only the second part <code>G(DONE => G !WAIT)</code>.
-                                The reason is that these two parts actually presents a same constraint: As along as a DONE event
-                                has appeared, then DONE will never appears in the queue again.
-                                Notation <code>$</code> represents the current processing event. So, it means if the current
-                                processing event is DONE, then there won't be event DONE any more.
-                                We need the first part to help us complete the semantics.
+                                <b><i>Remark</i>:</b> This subformula consists of two components, connected by logic and <code>&</code>.
+                                They actually present a same constraint from different perspectives.
+                                In other words, The first one is a supplementary of the second one.
+                                Symbol <code>$</code> represents the current processing event. So, the first component says: <i>
+                                    if the current
+                                    processing event is <code>DONE</code>, then there won't be event <code>DONE</code> any more
+                                </i>. While the second component says: <i>
+                                    whenever an <code>PING</code> appears in the queue, then the incoming event is always <code>PING</code>
+                                </i>.
+                                Since the second component cannot constrain the processing event,
+                                we need the first component to complete the constraint.
                             </p>
                     </ul>
                 </li>

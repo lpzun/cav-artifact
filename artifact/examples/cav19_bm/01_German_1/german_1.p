@@ -3,7 +3,7 @@
 /// events sent out from CPU
 ///////////////////////////////
 // event grant assert 1;
-event ask_share assume 1; // at most 3 instances of ask_share may exist in *some* (?) input queue. This is only used in systematic testing using Zing. 
+event ask_share assume 2; // at most 3 instances of ask_share may exist in *some* (?) input queue. This is only used in systematic testing using Zing. 
 event ask_excl assume 1;
 ///////////////////////////////
 /// events sent out from Client

@@ -24,21 +24,50 @@
         <!--end of Navigation bar-->
         <!-- customize your content begin here -->
         <div id="tool">
+            <h3>1. Experimental Setup</h3>
+            <p>
+                For reference, our experiments are performed on a 2.80 GHz Intel(R) Core(TM) i7-7600 machine with 8 GB memory,
+                running 64-bit Windows 10. The timeout per benchmark is set to 3600sec (1h); the memory limit
+                to 4 GB.
+            </p>
+            <h3>2. Reproduce Experiments</h3>
             <p>
                 The benchmarks used in our paper can be found in the directory<code>examples/cav19_bm</code>.
                 Various batch scripts has been included for reproducing the experiments.
             </p>
-            <h4>1. Compile benchmarks</h4>
-            To compile benchmarks, run the following command:
-            <pre>./compile-benchmark.bat</pre>
+            <p>
+                <b><i>Remark</i>:</b>
+                <ul>
+                    <li>
+                        For benchmark <code>01/German-1</code> and <code>01/German-2</code>, our script only reproduces
+                        the experiments with invariants.
+                    </li>
+                    <br />
+                    <li>
+                        Per suggestion from the instruction of artifact submission, we exclude
+                        from the artifact two time-consuming benchmarks <code>04/TokenRing-fixed</code> and <code>07/openWSN</code>.
+                    </li>
+                    <br />
 
-            To clean up benchmarks, run the following command:
-            <pre>./cleanup-benchmark.bat</pre>
-            <h4>2. Run experiments</h4>
-            Run the following command to reproduce the experiments:
-            <pre>./run-experiments.bat</pre>
-            <h4>3. Generate the table</h4>
-            <h4>4. Generate the chart</h4>
+                    <li>
+                        We did not collect memory usage as doing this in Windows batch script is painful. We manually collected
+                        the information of memory usage reported in the paper.
+                    </li>
+                </ul>
+            </p>
+            <h4>Step 1. Compile benchmarks</h4>
+            To compile benchmarks, please execute the following command:
+            <pre>compile-benchmark.bat</pre>
+
+            To clean up benchmarks, please execute the following command:
+            <pre>cleanup-benchmark.bat</pre>
+
+            <h4>Step 2. Run experiments</h4>
+            To reproduce the experiments, please execute the following command :
+            <pre>run-experiments.bat</pre>
+
+            The experiments will generate logs. Read the <code>README.txt</code> to get more on how to read the log files.
+            <!--h4>3. Generate the table</h4-->
         </div>
 
     </div>

@@ -1,9 +1,9 @@
 //include "Timer.p"
 
 // request from failure detector to node 
-event PING: machine;
+event PING assume 1: machine;
 // response from node to failure detector
-event PONG: machine;
+event PONG assume 2: machine;
 // register a client for failure notification 
 event REGISTER_CLIENT: machine;
 // unregister a client from failure notification

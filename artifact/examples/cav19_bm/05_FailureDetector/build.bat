@@ -1,3 +1,4 @@
+@echo off
 set THISDIR=%~dp0
 pushd %THISDIR%
 set pc=..\..\..\bin\x64\Binaries\pc.exe

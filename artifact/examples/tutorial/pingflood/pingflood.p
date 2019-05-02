@@ -1,7 +1,7 @@
 //enum Global { ZERO=0, X=3 } // for some reason, at least one enum element must be numbered 0
 
-event WAIT;
-event DONE assert 1;
+event PRIME;
+event DONE;
 event PING;
 
 machine Main {
@@ -19,7 +19,7 @@ machine Main {
       var i:int;
       i = 0;
       while (i < 3) {
-        send client, WAIT;
+        send client, PRIME;
         i = i + 1; 
       }
       send client, DONE;
@@ -39,11 +39,11 @@ machine Main {
 
 machine Client {
   start state Init {
-    defer WAIT, PING;
+    defer PRIME;
     on DONE goto Consume; 
   }
 
   state Consume { 
-  ignore WAIT, PING; 
+  ignore PRIME, PING; 
   }
 }

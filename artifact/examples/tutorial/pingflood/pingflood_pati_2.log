@@ -1,0 +1,56 @@
+testing...true:$ DONE = DONE # 0 = => () PING PING G => () G &
+0: 1 
+1: ( $  = DONE  => # DONE  = 0 ) & G ( PING  => G PING )
+
+Using queue bound of 1
+
+Number of concrete states visited     = 7
+Number of abstract states encountered = 7
+Number of abstract successors found   = 0 (only those satisfying all static invariants)
+Maximum queue size  encountered       = 1
+Maximum stack size  encountered       = 5
+
+Using queue bound of 2
+
+Number of concrete states visited     = 10
+Number of abstract states encountered = 10
+Number of abstract successors found   = 0 (only those satisfying all static invariants)
+Maximum queue size  encountered       = 2
+Maximum stack size  encountered       = 6
+
+Using queue bound of 3
+
+Number of concrete states visited     = 13
+Number of abstract states encountered = 13
+Number of abstract successors found   = 0 (only those satisfying all static invariants)
+Maximum queue size  encountered       = 3
+Maximum stack size  encountered       = 7
+
+Using queue bound of 4
+
+Number of concrete states visited     = 36
+Number of abstract states encountered = 25
+Number of abstract successors found   = 7 (only those satisfying all static invariants)
+Maximum queue size  encountered       = 4
+Maximum stack size  encountered       = 20
+
+Using queue bound of 5
+
+Number of concrete states visited     = 43
+Number of abstract states encountered = 27
+Number of abstract successors found   = 8 (only those satisfying all static invariants)
+Maximum queue size  encountered       = 5
+Maximum stack size  encountered       = 22
+
+Using queue bound of 6
+
+Number of concrete states visited     = 50
+Number of abstract states encountered = 27
+Number of abstract successors found   = 8 (only those satisfying all static invariants)
+Maximum queue size  encountered       = 6
+Maximum stack size  encountered       = 24
+
+New plateau detected.
+Running abstract state convergence test with list abstraction ... 
+Abstract state sequence converged at 5
+Time elapsed: 0.07 seconds

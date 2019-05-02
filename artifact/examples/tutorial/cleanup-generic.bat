@@ -7,6 +7,8 @@ del *.cs  2> nul
 del *.pdb 2> nul
 del *.out 2> nul
 del *.dll *~ 2> nul
+del coverge.dgml 2> nul
+del coverge.txt 2> nul
 
 del concretes*      2> nul
 del abstracts*      2> nul

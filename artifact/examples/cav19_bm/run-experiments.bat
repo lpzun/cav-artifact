@@ -26,4 +26,4 @@ for /D %%d in (*) do (
 
 goto :eof
 :no-pt
-echo please specify pt.ext
+echo please specify pt.exe
