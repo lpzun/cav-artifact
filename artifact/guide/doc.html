@@ -38,18 +38,18 @@
                 <ul>
                     <li>
                         PAT implements the core idea of our approach (Algorithm 1, Section 4 of the paper). It contains two main procedures:
-                        the procedure of observation <b>sequence construction</b> using list abstraction, and that of <b>convergence detector</b>
+                        the <b>observation sequence construction</b> using list abstraction, and the <b>convergence detection</b>
                         using the partial abstract transformer.
                     </li>
                     <br />
                     <li>
                         QuTL MCer (QuTL model checker) implements the QuTL model checking algorithms
-                        (Section 5 of the paper). When enable, it is used to filter the suprious abstract states in the process of
+                        (Section 5 of the paper). When enabled, it is used to filter spurious abstract states in the process of
                         convergence detection. It contains two main procedures: a <b>concrete MCer</b> is called on
-                        concrete states in the process of sequence construction. Its main purpose is to verify
-                        whether the input invariant is valid or not. If the concrete MCer reports a violation,
+                        concrete states in the process of sequence construction. Its main purpose is to test
+                        whether the input invariant is valid or not, on the states reached up to the bound. If the concrete MCer reports a violation,
                         then the user has to rewritten the invariant. Otherwise, the invariant will be fed
-                        to <b>abstract MCer</b> to filter infeasible abstract states -- the ones does not satisfy the invariant.
+                        to <b>abstract MCer</b> to filter infeasible abstract states -- those that violate the invariant (see paper for meaning).
                     </li>
                 </ul>
             </p>
@@ -61,22 +61,21 @@
                 Our tool provides rich features to perform verification. Two main features are presented as follows:
                 <ul>
                     <li>
-                        <code>/queue-prefix:p</code>:: to verify P program by specifying an
-                        unabstracted prefix of queues. An advantage of this approach is that it is fully automatic. 
+                        <code>/queue-prefix:p</code>:: to verify a P program by specifying an
+                        unabstracted prefix of queues.
                     </li>
                     <br />
                     <li>
-                        <code>/qutl:formula  </code>:: verify P program WITH QuTL MCer.
+                        <code>/qutl:formula  </code>:: to verify a P program using the QuTL MCer.
                     </li>
                 </ul>
-                Of course, we can even combine above two features together, namely we verify a P program by inputing an invariant, and meanwhile
-                specify an unabstracted prefix. 
+                The two features can be used simultanously.
             </p>
         </div>
 
         <h3>2. Programmer's Guide</h3>
         <div id="documentation">
-            See <a href="../doc/html/index.html">here</a> for the off-the-shelf programmer's guide in <b>html</b> format.
+            See <a href="../doc/Help/index.html">here</a> for the off-the-shelf programmer's guide in <b>html</b> format.
         </div>
     </div>
 </body>

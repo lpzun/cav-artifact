@@ -38,7 +38,7 @@
             <p>
                 <ul>
                     <li>
-                        Our tool can only run on the <b>64-bit Windows 10</b>. Using <b>Windows Command Prompt</b> will maximize its functionality.
+                        Our tool requires <b>64-bit Windows 10</b>. Using <b>Windows Command Prompt</b> is most effective.
                     </li>
                     <br />
                     <li>
@@ -91,22 +91,20 @@ If none of /psharp, /dfs, /os-... are specified: perform random testing</pre>
             </p>
 
             <p>
-                We illustrate tool usage through a motivating example <a href="../examples/tutorial/pingflood/pingflood.p">pingflood.p</a>,
+                We illustrate tool usage through a motivating example, <a href="../examples/tutorial/pingflood/pingflood.p">pingflood.p</a>,
                 included in the <code>examples/tutorial/pingflood/</code> directory. It is the same example we show in Section 2 of the paper
-                except some functions / variables use different names.
+                except that some functions/variables use different names.
             </p>
 
             <h4>2. Compile a P program</h4>
             <p>
                 A P compiler <code>pc.exe</code> is included in the directory <code>bin/x64/Binaries</code>, and a batch
-                script to compile <code>pingflood.p</code> is also attached in <code>examples/tutorial/pingflood/</code>.
+                script to compile <code>pingflood.p</code> is also included in <code>examples/tutorial/pingflood/</code>.
                 So, simply run the following command to compile <code>pingflood.p</code>.
                 <pre>build.bat</pre>
-                After compilation, you will get a file named <code>pingflood.dll</code>. Our tool PAT will run verification
-                on it.
+                The compilation produces a file named <code>pingflood.dll</code>, which is used by PAT, as shown below.
             </p>
-            <b><i>Warning:</i></b>
-            The compilation might take minutes. So, please be patient.
+            <b><i>Warning:</i></b> The compilation might take several minutes.
 
             <h4>3. Run PAT</h4>
 
@@ -122,12 +120,11 @@ pt /os-list pingflood.dll /queue-prefix:4</pre>
             <b><i>Explanation</i>:</b>
             <ul>
                 <li><code>pingflood.dll</code>: a compiled P program which is the target of verification.</li>
-                <li><code>/os-list              </code>: launch the <b>list abstraction</b>.</li>
+                <li><code>/os-list              </code>: use the <b>list abstraction</b>.</li>
                 <li>
                     <code>/queue-prefix</code>: the size of the un-abstracted prefix of queues (default value is 0). During verification,
                     this value will
-                    be iteratively increased, until either encounter a <i>convergence</i> if applicable, or reach an (artificially specified)
-                    upper bound.
+                    be iteratively increased, until you either experience <i>convergence</i>, or reach an (artificially specified) upper bound.
                 </li>
             </ul>
             <b><i>Example</i>:</b> The example does NOT converge when the value of <code>/queue-prefix</code> is <code>0~3</code>.
@@ -144,12 +141,11 @@ pt /os-list pingflood.dll /queue-prefix:4</pre>
             <h4>4. Run PAT+I</h4>
             <p>
                 Other than iteratively increasing the un-abstracted prefix of an abstract queue, an alternative solution is to
-                specify some invariant (i.e., the QuTL formula) to exclude the spurious abstract states.
+                specify some invariant, via a QuTL formula, to exclude the spurious abstract states.
             </p>
 
             <p>
-                <b><i>Remark</i>:</b> PAT+Invariant,
-                it will enable QuTL model checker to excluding the spurious abstract states which might prevent convergence. In the current
+                <b><i>Remark</i>:</b> PAT+Invariant will enable QuTL model checker to exclude some spurious abstract states, which will prevent convergence. In the current
                 implementation, the QuTL formula is written in
                 <a href="https://en.wikipedia.org/wiki/Reverse_Polish_notation">Reverse Polish Notation (RPN)</a>
                 (i.e. postfix notation). This is a limitation of the usability. We will improve this and use the
@@ -198,8 +194,7 @@ pt /os-list pingflood.dll /queue-prefix:4</pre>
             </ul>
 
             <b><i>Example</i>:</b> The example converges with the invariant, even when <code>queue-prefix:0</code>.
-            The output
-            is shown at the bottom of this page.
+            The output is shown at the bottom of this page.
 
             <h4>5. Example Output</h4>
             <div class="row">
