@@ -12,6 +12,8 @@ if NOT errorlevel 0 goto :eof
 
 %pc% /generate:C# /link /shared TestScript.p /r:Failover.4ml
 
+move Test0.dll Failover.dll
+
 if NOT errorlevel 0 goto :eof
 
 REM %pt% /psharp Test0.dll
