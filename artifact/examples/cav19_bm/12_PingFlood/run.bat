@@ -7,7 +7,7 @@ set f=pingflood
 
 :: paramters
 set BOUND=6
-set PREFIX=0
+set PREFIX=4
 
 
 if not exist "%f%.dll" goto :noF
