@@ -69,10 +69,22 @@
             The experiments will generate logs. Read the <code>README.txt</code> to get more on how to read the log files.
 
             <h4>Step 3. Process results</h4>
-            To process the experimental results, e.g. executing time etc., please execute the following command:
-            <pre>process-results.bat</pre>
 
             <b><i>Warning</i>:</b> To use the process-results scripts, please make sure you have Python (version 2.7.14 or above) installed on your machine.
+            <p>
+                To process the experimental results, e.g. executing time etc., please execute the following command:
+                <pre>process-results.bat</pre>
+
+                After running the above script, the results will be stored in the following two files:
+                <ul>
+                    <li>
+                        <b>pat_ptester.csv:</b> the results of running PAT and PTester atop which our tool is built; the comparison demonstrates the overhead our approach adds it on.
+                    </li>
+                    <li>
+                        <b>pati.csv:</b> the experimental result of PAT+I; only <code>01/German-1</code> and <code>02/German-2</code> have such results.
+                    </li>
+                </ul>
+            </p>
         </div>
 
     </div>
