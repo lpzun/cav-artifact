@@ -12,6 +12,15 @@ if not exist "%pt%" goto :no-pt
 for /D %%d in (*) do (
 	@echo %%d
 	cd %%d
+	@call run.bat %pt% log
+	cd ..
+)
+
+goto :eof
+:no-pt
+echo please specify pt.exe
+
+
 	REM for %%f in (*.dll) do (
 		REM @echo %%~nf
 		REM @echo %PAT% /queue-prefix:%PREFIX% %%~nf.dll
@@ -20,10 +29,3 @@ for /D %%d in (*) do (
 		REM @echo %PTESTER% /queue-bound:%BOUND% %%~nf.dll
 		REM REM @echo %PTESTER% /queue-bound:%BOUND% %%~nf.dll > %%~nf_ptester.out
 	REM )
-	@call run.bat %PAT% log
-	cd ..
-)
-
-goto :eof
-:no-pt
-echo please specify pt.exe
