@@ -1,7 +1,7 @@
 @echo off
 
-set pt=C:\Users\peizu\GitRoot\cav-artifact\artifact\bin\x64\Binaries\pt.exe
-set ext=log
+set pt=%1
+set ext=%2
 
 set f=Elevator_buggy
 
@@ -37,7 +37,7 @@ if 1%ms% lss 100 set ms=0%ms%
 
 :: Mission accomplished
 set /a totalsecs = %hours%*3600 + %mins%*60 + %secs%
-echo find a bug ... >> %f%_pat.%ext%
+echo find a bug at 1 ... >> %f%_pat.%ext%
 echo Time elapsed: %totalsecs%.%ms% seconds >> %f%_pat.%ext%
 
 
